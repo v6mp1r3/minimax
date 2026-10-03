@@ -1,0 +1,167 @@
+{
+  "education": {
+    "label": "Educație / Erasmus",
+    "domains": [
+      {
+        "domain": "erasmus-plus.ec.europa.eu",
+        "authority": 5,
+        "label": "Erasmus+ / European Commission"
+      },
+      {
+        "domain": "utm.md",
+        "authority": 5,
+        "label": "Universitatea Tehnică a Moldovei"
+      },
+      {
+        "domain": "edu.gov.md",
+        "authority": 5,
+        "label": "Ministerul Educației și Cercetării"
+      }
+    ]
+  },
+  "rent": {
+    "label": "Chirie / locuință",
+    "domains": [
+      {
+        "domain": "legis.md",
+        "authority": 5,
+        "label": "Legislația Republicii Moldova"
+      },
+      {
+        "domain": "gov.md",
+        "authority": 5,
+        "label": "Guvernul Republicii Moldova"
+      },
+      {
+        "domain": "sfs.md",
+        "authority": 5,
+        "label": "Serviciul Fiscal de Stat"
+      }
+    ]
+  },
+  "relocation": {
+    "label": "Călătorie / relocare",
+    "domains": [
+      {
+        "domain": "mae.gov.md",
+        "authority": 5,
+        "label": "Ministerul Afacerilor Externe"
+      },
+      {
+        "domain": "gov.md",
+        "authority": 5,
+        "label": "Guvernul Republicii Moldova"
+      },
+      {
+        "domain": "europa.eu",
+        "authority": 5,
+        "label": "European Union"
+      }
+    ]
+  },
+  "general": {
+    "label": "Surse generale",
+    "domains": [
+      {
+        "domain": "gov.md",
+        "authority": 5,
+        "label": "Guvernul Republicii Moldova"
+      },
+      {
+        "domain": "legis.md",
+        "authority": 5,
+        "label": "Legislația Republicii Moldova"
+      },
+      {
+        "domain": "europa.eu",
+        "authority": 5,
+        "label": "European Union"
+      }
+    ]
+  },
+  "auto": {
+    "label": "Auto / înmatriculare / import",
+    "domains": [
+      {
+        "domain": "asp.gov.md",
+        "authority": 5,
+        "label": "Agenția Servicii Publice"
+      },
+      {
+        "domain": "customs.gov.md",
+        "authority": 5,
+        "label": "Serviciul Vamal al Republicii Moldova"
+      },
+      {
+        "domain": "legis.md",
+        "authority": 5,
+        "label": "Legislația Republicii Moldova"
+      },
+      {
+        "domain": "sfs.md",
+        "authority": 5,
+        "label": "Serviciul Fiscal de Stat"
+      }
+    ]
+  },
+  "employment": {
+    "label": "Muncă / angajare",
+    "domains": [
+      {
+        "domain": "gov.md",
+        "authority": 5,
+        "label": "Guvernul Republicii Moldova"
+      },
+      {
+        "domain": "legis.md",
+        "authority": 5,
+        "label": "Legislația Republicii Moldova"
+      },
+      {
+        "domain": "anofm.md",
+        "authority": 5,
+        "label": "Agenția Națională pentru Ocuparea Forței de Muncă"
+      }
+    ]
+  },
+  "business": {
+    "label": "Firmă / antreprenoriat",
+    "domains": [
+      {
+        "domain": "asp.gov.md",
+        "authority": 5,
+        "label": "Agenția Servicii Publice"
+      },
+      {
+        "domain": "legis.md",
+        "authority": 5,
+        "label": "Legislația Republicii Moldova"
+      },
+      {
+        "domain": "sfs.md",
+        "authority": 5,
+        "label": "Serviciul Fiscal de Stat"
+      }
+    ]
+  },
+  "health": {
+    "label": "Servicii medicale / administrative",
+    "domains": [
+      {
+        "domain": "cnam.gov.md",
+        "authority": 5,
+        "label": "Compania Națională de Asigurări în Medicină"
+      },
+      {
+        "domain": "ms.gov.md",
+        "authority": 5,
+        "label": "Ministerul Sănătății"
+      },
+      {
+        "domain": "gov.md",
+        "authority": 5,
+        "label": "Guvernul Republicii Moldova"
+      }
+    ]
+  }
+}

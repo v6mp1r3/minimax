@@ -1,0 +1,238 @@
+{
+  "id": "erasmus-outgoing-utm",
+  "category": "education",
+  "title": "Mobilitate de studiu Erasmus+ pentru studenții UTM",
+  "match_hints": [
+    "erasmus"
+  ],
+  "applies_when": {},
+  "last_verified": "2026-10-03",
+  "summary": "Dosarul se depune la coordonatorul Erasmus+ al facultății; după selecție, universitatea gazdă confirmă, iar la întoarcere aduci documentele de recunoaștere a studiilor.",
+  "sources": {
+    "utm": {
+      "url": "https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-studenti/",
+      "title": "Erasmus+ studenți",
+      "organization": "Universitatea Tehnică a Moldovei"
+    }
+  },
+  "documents": [
+    {
+      "id": "d-application",
+      "name": "Cerere pentru mobilitate Erasmus",
+      "status": "required",
+      "where_to_get": "Se descarcă de pe pagina Erasmus+ studenți a UTM",
+      "source": "utm",
+      "quote": "Cerere pentru mobilitate Erasmus"
+    },
+    {
+      "id": "d-motivation",
+      "name": "Scrisoare de motivație care justifică universitatea aleasă",
+      "status": "required",
+      "where_to_get": null,
+      "source": "utm",
+      "quote": "Scrisoare de motivație care să justifice universitatea aleasă"
+    },
+    {
+      "id": "d-recommendation",
+      "name": "Recomandare din partea unui cadru didactic",
+      "status": "required",
+      "where_to_get": "De la un cadru didactic",
+      "source": "utm",
+      "quote": "Recomandare din partea unui cadru didactic"
+    },
+    {
+      "id": "d-la",
+      "name": "Learning Agreement (for study / for traineeship)",
+      "status": "required",
+      "where_to_get": "Se completează cu responsabilul Erasmus al facultății",
+      "source": "utm",
+      "quote": "Learning Agreement for study/Learning Agreement for traineeship"
+    },
+    {
+      "id": "d-language",
+      "name": "Certificat de competență lingvistică (minim B2) sau alte diplome recunoscute; nu se cere studenților care studiază limba respectivă ca parte din specializare",
+      "status": "required",
+      "where_to_get": "Departamentul de Limbi străine UTM",
+      "source": "utm",
+      "quote": "Certificat de competenta lingvistică (de la departamentul de Limbi străine, minim B2)"
+    },
+    {
+      "id": "d-return-attendance",
+      "name": "La întoarcere: Certificatul de prezență semnat de universitatea gazdă (cu data de început și de final)",
+      "status": "required",
+      "where_to_get": "De la universitatea gazdă",
+      "source": "utm",
+      "quote": "Certificatul de prezență (care conține data de începere și data de finalizare a mobilității), semnat de către universitatea gazdă"
+    },
+    {
+      "id": "d-return-la",
+      "name": "La întoarcere: Contractul de Studiu ECTS (Learning Agreement for studies și Changes to Learning Agreement, dacă e cazul), semnat",
+      "status": "required",
+      "where_to_get": "De la universitatea gazdă",
+      "source": "utm",
+      "quote": "Contractului de Studiu ECTS (Learning agreement for studies și Changes to Learning Agreement, acolo unde este cazul), semnat"
+    },
+    {
+      "id": "d-return-transcript",
+      "name": "La întoarcere: Situația școlară (Transcript of records)",
+      "status": "required",
+      "where_to_get": "De la universitatea gazdă",
+      "source": "utm",
+      "quote": "Situația școlară (Transcript of records/ Releve de notes)"
+    }
+  ],
+  "steps": [
+    {
+      "id": "s1",
+      "title": "Verifică dacă poți aplica",
+      "where": "UTM",
+      "description": "Se pot înscrie studenții înmatriculați la UTM, la licență (fără anul I), master sau doctorat cu frecvență, fără restanțe. Nu se pot înscrie cei care au deja 12 luni de Erasmus+ în ciclul respectiv, cei cu burse din fonduri europene (dublă finanțare) și cei înmatriculați la alte universități decât UTM.",
+      "depends_on_step": null,
+      "source": "utm",
+      "quotes": [
+        "se pot înscrie studenţii care: sunt înmatriculați la UTM;",
+        "nu se pot înscrie: studenţii care au beneficiat deja de statutul de student Erasmus+ pentru o perioadă de 12 luni pe ciclu de învăţământ",
+        "nu au restanţe"
+      ],
+      "cost": null,
+      "duration": null
+    },
+    {
+      "id": "s2",
+      "title": "Întocmește dosarul și predă-l coordonatorului Erasmus+ al facultății",
+      "where": "Coordonatorul Erasmus+ al facultății",
+      "description": "Dosarul conține: cerere pentru mobilitate, scrisoare de motivație, recomandare de la un cadru didactic, Learning Agreement și certificat de competență lingvistică (minim B2).",
+      "depends_on_step": 1,
+      "source": "utm",
+      "quotes": [
+        "Înainte de efectuarea mobilității, studentul trebuie sa întocmească un dosar care sa-l predea coordonatorului Erasmus+ al facultății"
+      ],
+      "cost": null,
+      "duration": null
+    },
+    {
+      "id": "s3",
+      "title": "Așteaptă selecția făcută de Comisia Erasmus+ UTM",
+      "where": "Comisia Erasmus+ UTM",
+      "description": "Selecția se face în funcție de numărul de burse alocate și de calendarul Erasmus+ al semestrului, afișat pe site-ul UTM și la avizierele facultăților.",
+      "depends_on_step": 2,
+      "source": "utm",
+      "quotes": [
+        "Selecţia candidaților se face de către Comisia Erasmus+UTM în funcţie de numărul de burse alocate",
+        "care poate fi consultat atât pe site-ul UTM cât și la avizierele facultăților"
+      ],
+      "cost": null,
+      "duration": null
+    },
+    {
+      "id": "s4",
+      "title": "Universitatea gazdă confirmă acceptarea",
+      "where": "Universitatea gazdă",
+      "description": "Centrul Universitar Erasmus+ anunță universitatea gazdă de rezultatele selecției, iar aceasta confirmă acceptarea și te informează despre pașii următori.",
+      "depends_on_step": 3,
+      "source": "utm",
+      "quotes": [
+        "Centrul Universitar Erasmus+ va anunța universitatea/instituția gazdă de rezultatele selecției",
+        "Universitatea gazdă va confirma acceptarea beneficiarului și va anunța candidatul ales despre pașii ulteriori"
+      ],
+      "cost": null,
+      "duration": null
+    },
+    {
+      "id": "s5",
+      "title": "Pregătește documentele mobilității și trimite-le la aprobare universității gazdă",
+      "where": "Responsabilul pe internaționalizare al facultății (UTM)",
+      "description": "Pregătești documentele împreună cu responsabilul facultății, iar acordul de studiu detaliază curriculumul și durata. Disciplinele trebuie să asigure ECTS: 3 luni – 20, un semestru – 30, un an universitar – 60.",
+      "depends_on_step": 4,
+      "source": "utm",
+      "quotes": [
+        "Studentul selectat va pregăti documentele necesare mobilității împreună cu responsabilul pe internaționalizare din cadrul facultății (UTM) și le va trimite pentru aprobare de către universitatea/instituția gazdă",
+        "3 luni – 20 ECTS, 1 semestru – 30 ECTS, 1 an universitar – 60 ECTS"
+      ],
+      "cost": null,
+      "duration": null
+    },
+    {
+      "id": "s6",
+      "title": "Află grantul și durata mobilității",
+      "where": "UTM",
+      "description": "Grantul Erasmus+ pentru mobilitățile de studiu este între 800 și 900 euro/lună. O mobilitate poate dura de la 3 până la 12 luni pe ciclu academic (se recomandă câte un semestru).",
+      "depends_on_step": 4,
+      "source": "utm",
+      "quotes": [
+        "Grantul Erasmus+ pentru mobilitățile de studiu este între 800 și 900 euro/lună",
+        "O mobilitate de studii Erasmus+ poate fi de 3 până la 12 luni pe fiecare ciclu academic"
+      ],
+      "cost": "Grant primit: 800–900 EUR/lună",
+      "duration": "3–12 luni pe ciclu"
+    },
+    {
+      "id": "s7",
+      "title": "Organizează deplasarea, cazarea și asigurarea de sănătate",
+      "where": "Tu (beneficiarul)",
+      "description": "Organizarea deplasării (transport, cazare, asigurare de sănătate etc.) este obligația beneficiarului.",
+      "depends_on_step": 4,
+      "source": "utm",
+      "quotes": [
+        "Organizarea deplasării (transportul, cazarea, asigurarea de sănătate etc) este obligația beneficiarului"
+      ],
+      "cost": null,
+      "duration": null
+    },
+    {
+      "id": "s8",
+      "title": "La întoarcere: adu documentele de la universitatea gazdă",
+      "where": "De la universitatea gazdă, apoi la facultate",
+      "description": "Aduci certificatul de prezență semnat, Contractul de Studiu ECTS semnat și situația școlară (Transcript of records).",
+      "depends_on_step": 7,
+      "source": "utm",
+      "quotes": [
+        "La întoarcere din mobilitate, studentul trebuie să aducă următoarele documente de la universitatea gazdă",
+        "Situația școlară (Transcript of records/ Releve de notes)"
+      ],
+      "cost": null,
+      "duration": null
+    },
+    {
+      "id": "s9",
+      "title": "Echivalarea notelor",
+      "where": "Comisia de echivalare a studiilor Erasmus+",
+      "description": "Pe baza notelor de la universitatea gazdă, notele se echivalează cu Certificatul de echivalare, aprobat de comisia de echivalare.",
+      "depends_on_step": 8,
+      "source": "utm",
+      "quotes": [
+        "Pe baza notelor obtinute la universitatea gazdă, se vor echivala notele cu Certificatul de echivalare"
+      ],
+      "cost": null,
+      "duration": null
+    },
+    {
+      "id": "s10",
+      "title": "Completează chestionarul UE online",
+      "where": "Online (invitație primită după întoarcere)",
+      "description": "Chestionarul se completează în 10 zile calendaristice de la primirea invitației. Cine nu îl trimite poate fi obligat să ramburseze total sau parțial sprijinul financiar.",
+      "depends_on_step": 8,
+      "source": "utm",
+      "quotes": [
+        "va completa și transmite online chestionarul UE după întoarcerea din mobilitate în termen de 10 de zile calendaristice de la primirea invitației de completare",
+        "li se va cere rambursarea totală sau parțială a sprijinului financiar primit"
+      ],
+      "cost": null,
+      "duration": "10 zile calendaristice de la invitație"
+    }
+  ],
+  "unconfirmed": [
+    "Viza, permisul de ședere sau alte acte pentru țara gazdă — nu sunt descrise pe pagina UTM verificată și depind de cetățenii; verifică ambasada/consulatul țării gazdă",
+    "Termenele-limită ale concursului — se afișează în calendarul Erasmus+ din fiecare semestru",
+    "Costul asigurării de sănătate și al călătoriei — nu apare în surse"
+  ],
+  "slots": [
+    "citizenships"
+  ],
+  "profile_notes": {
+    "citizenships": {
+      "has_EU": "Ai și cetățenie UE: verifică dacă o folosești pentru intrarea/șederea în țara gazdă — pagina UTM nu descrie această situație.",
+      "no_EU": "Ai doar cetățenia Republicii Moldova (sau non-UE): verifică la ambasada/consulatul țării gazdă ce cerințe de intrare și ședere ți se aplică — pagina UTM nu le descrie."
+    }
+  }
+}

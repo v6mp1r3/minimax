@@ -1,0 +1,296 @@
+{
+  "_common": {
+    "citizenships": {
+      "type": "multi",
+      "ask": "Ce cetățenii ai? (poți alege mai multe)",
+      "options": [
+        {
+          "value": "MD",
+          "label": "Republica Moldova",
+          "keywords": [
+            "cetatenia in republica moldova",
+            "cetatenia republicii moldova",
+            "cetatenie moldov",
+            "cetatenia moldov",
+            "cetatean moldov",
+            "cetatean al republicii moldova",
+            "cetatean rm",
+            "cetatenie rm",
+            "cetatenia rm",
+            "cetatenie in republica moldova",
+            "cetatean din republica moldova"
+          ]
+        },
+        {
+          "value": "EU",
+          "label": "Un stat UE (ex. România)",
+          "keywords": [
+            "cetatenie romana",
+            "cetatenia romana",
+            "cetatean roman",
+            "cetatenie ue",
+            "cetatenia ue",
+            "cetatenie europeana",
+            "pasaport romanesc",
+            "pasaport european",
+            "cetatenie romanesc"
+          ]
+        },
+        {
+          "value": "NON_EU",
+          "label": "Altă cetățenie (specifică)",
+          "specify": true
+        }
+      ]
+    },
+    "destination_country": {
+      "type": "text",
+      "ask": "În ce țară pleci?",
+      "auto_from": "country",
+      "options": [],
+      "placeholder": "ex. Italia"
+    }
+  },
+  "education": {
+    "slots": [
+      "citizenships",
+      "destination_country",
+      {
+        "key": "study_level",
+        "type": "single",
+        "ask": "La ce nivel studiezi?",
+        "options": [
+          {
+            "value": "bachelor",
+            "label": "Licență",
+            "keywords": [
+              "licenta",
+              "anul 1",
+              "anul i "
+            ]
+          },
+          {
+            "value": "master",
+            "label": "Master",
+            "keywords": [
+              "master",
+              "masterat"
+            ]
+          },
+          {
+            "value": "phd",
+            "label": "Doctorat",
+            "keywords": [
+              "doctorat",
+              "phd"
+            ]
+          }
+        ]
+      },
+      {
+        "key": "selected",
+        "type": "single",
+        "ask": "Ai fost deja selectat/ă de universitate pentru mobilitate?",
+        "options": [
+          {
+            "value": "yes",
+            "label": "Da"
+          },
+          {
+            "value": "no",
+            "label": "Nu încă"
+          }
+        ],
+        "no_other": true
+      }
+    ]
+  },
+  "relocation": {
+    "slots": [
+      "citizenships",
+      "destination_country",
+      {
+        "key": "purpose",
+        "type": "single",
+        "ask": "Care este scopul?",
+        "options": [
+          {
+            "value": "study",
+            "label": "Studii",
+            "keywords": [
+              "studii",
+              "studiez",
+              "facultate",
+              "universitate",
+              "erasmus"
+            ]
+          },
+          {
+            "value": "work",
+            "label": "Muncă",
+            "keywords": [
+              "munca",
+              "lucrez",
+              "angaj",
+              "job"
+            ]
+          },
+          {
+            "value": "family",
+            "label": "Familie",
+            "keywords": [
+              "familie",
+              "casatori",
+              "reunificare"
+            ]
+          },
+          {
+            "value": "other",
+            "label": "Altul (specifică)",
+            "specify": true
+          }
+        ]
+      }
+    ]
+  },
+  "rent": {
+    "slots": [
+      "citizenships",
+      {
+        "key": "role",
+        "type": "single",
+        "ask": "Ești chiriaș sau proprietar?",
+        "options": [
+          {
+            "value": "tenant",
+            "label": "Chiriaș",
+            "keywords": [
+              "iau in chirie",
+              "vreau sa inchiriez",
+              "chirias",
+              "caut apartament"
+            ]
+          },
+          {
+            "value": "landlord",
+            "label": "Proprietar",
+            "keywords": [
+              "dau in chirie",
+              "proprietar",
+              "inchiriez apartamentul meu"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "auto": {
+    "slots": [
+      {
+        "key": "vehicle_origin",
+        "type": "single",
+        "ask": "De unde provine mașina?",
+        "options": [
+          {
+            "value": "EU",
+            "label": "Un stat UE"
+          },
+          {
+            "value": "NON_EU",
+            "label": "Din afara UE (specifică țara)",
+            "specify": true
+          }
+        ],
+        "auto_from": "country_bloc"
+      },
+      {
+        "key": "vehicle_age",
+        "type": "single",
+        "ask": "Cât de veche este mașina?",
+        "options": [
+          {
+            "value": "lt3",
+            "label": "Sub 3 ani"
+          },
+          {
+            "value": "3to7",
+            "label": "3–7 ani"
+          },
+          {
+            "value": "gt7",
+            "label": "Peste 7 ani"
+          }
+        ]
+      }
+    ]
+  },
+  "employment": {
+    "slots": [
+      "citizenships",
+      {
+        "key": "work_location",
+        "type": "single",
+        "ask": "Unde vei lucra?",
+        "options": [
+          {
+            "value": "MD",
+            "label": "În Republica Moldova"
+          },
+          {
+            "value": "abroad",
+            "label": "În străinătate"
+          }
+        ]
+      }
+    ]
+  },
+  "business": {
+    "slots": [
+      "citizenships",
+      {
+        "key": "resident",
+        "type": "single",
+        "ask": "Locuiești în Republica Moldova?",
+        "options": [
+          {
+            "value": "yes",
+            "label": "Da"
+          },
+          {
+            "value": "no",
+            "label": "Nu"
+          }
+        ],
+        "no_other": true
+      }
+    ]
+  },
+  "health": {
+    "slots": [
+      "citizenships",
+      {
+        "key": "insured",
+        "type": "single",
+        "ask": "Ai asigurare medicală?",
+        "options": [
+          {
+            "value": "yes",
+            "label": "Da"
+          },
+          {
+            "value": "no",
+            "label": "Nu"
+          },
+          {
+            "value": "unknown",
+            "label": "Nu știu"
+          }
+        ],
+        "no_other": true
+      }
+    ]
+  },
+  "general": {
+    "slots": []
+  }
+}

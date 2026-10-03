@@ -1,0 +1,183 @@
+{
+  "id": "auto-import-registration",
+  "category": "auto",
+  "title": "Înmatricularea unei mașini aduse din străinătate",
+  "match_hints": [
+    "inmatricul",
+    "adus",
+    "import",
+    "vamuir",
+    "vama"
+  ],
+  "applies_when": {
+    "vehicle_origin": [
+      "EU",
+      "NON_EU"
+    ]
+  },
+  "last_verified": "2026-10-03",
+  "summary": "Mașina se declară mai întâi la vamă (import), apoi se înmatriculează la Agenția Servicii Publice (ASP).",
+  "sources": {
+    "customs": {
+      "url": "https://customs.gov.md/ro/articles/importul-mijloacelor-de-transport-cerinte-si-documente-2466-ro",
+      "title": "Importul mijloacelor de transport: Cerințe și documente",
+      "organization": "Serviciul Vamal al Republicii Moldova"
+    },
+    "asp": {
+      "url": "https://www.asp.gov.md/ro/servicii/vehicule/inmatriculare-vehicule/421",
+      "title": "Eliberarea certificatului de înmatriculare pentru vehicul",
+      "organization": "Agenția Servicii Publice"
+    }
+  },
+  "documents": [
+    {
+      "id": "d-id-customs",
+      "name": "Actul de identitate al proprietarului (pașaport sau buletin) — pentru vamă",
+      "status": "required",
+      "where_to_get": "Original și copie",
+      "source": "customs",
+      "quote": "actul de identitate (pașaportul sau buletinul de identitate) al proprietarului sau persoanei împuternicite legal să declare bunul"
+    },
+    {
+      "id": "d-ownership",
+      "name": "Document care confirmă dreptul de proprietate sau folosință (contract, factura comercială sau document de plată)",
+      "status": "required",
+      "where_to_get": "De la vânzător",
+      "source": "customs",
+      "quote": "documentul ce confirmă dreptul de proprietate sau folosință asupra bunurilor (contractul, factura comercială sau documentul de plată)"
+    },
+    {
+      "id": "d-tech-passport",
+      "name": "Pașaportul tehnic al mijlocului de transport",
+      "status": "required",
+      "where_to_get": null,
+      "source": "customs",
+      "quote": "pașaportul tehnic al mijlocului de transport"
+    },
+    {
+      "id": "d-poa",
+      "name": "Procura persoanei care declară bunul, dacă proprietarul este reprezentat",
+      "status": "possible",
+      "where_to_get": null,
+      "source": "customs",
+      "quote": "procura eliberată persoanei care va efectua declararea bunului autorității vamale (în cazul reprezentării proprietarului acestuia)"
+    },
+    {
+      "id": "d-app",
+      "name": "Cerere de eliberare a certificatului de înmatriculare (VP)",
+      "status": "required",
+      "where_to_get": "ASP",
+      "source": "asp",
+      "quote": "cerere de eliberare VP, actele de însoțire a vehiculului importat"
+    },
+    {
+      "id": "d-fee-proof",
+      "name": "Document de confirmare a taxelor pentru serviciile ASP",
+      "status": "required",
+      "where_to_get": null,
+      "source": "asp",
+      "quote": "document de confirmare a taxelor pentru serviciile prestate"
+    },
+    {
+      "id": "d-id-asp",
+      "name": "Documente de identitate sau procură, după caz — pentru ASP",
+      "status": "required",
+      "where_to_get": null,
+      "source": "asp",
+      "quote": "documente de identitate, sau procură, după caz"
+    }
+  ],
+  "steps": [
+    {
+      "id": "s1",
+      "title": "Pregătește documentele pentru vamă (original și copie)",
+      "where": "Înainte de a ajunge la postul vamal",
+      "description": "Pentru import, la postul vamal se prezintă actul de identitate, documentul de proprietate sau folosință, pașaportul tehnic și, la reprezentare, procura — în original și copie.",
+      "depends_on_step": null,
+      "source": "customs",
+      "quotes": [
+        "La plasarea sub regimul vamal de import a unui mijloc de transport este necesar de prezentat postului vamal de frontieră sau postului vamal intern următoarele documente (în original și copie)"
+      ],
+      "cost": null,
+      "duration": null
+    },
+    {
+      "id": "s2",
+      "title": "Declară mașina la vamă (regim vamal de import)",
+      "where": "Post vamal de frontieră sau post vamal intern",
+      "description": "Declararea o face proprietarul, persoana împuternicită legal sau un broker vamal licențiat. Persoanele fizice o fac pe declarația vamală standard (H1) sau pe hârtie, pe formularul primit de la funcționarul vamal.",
+      "depends_on_step": 1,
+      "source": "customs",
+      "quotes": [
+        "procedura declarării aferentă a importului mijlocului de transport se efectuează de către proprietar/persoana împuternicită legal să declare bunul sau de către un broker vamal licențiat",
+        "Persoanele fizice declară mijlocul de transport fie în baza declarației vamale standard (set de date H1) sau în scris, pe suport de hârtie"
+      ],
+      "cost": null,
+      "duration": null
+    },
+    {
+      "id": "s3",
+      "title": "Drepturile de import (calculate la vămuire)",
+      "where": "Serviciul Vamal",
+      "description": "Suma depinde de termenul de exploatare, capacitatea cilindrică a motorului și valoarea în vamă. Termenul de exploatare se calculează după anul de producere, nu după anul primei înmatriculări. Cota accizului se calculează conform anexei nr.2 la Titlul IV din Codul Fiscal.",
+      "depends_on_step": 2,
+      "source": "customs",
+      "quotes": [
+        "drepturile de import variază în funcție de termenul de exploatare, capacitatea cilindrică a motorului și valoarea în vamă calculată a mijlocului de transport",
+        "care se calculează în baza anului de producere, dar nu în baza anului primei înmatriculări"
+      ],
+      "cost": null,
+      "duration": null
+    },
+    {
+      "id": "s4",
+      "title": "Identificarea vehiculului la ASP",
+      "where": "ASP — Departamentul înmatriculare a mijloacelor de transport și calificare a conducătorilor auto",
+      "description": "Procedura de înmatriculare începe cu identificarea vehiculului importat: se verifică datele (nr. motor, caroserie, șasiu) și autenticitatea actelor de însoțire, iar datele se înscriu în Raportul de identificare.",
+      "depends_on_step": 3,
+      "source": "asp",
+      "quotes": [
+        "Procedura de înmatriculare începe cu identificarea vehiculului, pentru cel importat",
+        "Se verifică autenticitatea actelor de însoțire"
+      ],
+      "cost": null,
+      "duration": null
+    },
+    {
+      "id": "s5",
+      "title": "Depune dosarul de înmatriculare și achită taxele ASP",
+      "where": "ASP",
+      "description": "Dosarul se formează pe baza cererii: cerere VP, actele de însoțire a vehiculului importat, confirmarea achitării taxelor și actele de identitate (sau procura).",
+      "depends_on_step": 4,
+      "source": "asp",
+      "quotes": [
+        "Se formează dosarul de înmatriculare în baza cererii solicitantului, se achită taxele pentru serviciile prestate",
+        "cerere de eliberare VP, actele de însoțire a vehiculului importat"
+      ],
+      "cost": null,
+      "duration": null
+    },
+    {
+      "id": "s6",
+      "title": "Primești certificatul de înmatriculare provizoriu și numerele",
+      "where": "ASP",
+      "description": "Certificatul provizoriu (VPP) se eliberează odată cu setul numerelor de înmatriculare, contra semnătură.",
+      "depends_on_step": 5,
+      "source": "asp",
+      "quotes": [
+        "se printează certificatul de înmatriculare provizoriu(VPP), care este eliberat persoanei/reprezentantului odată cu setul numerelor de înmatriculare, contra semnătură"
+      ],
+      "cost": null,
+      "duration": null
+    }
+  ],
+  "unconfirmed": [
+    "Sumele exacte (drepturi de import, accize, taxe ASP) — depind de vehicul și nu sunt în textul extras din surse",
+    "Termenele de procesare la vamă și la ASP",
+    "Dacă există pași suplimentari (ex. inspecție tehnică) — nu sunt menționați în paginile verificate",
+    "Tariful ASP: pagina afișează o listă de termene (20/10/5/3/1 zile lucrătoare) și tarife (gratuit, 1 320, 1 650, 1 980 lei) fără a se vedea clar ce rând aparține înmatriculării inițiale — nu este atribuită unei etape"
+  ],
+  "slots": [
+    "vehicle_origin"
+  ]
+}
