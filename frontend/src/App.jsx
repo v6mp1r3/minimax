@@ -635,6 +635,44 @@ function QuestionCard({ q, active, onSubmit }) {
   );
 }
 
+const THINKING_STEPS = [
+  "Analizez întrebarea",
+  "Caut în sursele oficiale",
+  "Verific documentele și pașii",
+  "Îți pregătesc ghidul",
+];
+
+// Shown while the backend works: rotating status + moving bar, so it is clear the AI is busy.
+function ThinkingBubble() {
+  const [seconds, setSeconds] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => setSeconds((s) => s + 1), 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  const step = Math.min(Math.floor(seconds / 4), THINKING_STEPS.length - 1);
+
+  return (
+    <div className="assistant-bubble thinking" role="status" aria-live="polite">
+      <div className="thinking-line">
+        <span className="thinking-dots" aria-hidden="true">
+          <i />
+          <i />
+          <i />
+        </span>
+        <span key={step} className="thinking-label">
+          {THINKING_STEPS[step]}…
+        </span>
+      </div>
+      <div className="thinking-track" aria-hidden="true">
+        <span />
+      </div>
+      {seconds >= 12 && <small>Încă lucrez la răspuns… ({seconds} s)</small>}
+    </div>
+  );
+}
+
 function ChatPage({ initialMessage, onHome }) {
   const [message, setMessage] = useState("");
   const [busy, setBusy] = useState(false);
@@ -865,7 +903,7 @@ function ChatPage({ initialMessage, onHome }) {
       </aside>
 
       <section className="chat-main">
-        <header className="chat-header">
+        <header className={`chat-header ${busy ? "busy" : ""}`}>
           <strong>Asistent DocuGuide</strong>
           {categoryById(categoryId) && (
             <span className="chat-category">
@@ -918,10 +956,8 @@ function ChatPage({ initialMessage, onHome }) {
 
           {busy && (
             <div className="message-row">
-              <span className="chat-avatar"><Icon name="logo" size={20} /></span>
-              <div className="assistant-bubble typing" role="status">
-                Caut în sursele oficiale<span>.</span><span>.</span><span>.</span>
-              </div>
+              <span className="chat-avatar thinking-avatar"><Icon name="logo" size={20} /></span>
+              <ThinkingBubble />
             </div>
           )}
           <div ref={endRef} />
@@ -940,12 +976,12 @@ function ChatPage({ initialMessage, onHome }) {
           <input
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            placeholder="Scrie un mesaj..."
+            placeholder={busy ? "DocuGuide se gândește..." : "Scrie un mesaj..."}
             aria-label="Scrie un mesaj"
             disabled={busy}
           />
           <button type="submit" className="chat-send" aria-label="Trimite" disabled={busy}>
-            <Icon name="send" size={20} />
+            {busy ? <Icon name="loader" size={20} className="icon-spin" /> : <Icon name="send" size={20} />}
           </button>
         </form>
       </section>
@@ -969,6 +1005,11 @@ function App() {
   };
 
   const goHome = () => setPage("home");
+
+  // every page switch starts at the top, so the navbar/logo never appears shifted
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [page]);
 
   return (
     <div className="app">

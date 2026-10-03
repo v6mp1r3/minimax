@@ -11,6 +11,7 @@ import {
   GraduationCap,
   House,
   IdCard,
+  LoaderCircle,
   MapPin,
   MessageSquare,
   Pin,
@@ -49,6 +50,7 @@ const ICONS = {
   unpin: PinOff,
   trash: Trash2,
   chat: MessageSquare,
+  loader: LoaderCircle,
   // details
   location: MapPin,
   cost: Wallet,
