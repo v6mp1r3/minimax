@@ -7,7 +7,7 @@ import {
   Check,
   ChevronRight,
   Clock,
-  FileCheck,
+  FileSearch,
   GraduationCap,
   House,
   IdCard,
@@ -28,7 +28,7 @@ import {
 // One registry for every icon in the app: change a glyph here and it changes everywhere.
 const ICONS = {
   // brand + assistant
-  logo: FileCheck,
+  logo: FileSearch,
   spark: Sparkles,
   // categories (match `icon` in the categories list)
   education: GraduationCap,
