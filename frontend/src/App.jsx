@@ -81,11 +81,76 @@ function Navbar({ onHome, onChat }) {
   );
 }
 
+const SpeechRecognitionAPI =
+  typeof window !== "undefined" &&
+  (window.SpeechRecognition || window.webkitSpeechRecognition);
+
+const SPEECH_ERRORS = {
+  "not-allowed": "Permite accesul la microfon în browser ca să poți vorbi.",
+  "service-not-allowed": "Permite accesul la microfon în browser ca să poți vorbi.",
+  "no-speech": "Nu am auzit nimic. Încearcă din nou.",
+  "audio-capture": "Nu găsesc niciun microfon.",
+  network: "Recunoașterea vocală are nevoie de conexiune la internet.",
+};
+
+function useSpeech(onText) {
+  const recRef = useRef(null);
+  const [listening, setListening] = useState(false);
+  const [error, setError] = useState("");
+
+  useEffect(() => () => recRef.current?.abort(), []);
+
+  const start = () => {
+    const rec = new SpeechRecognitionAPI();
+    rec.lang = "ro-RO";
+    rec.interimResults = true;
+    rec.continuous = false;
+    rec.onresult = (e) =>
+      onText(Array.from(e.results).map((r) => r[0].transcript).join(""));
+    rec.onerror = (e) =>
+      setError(SPEECH_ERRORS[e.error] || "Recunoașterea vocală a eșuat.");
+    rec.onend = () => setListening(false);
+    recRef.current = rec;
+    setError("");
+    setListening(true);
+    rec.start();
+  };
+
+  return {
+    supported: Boolean(SpeechRecognitionAPI),
+    listening,
+    error,
+    toggle: () => (listening ? recRef.current?.stop() : start()),
+    cancel: () => recRef.current?.abort(),
+  };
+}
+
+function MicButton({ voice, disabled }) {
+  if (!voice.supported) return null;
+  return (
+    <button
+      type="button"
+      className={`mic-button ${voice.listening ? "listening" : ""}`}
+      onClick={voice.toggle}
+      disabled={disabled}
+      aria-pressed={voice.listening}
+      aria-label={voice.listening ? "Oprește înregistrarea" : "Spune întrebarea cu vocea"}
+    >
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <rect x="9" y="3" width="6" height="12" rx="3" />
+        <path d="M5 11a7 7 0 0 0 14 0M12 18v3" />
+      </svg>
+    </button>
+  );
+}
+
 function HomePage({ onChat, onCategory }) {
   const [question, setQuestion] = useState("");
+  const voice = useSpeech(setQuestion);
 
   const sendQuestion = () => {
     if (question.trim()) {
+      voice.cancel();
       onChat(question);
     }
   };
@@ -125,9 +190,10 @@ function HomePage({ onChat, onCategory }) {
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && sendQuestion()}
-              placeholder="Scrie ce vrei să faci..."
+              placeholder={voice.listening ? "Te ascult..." : "Scrie ce vrei să faci..."}
               aria-label="Descrie situația ta"
             />
+            <MicButton voice={voice} />
             <button
               className="search-submit"
               onClick={sendQuestion}
@@ -136,6 +202,7 @@ function HomePage({ onChat, onCategory }) {
               →
             </button>
           </div>
+          {voice.error && <p className="voice-error">{voice.error}</p>}
 
           <div className="examples">
             <span>Exemple:</span>
@@ -473,6 +540,7 @@ function ChatPage({ initialMessage, onHome }) {
   );
   const started = useRef(false);
   const endRef = useRef(null);
+  const voice = useSpeech(setMessage);
 
   const push = (...items) => setConversation((old) => [...old, ...items]);
 
@@ -536,6 +604,7 @@ function ChatPage({ initialMessage, onHome }) {
 
   const sendMessage = (text) => {
     if (busy || !text.trim()) return;
+    voice.cancel();
     push({ role: "user", type: "text", text });
     setMessage("");
     setPending(null);
@@ -641,6 +710,8 @@ function ChatPage({ initialMessage, onHome }) {
           <div ref={endRef} />
         </div>
 
+        {voice.error && <p className="voice-error">{voice.error}</p>}
+
         <form
           className="chat-input-area"
           onSubmit={(e) => {
@@ -654,10 +725,11 @@ function ChatPage({ initialMessage, onHome }) {
           <input
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            placeholder="Scrie un mesaj..."
+            placeholder={voice.listening ? "Te ascult..." : "Scrie un mesaj..."}
             aria-label="Scrie un mesaj"
             disabled={busy}
           />
+          <MicButton voice={voice} disabled={busy} />
           <button type="submit" className="chat-send" aria-label="Trimite" disabled={busy}>
             ↑
           </button>

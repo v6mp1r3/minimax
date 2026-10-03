@@ -1244,3 +1244,49 @@ input:focus-visible {
 .chat-input-area input:disabled {
   cursor: wait;
 }
+
+/* VOICE INPUT */
+
+.mic-button {
+  width: 43px;
+  height: 43px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border: none;
+  border-radius: 50%;
+  background: #f5faf7;
+  color: #087e6c;
+  transition: background 0.2s, color 0.2s;
+}
+
+.mic-button:hover:not(:disabled) {
+  background: #e5f7f0;
+}
+
+.mic-button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.mic-button.listening {
+  background: #d93f3f;
+  color: #fff;
+  animation: mic-pulse 1.4s infinite;
+}
+
+@keyframes mic-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(217, 63, 63, 0.45); }
+  100% { box-shadow: 0 0 0 14px rgba(217, 63, 63, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mic-button.listening { animation: none; }
+}
+
+.voice-error {
+  margin: 0 4% 8px;
+  color: #b3392f;
+  font-size: 13px;
+  text-align: center;
+}
