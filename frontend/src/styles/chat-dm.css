@@ -1,0 +1,184 @@
+/* ============================================================
+   CHAT: Instagram-style messages
+   ============================================================ */
+
+.chat-main {
+  --ig-user-from: #0aa58c;
+  --ig-user-to: #087e6c;
+  --ig-other: #eef2f0;
+  --ig-ring-a: #19c3a6;
+  --ig-ring-b: #f6c453;
+  --ig-ring-c: #e8707a;
+}
+
+/* header: avatar + name + status, like a DM thread */
+.chat-header-id {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.chat-header-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+
+.chat-header-text small {
+  color: #8a9a92;
+  font-size: 12px;
+}
+
+.chat-header-text small.typing {
+  color: #087e6c;
+  font-weight: 600;
+}
+
+.chat-header {
+  justify-content: flex-start;
+  gap: 12px;
+}
+
+.chat-header .chat-category {
+  margin-left: auto;
+}
+
+.mobile-home {
+  margin-left: auto;
+}
+
+.chat-category + .mobile-home {
+  margin-left: 12px;
+}
+
+/* avatar with gradient story-ring */
+.chat-avatar {
+  width: 36px;
+  height: 36px;
+  padding: 2px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(45deg, var(--ig-ring-b), var(--ig-ring-c) 45%, var(--ig-ring-a));
+  color: #087e6c;
+}
+
+.chat-avatar.sm {
+  width: 28px;
+  height: 28px;
+}
+
+.avatar-inner {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: #e5f7f0;
+}
+
+.avatar-spacer {
+  width: 36px;
+  flex-shrink: 0;
+}
+
+/* rows */
+.chat-messages {
+  padding: 24px 5% 12px;
+}
+
+.chat-welcome,
+.message-row {
+  align-items: flex-end;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.message-row.joins-next {
+  margin-bottom: 3px;
+}
+
+/* bubbles */
+.assistant-bubble,
+.user-bubble {
+  padding: 11px 16px;
+  border-radius: 22px;
+  font-size: 14px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.assistant-bubble {
+  background: var(--ig-other);
+  color: #1d2723;
+}
+
+.user-bubble {
+  max-width: min(520px, 78%);
+  background: linear-gradient(135deg, var(--ig-user-from), var(--ig-user-to));
+  color: #fff;
+}
+
+/* rich bubbles need more air */
+.answer-bubble,
+.question-bubble {
+  padding: 18px 20px;
+  border-radius: 24px;
+}
+
+/* clustered bubbles: the corner on the avatar / edge side tightens */
+.message-row:not(.user-row).joins-prev .assistant-bubble {
+  border-top-left-radius: 6px;
+}
+
+.message-row:not(.user-row).joins-next .assistant-bubble {
+  border-bottom-left-radius: 6px;
+}
+
+.message-row:not(.user-row):not(.joins-next) .assistant-bubble {
+  border-bottom-left-radius: 6px;
+}
+
+.message-row.user-row.joins-prev .user-bubble {
+  border-top-right-radius: 6px;
+}
+
+.message-row.user-row.joins-next .user-bubble {
+  border-bottom-right-radius: 6px;
+}
+
+.message-row.user-row:not(.joins-next) .user-bubble {
+  border-bottom-right-radius: 6px;
+}
+
+/* inner cards keep working on the grey bubble */
+.assistant-bubble .answer-card,
+.assistant-bubble .answer-card section {
+  color: #1d2723;
+}
+
+.assistant-bubble .doc-list li,
+.assistant-bubble .step-list li {
+  border-color: #dfe6e2;
+}
+
+.assistant-bubble .source-quote {
+  background: #fff;
+}
+
+/* input like a DM composer */
+.chat-input-area {
+  border-color: #dfe6e2;
+  background: #fff;
+}
+
+.chat-input-area:focus-within {
+  border-color: #087e6c;
+}
+
+.chat-input-area input:focus-visible {
+  outline: none;
+}

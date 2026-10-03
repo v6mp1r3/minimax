@@ -1,0 +1,60 @@
+/* FOLLOW-UP ANSWERS */
+
+.followup-title {
+  margin: 0 0 8px;
+}
+
+.source-quote {
+  margin: 10px 0;
+  padding: 8px 12px;
+  border-left: 3px solid #b8d9cc;
+  background: #f4faf7;
+  color: #3b4a43;
+  font-size: 13px;
+  font-style: italic;
+  white-space: pre-line;
+}
+
+.source-quote a {
+  display: block;
+  margin-top: 4px;
+  font-size: 11px;
+  font-style: normal;
+  color: #087e6c;
+}
+
+.hint-unconfirmed {
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: #fff7e6;
+  color: #7a5a14;
+  font-size: 13px;
+}
+
+.general-answer {
+  margin: 12px 0;
+  padding: 10px 14px;
+  border: 1px dashed #d4b45a;
+  border-radius: 10px;
+  background: #fffaf0;
+  color: #4a3c10;
+  font-size: 14px;
+}
+
+.general-answer strong {
+  display: block;
+  margin-bottom: 6px;
+  color: #7a5a14;
+  font-size: 12px;
+}
+
+.general-text {
+  white-space: pre-wrap;
+}
+
+.general-answer small {
+  display: block;
+  margin-top: 8px;
+  color: #8a7430;
+  font-size: 11px;
+}

@@ -1,0 +1,43 @@
+/* CATEGORY ICONS + HISTORY */
+
+.sidebar-categories button,
+.recent-conversations button {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.side-icon {
+  flex-shrink: 0;
+  width: 22px;
+  display: grid;
+  place-items: center;
+}
+
+.recent-title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.recent-conversations button.active {
+  background: #eaf6f1;
+  color: #293832;
+}
+
+.recent-empty {
+  margin: 0 9px;
+  color: #9aa8a1;
+  font-size: 12px;
+}
+
+.chat-category {
+  margin-left: 12px;
+  padding: 4px 11px;
+  border-radius: 999px;
+  background: #e5f7f0;
+  color: #087e6c;
+  font-size: 12px;
+  font-weight: 600;
+}

@@ -1,0 +1,60 @@
+/* ============================================================
+   ICON ALIGNMENT: icons sit at the end of their container
+   ============================================================ */
+
+.icon {
+  vertical-align: middle;
+}
+
+.topic-card-content button {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  text-align: left;
+}
+
+.category-cta .primary-button {
+  justify-content: space-between;
+  padding-inline: 22px;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.new-chat-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+}
+
+.chat-category {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* step / document headers: title on the left, ticks, badges and source refs at the end */
+.doc-head > strong {
+  flex: 1 1 200px;
+  min-width: 0;
+}
+
+.doc-head > .tick,
+.doc-head > .badge,
+.doc-head > .source-ref {
+  flex-shrink: 0;
+}
+
+.doc-head > strong + * {
+  margin-left: auto;
+}
+
+.check-list label.doc-head strong {
+  flex: 1 1 200px;
+}

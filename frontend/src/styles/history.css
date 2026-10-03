@@ -1,0 +1,75 @@
+/* HISTORY: pin + delete */
+
+.recent-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-radius: 7px;
+}
+
+.recent-item:hover,
+.recent-item:focus-within {
+  background: #f4faf7;
+}
+
+.recent-item.active {
+  background: #eaf6f1;
+}
+
+.recent-conversations .recent-item button.recent-open {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+}
+
+.recent-conversations .recent-item button.recent-open:hover {
+  background: transparent;
+}
+
+.recent-item.active .recent-open {
+  color: #293832;
+}
+
+.pin-mark {
+  flex-shrink: 0;
+  display: inline-flex;
+  color: #087e6c;
+}
+
+.recent-actions {
+  display: none;
+  gap: 2px;
+  padding-right: 6px;
+}
+
+.recent-item:hover .recent-actions,
+.recent-item:focus-within .recent-actions {
+  display: flex;
+}
+
+.recent-item:hover .pin-mark,
+.recent-item:focus-within .pin-mark {
+  display: none;
+}
+
+.recent-conversations .recent-item button.icon-action {
+  padding: 4px 6px;
+  border-radius: 6px;
+  display: inline-flex;
+  background: transparent;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.recent-conversations .recent-item button.icon-action:hover {
+  background: #dcefe7;
+}
+
+@media (hover: none) {
+  .recent-actions {
+    display: flex;
+  }
+  .pin-mark {
+    display: none;
+  }
+}

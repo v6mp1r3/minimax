@@ -1,0 +1,100 @@
+/* ANSWER LAYOUT: timeline, checklist, collapsibles */
+
+.step-list li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 23px;
+  top: 38px;
+  bottom: -12px;
+  width: 2px;
+  background: #cfe6dd;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: #f1f7f4;
+  color: #4b5f56;
+  font-size: 12px;
+}
+
+.tick {
+  display: inline-flex;
+  color: #087e6c;
+}
+
+.progress {
+  margin-left: 8px;
+  color: #7b8b83;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.check-list label.doc-head {
+  cursor: pointer;
+}
+
+.check-list input[type="checkbox"] {
+  width: 17px;
+  height: 17px;
+  accent-color: #087e6c;
+  flex-shrink: 0;
+}
+
+.check-list li.done strong {
+  color: #8a9a92;
+  text-decoration: line-through;
+}
+
+.source-toggle {
+  margin-top: 8px;
+  font-size: 12px;
+}
+
+.source-toggle summary,
+.unconfirmed-box summary {
+  cursor: pointer;
+  color: #087e6c;
+  font-weight: 700;
+}
+
+.source-toggle a {
+  display: inline-block;
+  margin-top: 4px;
+  color: #087e6c;
+  font-weight: 700;
+}
+
+.unconfirmed-box {
+  margin-top: 20px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: #fff9ef;
+  color: #6b4a14;
+  font-size: 13px;
+}
+
+.unconfirmed-box summary {
+  color: #7a5a14;
+}
+
+.unconfirmed-box ul {
+  margin: 8px 0 0;
+  padding-left: 20px;
+  line-height: 1.55;
+}
+
+.check-list label.doc-head strong {
+  flex: 1 1 220px;
+  min-width: 0;
+}

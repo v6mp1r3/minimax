@@ -1,0 +1,180 @@
+/* RESPONSIVE */
+
+@media (max-width: 1050px) {
+  .category-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .topic-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .decoration-one {
+    right: 2%;
+  }
+
+  .decoration-two {
+    display: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .navbar {
+    height: 65px;
+    padding: 0 16px;
+  }
+
+  .logo {
+    font-size: 19px;
+  }
+
+  .logo-icon {
+    width: 29px;
+    height: 29px;
+  }
+
+  .language-button {
+    display: none;
+  }
+
+  .primary-button {
+    padding: 11px 15px;
+    font-size: 12px;
+  }
+
+  .hero {
+    min-height: 390px;
+    padding: 60px 17px 35px;
+  }
+
+  .hero-label {
+    margin-bottom: 26px;
+    font-size: 12px;
+  }
+
+  .hero h1 {
+    font-size: 35px;
+    letter-spacing: -1px;
+  }
+
+  .hero-description {
+    font-size: 13px;
+  }
+
+  .hero-decoration {
+    display: none;
+  }
+
+  .examples {
+    gap: 7px;
+  }
+
+  .examples > span {
+    width: 100%;
+  }
+
+  .example-chip {
+    font-size: 11px;
+  }
+
+  .categories-section {
+    padding: 35px 18px 50px;
+  }
+
+  .categories-section h2 {
+    font-size: 23px;
+    margin-bottom: 20px;
+  }
+
+  .category-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .category-card {
+    min-height: 100px;
+  }
+
+  .category-page {
+    padding: 20px 16px 45px;
+  }
+
+  .category-banner {
+    padding: 20px;
+    gap: 14px;
+  }
+
+  .category-banner h1 {
+    font-size: 22px;
+  }
+
+  .category-banner p {
+    font-size: 12px;
+  }
+
+  .category-icon.large {
+    width: 50px;
+    height: 50px;
+    font-size: 23px;
+  }
+
+  .topic-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .topic-illustration {
+    height: 125px;
+  }
+
+  .category-cta {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .category-cta .primary-button {
+    min-width: 0;
+  }
+
+  .chat-layout {
+    height: 100vh;
+    height: 100dvh;
+    grid-template-columns: 1fr;
+  }
+
+  .chat-sidebar {
+    display: none;
+  }
+
+  .chat-header {
+    height: 60px;
+    padding: 0 17px;
+  }
+
+  .mobile-home {
+    display: block;
+  }
+
+  .chat-messages {
+    padding: 20px 14px;
+  }
+
+  .chat-avatar {
+    width: 32px;
+    height: 32px;
+  }
+
+  .assistant-bubble,
+  .user-bubble {
+    max-width: 90%;
+    padding: 16px;
+    font-size: 13px;
+  }
+
+  .question-bubble {
+    width: 100%;
+  }
+
+  .chat-input-area {
+    margin: 0 12px 15px;
+  }
+}

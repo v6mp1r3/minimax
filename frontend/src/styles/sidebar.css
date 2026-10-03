@@ -1,0 +1,39 @@
+/* ============================================================
+   SIDEBAR: busy state + pinned conversations
+   ============================================================ */
+
+.new-chat-button:disabled,
+.sidebar-categories button:disabled,
+.recent-conversations .recent-item button.recent-open:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.new-chat-button:disabled:hover {
+  background: #087e6c;
+}
+
+.sidebar-categories button:disabled:hover {
+  background: transparent;
+}
+
+/* pinned: no extra chrome, just a small pin at the end of the row (they also stay on top) */
+.pin-mark {
+  margin-left: auto;
+  display: inline-flex;
+  color: #8fa59b;
+}
+
+.pin-mark .icon {
+  display: block;
+}
+
+.recent-conversations .recent-item button.icon-action:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.recent-conversations .recent-item button.icon-action.danger:hover:not(:disabled) {
+  background: #fde8e8;
+  color: #c0392b;
+}

@@ -1,0 +1,26 @@
+/* ============================================================
+   LOGO: sidebar uses the exact same 67px band as the navbar
+   ============================================================ */
+
+.logo {
+  margin: 0;
+  padding: 0;
+  height: 32px;
+  line-height: 1;
+}
+
+.sidebar-brand {
+  height: 67px;
+  margin: 0 -15px 12px;
+  padding: 0 32px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #e1ece5;
+}
+
+.chat-sidebar .logo {
+  height: 32px;
+  margin: 0;
+  align-self: auto;
+}

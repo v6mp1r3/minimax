@@ -1,0 +1,181 @@
+/* HERO */
+
+.hero {
+  position: relative;
+  min-height: 370px;
+  padding: 43px 30px 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background: #f5faf7;
+  border-bottom: 1px solid #dce8e1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 930px;
+  text-align: center;
+}
+
+.hero-label {
+  width: fit-content;
+  margin: 0 auto 39px;
+  padding: 7px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid #e0eee6;
+  border-radius: 30px;
+  background: #fff;
+  color: #087e6c;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.hero h1 {
+  font-size: clamp(32px, 4vw, 48px);
+  line-height: 1.2;
+  letter-spacing: -1.8px;
+  font-weight: 800;
+}
+
+.hero h1 span {
+  color: #087e6c;
+}
+
+.hero-description {
+  margin: 22px auto 28px;
+  color: #74847c;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* SEARCH */
+
+.search-box {
+  width: min(100%, 900px);
+  min-height: 57px;
+  margin: 0 auto;
+  padding: 5px 10px 5px 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border: 1px solid #e1ece6;
+  border-radius: 35px;
+  background: #fff;
+}
+
+.search-icon {
+  display: grid;
+  place-items: center;
+  color: #71847a;
+}
+
+.search-box input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #27352e;
+  font-size: 15px;
+}
+
+.search-box input::placeholder {
+  color: #9eaca5;
+}
+
+.search-submit {
+  width: 43px;
+  height: 43px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border: none;
+  border-radius: 50%;
+  background: #087e6c;
+  color: white;
+  font-size: 23px;
+  transition: background 0.2s;
+}
+
+.examples {
+  margin-top: 9px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 9px;
+  flex-wrap: wrap;
+  color: #77877f;
+  font-size: 12px;
+}
+
+.example-chip {
+  padding: 8px 17px;
+  border: 1px solid #e2ece6;
+  border-radius: 25px;
+  background: #fff;
+  color: #74847c;
+  font-size: 12px;
+  transition: all 0.2s;
+}
+
+.example-chip:hover,
+.filter-chip:hover {
+  border-color: #087e6c;
+  color: #087e6c;
+}
+
+/* HERO DECORATIONS */
+
+.hero-decoration {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 87px;
+  gap: 7px;
+  border-radius: 12px;
+  background: white;
+  color: #e1f6ed;
+}
+
+.hero-decoration span {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #e5f7f0;
+  font-size: 20px;
+}
+
+.hero-decoration div {
+  width: 40px;
+  height: 5px;
+  border-radius: 5px;
+  background: #e5eee9;
+}
+
+.hero-decoration div:last-child {
+  width: 28px;
+  align-self: flex-start;
+  margin-left: 16px;
+}
+
+.decoration-one {
+  top: 75px;
+  right: 6%;
+}
+
+.decoration-two {
+  bottom: 62px;
+  right: 2%;
+  transform: scale(0.9);
+}

@@ -1,0 +1,76 @@
+/* NAVBAR */
+
+.navbar {
+  height: 67px;
+  padding: 0 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  border-bottom: 1px solid #e0e9e4;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: none;
+  background: transparent;
+  color: #192321;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.8px;
+  white-space: nowrap;
+}
+
+.logo-icon {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  background: #e5f7f0;
+  color: #087e6c;
+  font-size: 22px;
+}
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.language-button {
+  min-width: 67px;
+  padding: 9px 16px;
+  border: 1px solid #dce9e2;
+  border-radius: 30px;
+  background: white;
+  color: #70817a;
+  font-weight: 600;
+}
+
+.primary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 28px;
+  background: #087e6c;
+  color: white;
+  font-weight: 700;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.primary-button:hover,
+.new-chat-button:hover,
+.search-submit:hover,
+.chat-send:hover {
+  background: #056655;
+}
+
+.primary-button:active {
+  transform: scale(0.98);
+}
