@@ -888,6 +888,10 @@ def chat(req: ChatRequest):
 
     try:
         answer = call_ollama(prompt)
+    except httpx.HTTPStatusError as e:
+        if e.response.status_code == 404:
+            raise HTTPException(503, f"Modelul {OLLAMA_MODEL} nu este instalat în Ollama. Rulează în terminal: ollama pull {OLLAMA_MODEL}")
+        raise HTTPException(503, f"Ollama a returnat o eroare: {e}")
     except Exception as e:
         raise HTTPException(503, f"Ollama nu a putut genera răspunsul: {e}")
     answer = sanitize_answer(answer, evidence)
@@ -922,4 +926,4 @@ def chat(req: ChatRequest):
         }
     }
 
-app.mount("/", StaticFiles(directory=BASE / "frontend", html=True), name="frontend")
+app.mount("/", StaticFiles(directory=BASE / "frontend" / "dist", html=True), name="frontend")

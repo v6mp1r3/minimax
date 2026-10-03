@@ -6,6 +6,14 @@ if not exist ".venv\Scripts\python.exe" (
   py -m venv .venv
 )
 
+if not exist "frontend\dist\index.html" (
+  echo Building frontend...
+  pushd frontend
+  call npm install
+  call npm run build
+  popd
+)
+
 call .venv\Scripts\activate
 python -m pip install -r backend\requirements.txt
 

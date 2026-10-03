@@ -511,7 +511,7 @@ function ChatPage({ initialMessage, onHome }) {
       let text = e.message;
       if (e instanceof TypeError) {
         text = "Nu mă pot conecta la server. Pornește backend-ul (run.bat / run.sh) și încearcă din nou.";
-      } else if (/10061|refused|ConnectError|timed out/i.test(text)) {
+      } else if (/ollama/i.test(text)) {
         text =
           "Ollama nu rulează sau nu răspunde. Pornește aplicația Ollama (sau rulează `ollama serve`) " +
           "și verifică dacă modelul este instalat: `ollama pull llama3.2:3b`. Detalii: " + text;
