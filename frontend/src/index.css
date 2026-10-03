@@ -1231,9 +1231,6 @@ input:focus-visible {
 }
 
 
-.chat-input-area input:disabled {
-  cursor: wait;
-}
 
 /* CATEGORY ICONS + HISTORY */
 
@@ -1524,13 +1521,6 @@ input:focus-visible {
   vertical-align: -0.2em;
 }
 
-.icon-before {
-  margin-right: 6px;
-}
-
-.icon-after {
-  margin-left: 6px;
-}
 
 .hero-label .icon {
   vertical-align: -0.15em;
@@ -1649,7 +1639,12 @@ input:focus-visible {
 }
 
 .chat-send:disabled {
-  cursor: wait;
+  cursor: default;
+  opacity: 0.55;
+}
+
+.chat-send:disabled:hover {
+  background: #087e6c;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1664,4 +1659,458 @@ input:focus-visible {
   }
   .thinking-track span { width: 100%; opacity: 0.5; }
   .icon-spin { animation-duration: 2.5s; }
+}
+
+
+/* ============================================================
+   ICON ALIGNMENT: icons sit at the end of their container
+   ============================================================ */
+
+.icon {
+  vertical-align: middle;
+}
+
+.topic-card-content button {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  text-align: left;
+}
+
+.category-cta .primary-button {
+  justify-content: space-between;
+  padding-inline: 22px;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.new-chat-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+}
+
+.chat-category {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* step / document headers: title on the left, ticks, badges and source refs at the end */
+.doc-head > strong {
+  flex: 1 1 200px;
+  min-width: 0;
+}
+
+.doc-head > .tick,
+.doc-head > .badge,
+.doc-head > .source-ref {
+  flex-shrink: 0;
+}
+
+.doc-head > strong + * {
+  margin-left: auto;
+}
+
+.check-list label.doc-head strong {
+  flex: 1 1 200px;
+}
+
+/* ============================================================
+   CHAT: Instagram-style messages
+   ============================================================ */
+
+.chat-main {
+  --ig-user-from: #0aa58c;
+  --ig-user-to: #087e6c;
+  --ig-other: #eef2f0;
+  --ig-ring-a: #19c3a6;
+  --ig-ring-b: #f6c453;
+  --ig-ring-c: #e8707a;
+}
+
+/* header: avatar + name + status, like a DM thread */
+.chat-header-id {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.chat-header-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+
+.chat-header-text small {
+  color: #8a9a92;
+  font-size: 12px;
+}
+
+.chat-header-text small.typing {
+  color: #087e6c;
+  font-weight: 600;
+}
+
+.chat-header {
+  justify-content: flex-start;
+  gap: 12px;
+}
+
+.chat-header .chat-category {
+  margin-left: auto;
+}
+
+.mobile-home {
+  margin-left: auto;
+}
+
+.chat-category + .mobile-home {
+  margin-left: 12px;
+}
+
+/* avatar with gradient story-ring */
+.chat-avatar {
+  width: 36px;
+  height: 36px;
+  padding: 2px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(45deg, var(--ig-ring-b), var(--ig-ring-c) 45%, var(--ig-ring-a));
+  color: #087e6c;
+}
+
+.chat-avatar.sm {
+  width: 28px;
+  height: 28px;
+}
+
+.avatar-inner {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: #e5f7f0;
+}
+
+.avatar-spacer {
+  width: 36px;
+  flex-shrink: 0;
+}
+
+/* rows */
+.chat-messages {
+  padding: 24px 5% 12px;
+}
+
+.chat-welcome,
+.message-row {
+  align-items: flex-end;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.message-row.joins-next {
+  margin-bottom: 3px;
+}
+
+/* bubbles */
+.assistant-bubble,
+.user-bubble {
+  padding: 11px 16px;
+  border-radius: 22px;
+  font-size: 14px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.assistant-bubble {
+  background: var(--ig-other);
+  color: #1d2723;
+}
+
+.user-bubble {
+  max-width: min(520px, 78%);
+  background: linear-gradient(135deg, var(--ig-user-from), var(--ig-user-to));
+  color: #fff;
+}
+
+/* rich bubbles need more air */
+.answer-bubble,
+.question-bubble,
+.assistant-bubble.thinking {
+  padding: 18px 20px;
+  border-radius: 24px;
+}
+
+/* clustered bubbles: the corner on the avatar / edge side tightens */
+.message-row:not(.user-row).joins-prev .assistant-bubble {
+  border-top-left-radius: 6px;
+}
+
+.message-row:not(.user-row).joins-next .assistant-bubble {
+  border-bottom-left-radius: 6px;
+}
+
+.message-row:not(.user-row):not(.joins-next) .assistant-bubble {
+  border-bottom-left-radius: 6px;
+}
+
+.message-row.user-row.joins-prev .user-bubble {
+  border-top-right-radius: 6px;
+}
+
+.message-row.user-row.joins-next .user-bubble {
+  border-bottom-right-radius: 6px;
+}
+
+.message-row.user-row:not(.joins-next) .user-bubble {
+  border-bottom-right-radius: 6px;
+}
+
+/* inner cards keep working on the grey bubble */
+.assistant-bubble .answer-card,
+.assistant-bubble .answer-card section {
+  color: #1d2723;
+}
+
+.assistant-bubble .doc-list li,
+.assistant-bubble .step-list li {
+  border-color: #dfe6e2;
+}
+
+.assistant-bubble .source-quote {
+  background: #fff;
+}
+
+.thinking-track {
+  background: #d9e2dd;
+}
+
+/* input like a DM composer */
+.chat-input-area {
+  border-color: #dfe6e2;
+  background: #fff;
+}
+
+.chat-input-area:focus-within {
+  border-color: #087e6c;
+}
+
+.chat-input-area input:focus-visible {
+  outline: none;
+}
+
+/* ============================================================
+   SIDEBAR: busy state + pinned conversations
+   ============================================================ */
+
+.new-chat-button:disabled,
+.sidebar-categories button:disabled,
+.recent-conversations .recent-item button.recent-open:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.new-chat-button:disabled:hover {
+  background: #087e6c;
+}
+
+.sidebar-categories button:disabled:hover {
+  background: transparent;
+}
+
+/* pinned: no extra chrome, just a small pin at the end of the row (they also stay on top) */
+.pin-mark {
+  margin-left: auto;
+  display: inline-flex;
+  color: #8fa59b;
+}
+
+.pin-mark .icon {
+  display: block;
+}
+
+.recent-conversations .recent-item button.icon-action:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.recent-conversations .recent-item button.icon-action.danger:hover:not(:disabled) {
+  background: #fde8e8;
+  color: #c0392b;
+}
+
+/* ============================================================
+   CONFIRM DIALOG
+   ============================================================ */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(18, 30, 26, 0.45);
+  backdrop-filter: blur(2px);
+  animation: fade-in 0.15s ease-out both;
+}
+
+.modal {
+  width: min(400px, 100%);
+  padding: 26px 24px 22px;
+  text-align: center;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.22);
+  animation: modal-pop 0.2s ease-out both;
+}
+
+.modal-icon {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 14px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #fde8e8;
+  color: #c0392b;
+}
+
+.modal h3 {
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.modal p {
+  margin-top: 8px;
+  color: #6b7b73;
+  font-size: 14px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.modal-actions {
+  margin-top: 22px;
+  display: flex;
+  gap: 10px;
+}
+
+.modal-actions button {
+  flex: 1;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+.modal-cancel {
+  background: #eef2f0;
+  color: #293832;
+}
+
+.modal-cancel:hover {
+  background: #e1e8e4;
+}
+
+.modal-confirm {
+  background: #d64541;
+  color: #fff;
+}
+
+.modal-confirm:hover {
+  background: #b93733;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modal-pop {
+  from { opacity: 0; transform: translateY(8px) scale(0.97); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (max-width: 700px) {
+  .chat-messages {
+    padding: 16px 12px 8px;
+  }
+
+  .chat-avatar,
+  .avatar-spacer {
+    width: 30px;
+    height: 30px;
+  }
+
+  .avatar-spacer {
+    height: 0;
+  }
+
+  .assistant-bubble,
+  .user-bubble {
+    max-width: 88%;
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+
+  .answer-bubble,
+  .question-bubble,
+  .assistant-bubble.thinking {
+    padding: 14px;
+  }
+
+  .chat-header .chat-category {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal-backdrop,
+  .modal {
+    animation: none;
+  }
+}
+
+
+/* ============================================================
+   LOGO: sidebar uses the exact same 67px band as the navbar
+   ============================================================ */
+
+.logo {
+  margin: 0;
+  padding: 0;
+  height: 32px;
+  line-height: 1;
+}
+
+.sidebar-brand {
+  height: 67px;
+  margin: 0 -15px 12px;
+  padding: 0 32px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #e1ece5;
+}
+
+.chat-sidebar .logo {
+  height: 32px;
+  margin: 0;
+  align-self: auto;
 }

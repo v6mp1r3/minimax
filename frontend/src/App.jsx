@@ -278,7 +278,7 @@ function CategoryPage({ category, onChat, onHome }) {
                 Află ce documente sunt necesare și care sunt pașii de urmat.
               </p>
               <button onClick={() => onChat(`Vreau informații despre: ${topic}`)}>
-                Vezi pașii <Icon name="go" size={16} className="icon-after" />
+                Vezi pașii <Icon name="go" size={16} />
               </button>
             </div>
           </article>
@@ -291,12 +291,12 @@ function CategoryPage({ category, onChat, onHome }) {
           <p>Descrie situația ta și primești un ghid adaptat.</p>
         </div>
         <button className="primary-button" onClick={() => onChat("")}>
-          Întreabă DocuGuide <Icon name="go" size={16} className="icon-after" />
+          Întreabă DocuGuide <Icon name="go" size={16} />
         </button>
       </section>
 
       <button className="back-link" onClick={onHome}>
-        <Icon name="back" size={16} className="icon-before" /> Înapoi la pagina principală
+        <Icon name="back" size={16} /> Înapoi la pagina principală
       </button>
     </main>
   );
@@ -635,6 +635,50 @@ function QuestionCard({ q, active, onSubmit }) {
   );
 }
 
+// Round avatar with a gradient ring (story-style). `thinking` pulses the ring while the AI works.
+function Avatar({ size = "md", thinking = false }) {
+  return (
+    <span className={`chat-avatar ${size} ${thinking ? "thinking-avatar" : ""}`} aria-hidden="true">
+      <span className="avatar-inner">
+        <Icon name="logo" size={size === "sm" ? 14 : 18} />
+      </span>
+    </span>
+  );
+}
+
+// In-app confirmation dialog (replaces window.confirm)
+function ConfirmDialog({ title, text, confirmLabel, cancelLabel = "Anulează", onConfirm, onCancel }) {
+  const cancelRef = useRef(null);
+
+  useEffect(() => {
+    cancelRef.current?.focus();
+    const onKey = (e) => e.key === "Escape" && onCancel();
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [onCancel]);
+
+  return (
+    <div className="modal-backdrop" onMouseDown={onCancel}>
+      <div
+        className="modal"
+        role="alertdialog"
+        aria-modal="true"
+        aria-labelledby="confirm-title"
+        aria-describedby="confirm-text"
+        onMouseDown={(e) => e.stopPropagation()}
+      >
+        <span className="modal-icon"><Icon name="trash" size={22} /></span>
+        <h3 id="confirm-title">{title}</h3>
+        <p id="confirm-text">{text}</p>
+        <div className="modal-actions">
+          <button ref={cancelRef} className="modal-cancel" onClick={onCancel}>{cancelLabel}</button>
+          <button className="modal-confirm" onClick={onConfirm}>{confirmLabel}</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 const THINKING_STEPS = [
   "Analizez întrebarea",
   "Caut în sursele oficiale",
@@ -786,8 +830,12 @@ function ChatPage({ initialMessage, onHome }) {
     setHistoryRev((r) => r + 1);
   };
 
-  const deleteChat = (id) => {
-    if (!window.confirm("Ștergi această conversație?")) return;
+  const [deleteTarget, setDeleteTarget] = useState(null); // history item waiting for confirmation
+
+  const confirmDelete = () => {
+    const id = deleteTarget?.id;
+    setDeleteTarget(null);
+    if (!id) return;
     saveHistory(history.filter((h) => h.id !== id));
     if (id === chatId) {
       newChat(); // the open conversation is gone: start a clean one so it is not saved again
@@ -826,6 +874,7 @@ function ChatPage({ initialMessage, onHome }) {
   };
 
   const newChat = () => {
+    if (busy) return; // an answer is still on its way: it would land in the wrong conversation
     lastQuestion.current = "";
     setChatId(String(Date.now()));
     setCategoryId(null);
@@ -836,13 +885,74 @@ function ChatPage({ initialMessage, onHome }) {
 
   const lastIndex = conversation.length - 1;
 
+  const pinnedItems = history.filter((h) => h.pinned);
+  const otherItems = history.filter((h) => !h.pinned);
+
+  const renderHistoryItem = (item) => {
+    const c = categoryById(item.categoryId);
+    const isActive = item.id === chatId;
+    return (
+      <div
+        key={item.id}
+        className={`recent-item ${isActive ? "active" : ""} ${item.pinned ? "pinned" : ""}`}
+      >
+        <button
+          className="recent-open"
+          onClick={() => openHistory(item)}
+          disabled={busy && !isActive}
+          title={c ? c.title : "Conversație"}
+        >
+          <span className="side-icon"><Icon name={c ? c.icon : "chat"} size={16} /></span>
+          <span className="recent-title">{item.title}</span>
+          {item.pinned && (
+            <span className="pin-mark" aria-label="Fixată">
+              <Icon name="pin" size={12} fill="currentColor" />
+            </span>
+          )}
+        </button>
+        <div className="recent-actions">
+          <button
+            className="icon-action"
+            onClick={() => togglePin(item.id)}
+            title={item.pinned ? "Anulează fixarea" : "Fixează în partea de sus"}
+            aria-label={item.pinned ? "Anulează fixarea" : "Fixează conversația"}
+          >
+            <Icon name={item.pinned ? "unpin" : "pin"} size={15} />
+          </button>
+          <button
+            className="icon-action danger"
+            onClick={() => setDeleteTarget(item)}
+            disabled={busy && isActive}
+            title={busy && isActive ? "Așteaptă finalizarea răspunsului" : "Șterge conversația"}
+            aria-label="Șterge conversația"
+          >
+            <Icon name="trash" size={15} />
+          </button>
+        </div>
+      </div>
+    );
+  };
+
+  // Instagram-style grouping: consecutive messages from the same side form one cluster,
+  // and only the last bubble of an assistant cluster shows the avatar.
+  const sideOf = (m) => (m.role === "user" ? "user" : "assistant");
+  const nextSide = (index) =>
+    index < lastIndex ? sideOf(conversation[index + 1]) : busy ? "assistant" : null;
+
   return (
     <main className="chat-layout">
       <aside className="chat-sidebar">
-        <Logo onClick={onHome} />
+        <div className="sidebar-brand">
+          <Logo onClick={onHome} />
+        </div>
 
-        <button className="new-chat-button" onClick={newChat}>
-          <Icon name="plus" size={16} className="icon-before" /> Conversație nouă
+        <button
+          className="new-chat-button"
+          onClick={newChat}
+          disabled={busy}
+          title={busy ? "Așteaptă finalizarea răspunsului" : undefined}
+        >
+          <Icon name="plus" size={16} /> Conversație nouă
         </button>
 
         <button className="all-conversations">Toate conversațiile</button>
@@ -851,6 +961,7 @@ function ChatPage({ initialMessage, onHome }) {
           {categories.map((category) => (
             <button
               key={category.id}
+              disabled={busy}
               onClick={() => sendMessage(`Vreau informații despre ${category.title}`)}
             >
               <span className="side-icon"><Icon name={category.icon} size={16} /></span>
@@ -862,52 +973,22 @@ function ChatPage({ initialMessage, onHome }) {
         <div className="recent-conversations">
           <strong>Conversații recente</strong>
           {history.length === 0 && <small className="recent-empty">Încă nu ai conversații.</small>}
-          {history.map((item) => {
-            const c = categoryById(item.categoryId);
-            return (
-              <div
-                key={item.id}
-                className={`recent-item ${item.id === chatId ? "active" : ""} ${item.pinned ? "pinned" : ""}`}
-              >
-                <button
-                  className="recent-open"
-                  onClick={() => openHistory(item)}
-                  title={c ? c.title : "Conversație"}
-                >
-                  <span className="side-icon"><Icon name={c ? c.icon : "chat"} size={16} /></span>
-                  <span className="recent-title">{item.title}</span>
-                  {item.pinned && <span className="pin-mark" aria-label="Fixată"><Icon name="pin" size={12} /></span>}
-                </button>
-                <div className="recent-actions">
-                  <button
-                    className="icon-action"
-                    onClick={() => togglePin(item.id)}
-                    title={item.pinned ? "Anulează fixarea" : "Fixează în partea de sus"}
-                    aria-label={item.pinned ? "Anulează fixarea" : "Fixează conversația"}
-                  >
-                    <Icon name={item.pinned ? "unpin" : "pin"} size={15} />
-                  </button>
-                  <button
-                    className="icon-action"
-                    onClick={() => deleteChat(item.id)}
-                    title="Șterge conversația"
-                    aria-label="Șterge conversația"
-                  >
-                    <Icon name="trash" size={15} />
-                  </button>
-                </div>
-              </div>
-            );
-          })}
+          {[...pinnedItems, ...otherItems].map(renderHistoryItem)}
         </div>
       </aside>
 
       <section className="chat-main">
         <header className={`chat-header ${busy ? "busy" : ""}`}>
-          <strong>Asistent DocuGuide</strong>
+          <div className="chat-header-id">
+            <Avatar thinking={busy} />
+            <div className="chat-header-text">
+              <strong>Asistent DocuGuide</strong>
+              <small className={busy ? "typing" : ""}>{busy ? "Scrie…" : "Activ acum"}</small>
+            </div>
+          </div>
           {categoryById(categoryId) && (
             <span className="chat-category">
-              <Icon name={categoryById(categoryId).icon} size={14} className="icon-before" />
+              <Icon name={categoryById(categoryId).icon} size={14} />
               {categoryById(categoryId).title}
             </span>
           )}
@@ -917,7 +998,7 @@ function ChatPage({ initialMessage, onHome }) {
         <div className="chat-messages">
           {conversation.length === 0 && (
             <div className="chat-welcome">
-              <span className="chat-avatar"><Icon name="logo" size={20} /></span>
+              <Avatar />
               <div className="assistant-bubble">
                 Bună! Sunt asistentul DocuGuide. Spune-mi ce documente
                 sau procedură te interesează.
@@ -925,12 +1006,16 @@ function ChatPage({ initialMessage, onHome }) {
             </div>
           )}
 
-          {conversation.map((item, index) => (
+          {conversation.map((item, index) => {
+            const side = sideOf(item);
+            const joinsPrev = index > 0 && sideOf(conversation[index - 1]) === side;
+            const joinsNext = nextSide(index) === side;
+            return (
             <div
-              className={`message-row ${item.role === "user" ? "user-row" : ""}`}
+              className={`message-row ${side === "user" ? "user-row" : ""} ${joinsPrev ? "joins-prev" : ""} ${joinsNext ? "joins-next" : ""}`}
               key={index}
             >
-              {item.role === "assistant" && <span className="chat-avatar"><Icon name="logo" size={20} /></span>}
+              {side === "assistant" && (joinsNext ? <span className="avatar-spacer" /> : <Avatar />)}
 
               {item.type === "question" ? (
                 <QuestionCard
@@ -952,11 +1037,12 @@ function ChatPage({ initialMessage, onHome }) {
                 </div>
               )}
             </div>
-          ))}
+            );
+          })}
 
           {busy && (
-            <div className="message-row">
-              <span className="chat-avatar thinking-avatar"><Icon name="logo" size={20} /></span>
+            <div className={`message-row ${lastIndex >= 0 && sideOf(conversation[lastIndex]) === "assistant" ? "joins-prev" : ""}`}>
+              <Avatar thinking />
               <ThinkingBubble />
             </div>
           )}
@@ -976,15 +1062,29 @@ function ChatPage({ initialMessage, onHome }) {
           <input
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            placeholder={busy ? "DocuGuide se gândește..." : "Scrie un mesaj..."}
+            placeholder={busy ? "DocuGuide lucrează… poți scrie următorul mesaj" : "Scrie un mesaj..."}
             aria-label="Scrie un mesaj"
-            disabled={busy}
           />
-          <button type="submit" className="chat-send" aria-label="Trimite" disabled={busy}>
+          <button
+            type="submit"
+            className="chat-send"
+            aria-label="Trimite"
+            disabled={busy || !message.trim()}
+          >
             {busy ? <Icon name="loader" size={20} className="icon-spin" /> : <Icon name="send" size={20} />}
           </button>
         </form>
       </section>
+
+      {deleteTarget && (
+        <ConfirmDialog
+          title="Ștergi conversația?"
+          text={`„${deleteTarget.title}” va fi ștearsă definitiv din istoric. Nu poți anula această acțiune.`}
+          confirmLabel="Șterge"
+          onConfirm={confirmDelete}
+          onCancel={() => setDeleteTarget(null)}
+        />
+      )}
     </main>
   );
 }
