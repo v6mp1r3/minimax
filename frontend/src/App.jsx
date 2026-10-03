@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 const categories = [
   {
     id: "education",
     title: "Educație și studii",
     description: "Erasmus, burse, universitate și echivalarea diplomelor.",
-    icon: "♧",
+    icon: "🎓",
     color: "mint",
     topics: ["Erasmus", "Înscriere la universitate", "Echivalarea diplomelor", "Burse și finanțare"],
   },
@@ -13,7 +13,7 @@ const categories = [
     id: "health",
     title: "Sănătate",
     description: "Înregistrarea la medic, asigurare și acces la servicii.",
-    icon: "♡",
+    icon: "🩺",
     color: "pink",
     topics: ["Înregistrare la medic", "Asigurare medicală", "Servicii medicale"],
   },
@@ -21,7 +21,7 @@ const categories = [
     id: "travel",
     title: "Călătorii și relocare",
     description: "Vize, ședere și documente de călătorie.",
-    icon: "➤",
+    icon: "✈️",
     color: "blue",
     topics: ["Viză", "Permis de ședere", "Relocare în străinătate"],
   },
@@ -29,7 +29,7 @@ const categories = [
     id: "public",
     title: "Acte și servicii publice",
     description: "Buletin, pașaport, stare civilă și servicii publice.",
-    icon: "▤",
+    icon: "🪪",
     color: "mint",
     topics: ["Buletin", "Pașaport", "Stare civilă", "Alte servicii publice"],
   },
@@ -37,7 +37,7 @@ const categories = [
     id: "career",
     title: "Muncă și carieră",
     description: "Angajare, acte de muncă și calificări.",
-    icon: "▣",
+    icon: "💼",
     color: "orange",
     topics: ["Angajare", "Contract de muncă", "Recunoașterea calificărilor"],
   },
@@ -45,11 +45,54 @@ const categories = [
     id: "business",
     title: "Afaceri și finanțe",
     description: "Înregistrare firmă, autorizații și acte fiscale.",
-    icon: "⌁",
+    icon: "🏢",
     color: "purple",
     topics: ["Deschiderea unei firme", "Acte fiscale", "Autorizații"],
   },
+  {
+    id: "daily",
+    title: "Viață cotidiană",
+    description: "Închiriere, schimbarea domiciliului și utilități.",
+    icon: "🏠",
+    color: "blue",
+    topics: ["Închiriere", "Schimbarea domiciliului", "Utilități"],
+  },
 ];
+
+// The backend classifies each question; map its category to the ones shown in the UI.
+const backendCategory = {
+  education: "education",
+  health: "health",
+  relocation: "travel",
+  auto: "public",
+  rent: "daily",
+  employment: "career",
+  business: "business",
+};
+const categoryById = (id) => categories.find((c) => c.id === id) || null;
+
+const HISTORY_KEY = "docuguide.history";
+const loadHistory = () => {
+  try {
+    const list = JSON.parse(localStorage.getItem(HISTORY_KEY) || "[]");
+    return Array.isArray(list) ? list : [];
+  } catch {
+    return [];
+  }
+};
+const MAX_HISTORY = 20;
+// pinned conversations first (in their current order), then the most recent others
+const orderHistory = (list) => [...list.filter((h) => h.pinned), ...list.filter((h) => !h.pinned)];
+const saveHistory = (list) => {
+  const ordered = orderHistory(list);
+  const pinned = ordered.filter((h) => h.pinned);
+  const rest = ordered.filter((h) => !h.pinned).slice(0, Math.max(MAX_HISTORY - pinned.length, 5));
+  try {
+    localStorage.setItem(HISTORY_KEY, JSON.stringify([...pinned, ...rest]));
+  } catch {
+    /* storage unavailable: history is just not kept */
+  }
+};
 
 const examples = [
   "Vreau să plec cu Erasmus în Franța",
@@ -283,42 +326,74 @@ function SourceRefs({ ids = [], sources }) {
   );
 }
 
+const CHECKS_KEY = "docuguide.checks";
+const loadChecks = () => {
+  try {
+    return JSON.parse(localStorage.getItem(CHECKS_KEY) || "{}") || {};
+  } catch {
+    return {};
+  }
+};
+
+// Verbatim official quote(s) + link, hidden until asked for
+function SourceToggle({ quotes = [], url }) {
+  const list = quotes.filter(Boolean);
+  if (!list.length) return null;
+  return (
+    <details className="source-toggle">
+      <summary>Vezi sursa</summary>
+      {list.map((q, i) => (
+        <blockquote className="source-quote" key={i}>
+          „{q}”
+        </blockquote>
+      ))}
+      {url && (
+        <a href={url} target="_blank" rel="noreferrer">
+          Deschide pagina oficială
+        </a>
+      )}
+    </details>
+  );
+}
+
 function AnswerCard({ data }) {
   const { answer, sources = [], card } = data;
   const documents = answer.documents || [];
   const steps = answer.steps || [];
   const warnings = answer.warnings || [];
   const contradictions = answer.contradictions || [];
+  const byId = Object.fromEntries(sources.map((s) => [s.id, s]));
+
+  // "Neconfirmat în surse: …" items are collapsed; notes that change what you do stay visible
+  const UNCONFIRMED = /^Neconfirmat în surse:\s*/;
+  const unconfirmed = warnings.filter((w) => UNCONFIRMED.test(w)).map((w) => w.replace(UNCONFIRMED, ""));
+  const visibleWarnings = warnings.filter((w) => !UNCONFIRMED.test(w));
+
+  // document checklist, remembered in this browser
+  const guideKey = card?.id || `ad-hoc:${(answer.summary || "").slice(0, 40)}`;
+  const [checks, setChecks] = useState(loadChecks);
+  const isChecked = (name) => !!checks[`${guideKey}:${name}`];
+  const toggleCheck = (name) => {
+    const next = { ...checks, [`${guideKey}:${name}`]: !isChecked(name) };
+    setChecks(next);
+    try {
+      localStorage.setItem(CHECKS_KEY, JSON.stringify(next));
+    } catch {
+      /* storage unavailable: the ticks just are not remembered */
+    }
+  };
+  const done = documents.filter((d) => isChecked(d.name)).length;
 
   return (
     <div className="answer-card">
       <p className="answer-summary">{answer.summary}</p>
 
-      {warnings.length > 0 && (
+      {visibleWarnings.length > 0 && (
         <ul className="answer-warnings">
-          {warnings.map((w, i) => (
+          {visibleWarnings.map((w, i) => (
             <li key={i}>{w}</li>
           ))}
         </ul>
-      )}
-
-      {documents.length > 0 && (
-        <section>
-          <h4>Documente</h4>
-          <ul className="doc-list">
-            {documents.map((d, i) => (
-              <li key={i}>
-                <div className="doc-head">
-                  <strong>{d.name}</strong>
-                  <span className={`badge ${d.status}`}>{STATUS_LABEL[d.status]}</span>
-                  <SourceRefs ids={d.sources} sources={sources} />
-                </div>
-                {d.reason && <p>{d.reason}</p>}
-                {d.where_to_get && <p className="meta">Unde: {d.where_to_get}</p>}
-              </li>
-            ))}
-          </ul>
-        </section>
       )}
 
       {steps.length > 0 && (
@@ -329,27 +404,65 @@ function AnswerCard({ data }) {
               <li key={i}>
                 <div className="doc-head">
                   <strong>{s.title}</strong>
+                  {s.check === "confirmed" && <span className="tick" title="Confirmat acum pe pagina oficială">✓</span>}
+                  {s.check && s.check !== "confirmed" && (
+                    <span className="badge unknown">
+                      {s.check === "changed" ? "Pagină schimbată" : "Neverificat acum"}
+                    </span>
+                  )}
                   <SourceRefs ids={s.sources} sources={sources} />
                 </div>
                 {s.description && <p>{s.description}</p>}
-                <p className="meta">
-                  {[
-                    s.where && `Unde: ${s.where}`,
-                    s.cost && `Cost: ${s.cost}`,
-                    s.duration && `Durată: ${s.duration}`,
-                    s.depends_on_step && `După pasul ${s.depends_on_step}`,
-                  ]
-                    .filter(Boolean)
-                    .join("  ·  ")}
-                </p>
-                {s.link && (
-                  <a className="step-link" href={s.link} target="_blank" rel="noreferrer">
-                    Deschide pagina oficială
-                  </a>
+                {(s.where || s.cost || s.duration || s.depends_on_step) && (
+                  <div className="chips">
+                    {s.where && <span className="chip">📍 {s.where}</span>}
+                    {s.cost && <span className="chip">💰 {s.cost}</span>}
+                    {s.duration && <span className="chip">⏱ {s.duration}</span>}
+                    {s.depends_on_step && <span className="chip">după pasul {s.depends_on_step}</span>}
+                  </div>
                 )}
+                <SourceToggle quotes={s.quotes || (s.quote ? [s.quote] : [])} url={s.link} />
               </li>
             ))}
           </ol>
+        </section>
+      )}
+
+      {documents.length > 0 && (
+        <section>
+          <h4>
+            Documente <span className="progress">{done}/{documents.length} pregătite</span>
+          </h4>
+          <ul className="doc-list check-list">
+            {documents.map((d, i) => (
+              <li key={i} className={isChecked(d.name) ? "done" : ""}>
+                <label className="doc-head">
+                  <input type="checkbox" checked={isChecked(d.name)} onChange={() => toggleCheck(d.name)} />
+                  <strong>{d.name}</strong>
+                  <span className={`badge ${d.status}`}>{STATUS_LABEL[d.status]}</span>
+                  {d.check === "confirmed" && <span className="tick" title="Confirmat acum pe pagina oficială">✓</span>}
+                  <SourceRefs ids={d.sources} sources={sources} />
+                </label>
+                {d.reason && d.check !== "confirmed" && <p>{d.reason}</p>}
+                {d.where_to_get && <p className="meta">Unde: {d.where_to_get}</p>}
+                <SourceToggle quotes={d.quote ? [d.quote] : []} url={byId[(d.sources || [])[0]]?.url} />
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {(answer.extracts || []).length > 0 && (
+        <section>
+          <h4>Fragmente din sursele oficiale</h4>
+          {answer.extracts.map((e, i) => (
+            <blockquote className="source-quote" key={i}>
+              {e.text}
+              <a href={e.url} target="_blank" rel="noreferrer">
+                [{e.id}] {e.source}
+              </a>
+            </blockquote>
+          ))}
         </section>
       )}
 
@@ -364,6 +477,17 @@ function AnswerCard({ data }) {
             ))}
           </ul>
         </section>
+      )}
+
+      {unconfirmed.length > 0 && (
+        <details className="unconfirmed-box">
+          <summary>Ce nu este confirmat în surse ({unconfirmed.length})</summary>
+          <ul>
+            {unconfirmed.map((u, i) => (
+              <li key={i}>{u}</li>
+            ))}
+          </ul>
+        </details>
       )}
 
       {sources.length > 0 && (
@@ -388,6 +512,50 @@ function AnswerCard({ data }) {
           manuală: {card.last_verified}.
         </p>
       )}
+    </div>
+  );
+}
+
+function FollowupCard({ data }) {
+  const { title, facts = [], quotes = [], hint, unconfirmed = [], links = [], general } = data;
+  return (
+    <div className="answer-card">
+      <h4 className="followup-title">{title}</h4>
+      {facts.map((f, i) => (
+        <p key={i}>{f}</p>
+      ))}
+      {quotes.map((q, i) => (
+        <blockquote className="source-quote" key={i}>
+          „{q.text}”
+          <a href={q.url} target="_blank" rel="noreferrer">
+            {q.source}
+          </a>
+        </blockquote>
+      ))}
+      {general && (
+        <div className="general-answer">
+          <strong>Răspuns orientativ — generat de AI, nu provine dintr-o sursă oficială</strong>
+          <div className="general-text">{general}</div>
+          <small>Verifică la instituția responsabilă înainte să te bazezi pe el.</small>
+        </div>
+      )}
+      {hint && (
+        <p className="hint-unconfirmed">
+          <strong>Sugestie (neconfirmată în sursele oficiale):</strong> {hint}
+        </p>
+      )}
+      {unconfirmed.length > 0 && (
+        <ul className="answer-warnings">
+          {unconfirmed.map((u, i) => (
+            <li key={i}>{u}</li>
+          ))}
+        </ul>
+      )}
+      {links.map((l, i) => (
+        <a className="step-link" key={i} href={l.url} target="_blank" rel="noreferrer">
+          Deschide pagina oficială
+        </a>
+      ))}
     </div>
   );
 }
@@ -472,17 +640,34 @@ function ChatPage({ initialMessage, onHome }) {
     initialMessage ? [{ role: "user", type: "text", text: initialMessage }] : []
   );
   const started = useRef(false);
+  const lastQuestion = useRef(""); // previous question, so a short follow-up can refer back to it
   const endRef = useRef(null);
+  const [chatId, setChatId] = useState(() => String(Date.now()));
+  const [categoryId, setCategoryId] = useState(null);
 
   const push = (...items) => setConversation((old) => [...old, ...items]);
 
-  const ask = async (question, answers = {}) => {
+  const currentCardId = () =>
+    [...conversation].reverse().map((m) => m.data?.card?.id).find(Boolean) || null;
+
+  const ask = async (question, answers = {}, prev = lastQuestion.current) => {
+    if (Object.keys(answers).length === 0) lastQuestion.current = question;
     setBusy(true);
     try {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question, category: "auto", country: "auto", answers }),
+        body: JSON.stringify({
+          question,
+          category: "auto",
+          country: "auto",
+          answers,
+          // the guide on screen, so "de unde iau documentul X?" is answered from it
+          context: {
+            card_id: Object.keys(answers).length === 0 ? currentCardId() : null,
+            prev_question: prev,
+          },
+        }),
       });
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
@@ -490,8 +675,14 @@ function ChatPage({ initialMessage, onHome }) {
       }
       const data = await res.json();
 
-      if (data.needs_clarification && data.questions?.length) {
-        setPending({ question, answers });
+      const detected = backendCategory[data.category];
+      if (detected) setCategoryId(detected);
+
+      if (data.followup) {
+        setPending(null);
+        push({ role: "assistant", type: "followup", data });
+      } else if (data.needs_clarification && data.questions?.length) {
+        setPending({ question, answers, prev });
         const items = [];
         if (Object.keys(answers).length === 0) {
           items.push({
@@ -511,10 +702,10 @@ function ChatPage({ initialMessage, onHome }) {
       let text = e.message;
       if (e instanceof TypeError) {
         text = "Nu mă pot conecta la server. Pornește backend-ul (run.bat / run.sh) și încearcă din nou.";
-      } else if (/10061|refused|ConnectError|timed out/i.test(text)) {
+      } else if (/10061|refused|ConnectError|timed out|Ollama/i.test(text)) {
         text =
-          "Ollama nu rulează sau nu răspunde. Pornește aplicația Ollama (sau rulează `ollama serve`) " +
-          "și verifică dacă modelul este instalat: `ollama pull llama3.2:3b`. Detalii: " + text;
+          "Serviciul AI nu răspunde. Verifică cheia GROQ_API_KEY din fișierul .env, sau pornește Ollama " +
+          "(`ollama serve`, modelul: `ollama pull llama3.2:3b`). Detalii: " + text;
       }
       push({ role: "assistant", type: "text", text });
     } finally {
@@ -529,6 +720,51 @@ function ChatPage({ initialMessage, onHome }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // History = this conversation (kept up to date) + the ones saved earlier in this browser.
+  const [historyRev, setHistoryRev] = useState(0); // bumped after pin / delete so the list is re-read
+  const history = useMemo(() => {
+    const firstUser = conversation.find((m) => m.role === "user");
+    const all = loadHistory();
+    const saved = all.filter((h) => h.id !== chatId);
+    if (!firstUser) return orderHistory(saved);
+    const pinned = !!all.find((h) => h.id === chatId)?.pinned;
+    return orderHistory([
+      { id: chatId, title: firstUser.text.slice(0, 48), categoryId, conversation, pinned },
+      ...saved,
+    ]).slice(0, MAX_HISTORY + 10);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [conversation, categoryId, chatId, historyRev]);
+
+  useEffect(() => {
+    if (conversation.length) saveHistory(history);
+  }, [history, conversation.length]);
+
+  const togglePin = (id) => {
+    saveHistory(history.map((h) => (h.id === id ? { ...h, pinned: !h.pinned } : h)));
+    setHistoryRev((r) => r + 1);
+  };
+
+  const deleteChat = (id) => {
+    if (!window.confirm("Ștergi această conversație?")) return;
+    saveHistory(history.filter((h) => h.id !== id));
+    if (id === chatId) {
+      newChat(); // the open conversation is gone: start a clean one so it is not saved again
+    }
+    setHistoryRev((r) => r + 1);
+  };
+
+  const openHistory = (item) => {
+    if (busy) return;
+    // an unanswered clarification question cannot be resumed: drop it
+    const conv = [...item.conversation];
+    while (conv.length && conv[conv.length - 1].type === "question") conv.pop();
+    setChatId(item.id);
+    setCategoryId(item.categoryId);
+    setConversation(conv);
+    setPending(null);
+    setMessage("");
+  };
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
@@ -545,10 +781,13 @@ function ChatPage({ initialMessage, onHome }) {
   const answerQuestion = (q, value, label) => {
     if (busy || !pending) return;
     push({ role: "user", type: "text", text: label });
-    ask(pending.question, { ...pending.answers, [q.key]: value });
+    ask(pending.question, { ...pending.answers, [q.key]: value }, pending.prev);
   };
 
   const newChat = () => {
+    lastQuestion.current = "";
+    setChatId(String(Date.now()));
+    setCategoryId(null);
     setConversation([]);
     setPending(null);
     setMessage("");
@@ -573,6 +812,7 @@ function ChatPage({ initialMessage, onHome }) {
               key={category.id}
               onClick={() => sendMessage(`Vreau informații despre ${category.title}`)}
             >
+              <span className="side-icon">{category.icon}</span>
               {category.title}
             </button>
           ))}
@@ -580,17 +820,55 @@ function ChatPage({ initialMessage, onHome }) {
 
         <div className="recent-conversations">
           <strong>Conversații recente</strong>
-          {["Erasmus în Franța", "Înregistrare la medic", "Permis de ședere", "Deschidere firmă"].map((item) => (
-            <button key={item} onClick={() => sendMessage(item)}>
-              {item}
-            </button>
-          ))}
+          {history.length === 0 && <small className="recent-empty">Încă nu ai conversații.</small>}
+          {history.map((item) => {
+            const c = categoryById(item.categoryId);
+            return (
+              <div
+                key={item.id}
+                className={`recent-item ${item.id === chatId ? "active" : ""} ${item.pinned ? "pinned" : ""}`}
+              >
+                <button
+                  className="recent-open"
+                  onClick={() => openHistory(item)}
+                  title={c ? c.title : "Conversație"}
+                >
+                  <span className="side-icon">{c ? c.icon : "💬"}</span>
+                  <span className="recent-title">{item.title}</span>
+                  {item.pinned && <span className="pin-mark" aria-label="Fixată">📌</span>}
+                </button>
+                <div className="recent-actions">
+                  <button
+                    className="icon-action"
+                    onClick={() => togglePin(item.id)}
+                    title={item.pinned ? "Anulează fixarea" : "Fixează în partea de sus"}
+                    aria-label={item.pinned ? "Anulează fixarea" : "Fixează conversația"}
+                  >
+                    {item.pinned ? "📍" : "📌"}
+                  </button>
+                  <button
+                    className="icon-action"
+                    onClick={() => deleteChat(item.id)}
+                    title="Șterge conversația"
+                    aria-label="Șterge conversația"
+                  >
+                    🗑
+                  </button>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </aside>
 
       <section className="chat-main">
         <header className="chat-header">
           <strong>Asistent DocuGuide</strong>
+          {categoryById(categoryId) && (
+            <span className="chat-category">
+              {categoryById(categoryId).icon} {categoryById(categoryId).title}
+            </span>
+          )}
           <button className="mobile-home" onClick={onHome}>Acasă</button>
         </header>
 
@@ -618,6 +896,10 @@ function ChatPage({ initialMessage, onHome }) {
                   active={index === lastIndex && !busy}
                   onSubmit={(value, label) => answerQuestion(item.q, value, label)}
                 />
+              ) : item.type === "followup" ? (
+                <div className="assistant-bubble answer-bubble">
+                  <FollowupCard data={item.data.followup} />
+                </div>
               ) : item.type === "answer" ? (
                 <div className="assistant-bubble answer-bubble">
                   <AnswerCard data={item.data} />

@@ -1,0 +1,74 @@
+- main [ref=f9e79]:
+  - complementary [ref=f9e80]:
+    - button "DocuGuide - Acasă" [ref=f9e81] [cursor=pointer]:
+      - generic [ref=f9e82]: ♧
+      - generic [ref=f9e83]: DocuGuide
+    - button "+ Conversație nouă" [ref=f9e84] [cursor=pointer]
+    - button "Toate conversațiile" [ref=f9e85] [cursor=pointer]
+    - navigation [ref=f9e86]:
+      - button "🎓 Educație și studii" [ref=f9e87] [cursor=pointer]:
+        - generic [ref=f9e88]: 🎓
+        - text: Educație și studii
+      - button "🩺 Sănătate" [ref=f9e89] [cursor=pointer]:
+        - generic [ref=f9e90]: 🩺
+        - text: Sănătate
+      - button "✈️ Călătorii și relocare" [ref=f9e91] [cursor=pointer]:
+        - generic [ref=f9e92]: ✈️
+        - text: Călătorii și relocare
+      - button "🪪 Acte și servicii publice" [ref=f9e93] [cursor=pointer]:
+        - generic [ref=f9e94]: 🪪
+        - text: Acte și servicii publice
+      - button "💼 Muncă și carieră" [ref=f9e95] [cursor=pointer]:
+        - generic [ref=f9e96]: 💼
+        - text: Muncă și carieră
+      - button "🏢 Afaceri și finanțe" [ref=f9e97] [cursor=pointer]:
+        - generic [ref=f9e98]: 🏢
+        - text: Afaceri și finanțe
+      - button "🏠 Viață cotidiană" [ref=f9e99] [cursor=pointer]:
+        - generic [ref=f9e100]: 🏠
+        - text: Viață cotidiană
+    - generic [ref=f9e101]:
+      - strong [ref=f9e102]: Conversații recente
+      - button "🪪 cum inregistrez o masina adusa din Germania?" [ref=f9e103] [cursor=pointer]:
+        - generic [ref=f9e104]: 🪪
+        - generic [ref=f9e105]: cum inregistrez o masina adusa din Germania?
+      - button "🪪 cum inregistrez o masina adusa din Germania?" [ref=f9e106] [cursor=pointer]:
+        - generic [ref=f9e107]: 🪪
+        - generic [ref=f9e108]: cum inregistrez o masina adusa din Germania?
+      - button "🏢 ce documente am nevoie ca sa deschid un srl" [ref=f9e109] [cursor=pointer]:
+        - generic [ref=f9e110]: 🏢
+        - generic [ref=f9e111]: ce documente am nevoie ca sa deschid un srl
+      - button "🏢 ce documente am nevoie ca sa deschid un srl" [ref=f9e112] [cursor=pointer]:
+        - generic [ref=f9e113]: 🏢
+        - generic [ref=f9e114]: ce documente am nevoie ca sa deschid un srl
+      - 'button "🩺 Vreau informații despre: Înregistrare la medic" [ref=f9e115] [cursor=pointer]':
+        - generic [ref=f9e116]: 🩺
+        - generic [ref=f9e117]: "Vreau informații despre: Înregistrare la medic"
+      - 'button "🩺 Vreau informații despre: Înregistrare la medic" [ref=f9e118] [cursor=pointer]':
+        - generic [ref=f9e119]: 🩺
+        - generic [ref=f9e120]: "Vreau informații despre: Înregistrare la medic"
+      - button "💬 ce documente am nevoie ca sa deschid un srl" [ref=f9e121] [cursor=pointer]:
+        - generic [ref=f9e122]: 💬
+        - generic [ref=f9e123]: ce documente am nevoie ca sa deschid un srl
+      - button "🎓 eu vreau sa ma duc la erasmus, ce am nevoie avan" [ref=f9e124] [cursor=pointer]:
+        - generic [ref=f9e125]: 🎓
+        - generic [ref=f9e126]: eu vreau sa ma duc la erasmus, ce am nevoie avan
+      - button "🎓 eu vreau sa ma duc la erasmus, ce am nevoie avan" [ref=f9e127] [cursor=pointer]:
+        - generic [ref=f9e128]: 🎓
+        - generic [ref=f9e129]: eu vreau sa ma duc la erasmus, ce am nevoie avan
+      - button "🪪 cum inregistrez o masina adusa din Germania?" [ref=f9e130] [cursor=pointer]:
+        - generic [ref=f9e131]: 🪪
+        - generic [ref=f9e132]: cum inregistrez o masina adusa din Germania?
+      - button "🎓 eu vreau sa ma duc la erasmus, ce am nevoie avan" [ref=f9e133] [cursor=pointer]:
+        - generic [ref=f9e134]: 🎓
+        - generic [ref=f9e135]: eu vreau sa ma duc la erasmus, ce am nevoie avan
+  - generic [ref=f9e136]:
+    - strong [ref=f9e138]: Asistent DocuGuide
+    - generic [ref=f9e140]:
+      - generic [ref=f9e141]: ♧
+      - generic [ref=f9e142]: Bună! Sunt asistentul DocuGuide. Spune-mi ce documente sau procedură te interesează.
+    - generic [ref=f9e143]:
+      - button "Adaugă" [ref=f9e144] [cursor=pointer]: +
+      - textbox "Scrie un mesaj" [ref=f9e145]:
+        - /placeholder: Scrie un mesaj...
+      - button "Trimite" [ref=f9e146] [cursor=pointer]: ↑

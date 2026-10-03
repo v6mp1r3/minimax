@@ -1,0 +1,118 @@
+- main [ref=f11e79]:
+  - complementary [ref=f11e80]:
+    - button "DocuGuide - Acasă" [ref=f11e81] [cursor=pointer]:
+      - generic [ref=f11e82]: ♧
+      - generic [ref=f11e83]: DocuGuide
+    - button "+ Conversație nouă" [ref=f11e84] [cursor=pointer]
+    - button "Toate conversațiile" [ref=f11e85] [cursor=pointer]
+    - navigation [ref=f11e86]:
+      - button "🎓 Educație și studii" [ref=f11e87] [cursor=pointer]:
+        - generic [ref=f11e88]: 🎓
+        - text: Educație și studii
+      - button "🩺 Sănătate" [ref=f11e89] [cursor=pointer]:
+        - generic [ref=f11e90]: 🩺
+        - text: Sănătate
+      - button "✈️ Călătorii și relocare" [ref=f11e91] [cursor=pointer]:
+        - generic [ref=f11e92]: ✈️
+        - text: Călătorii și relocare
+      - button "🪪 Acte și servicii publice" [ref=f11e93] [cursor=pointer]:
+        - generic [ref=f11e94]: 🪪
+        - text: Acte și servicii publice
+      - button "💼 Muncă și carieră" [ref=f11e95] [cursor=pointer]:
+        - generic [ref=f11e96]: 💼
+        - text: Muncă și carieră
+      - button "🏢 Afaceri și finanțe" [ref=f11e97] [cursor=pointer]:
+        - generic [ref=f11e98]: 🏢
+        - text: Afaceri și finanțe
+      - button "🏠 Viață cotidiană" [ref=f11e99] [cursor=pointer]:
+        - generic [ref=f11e100]: 🏠
+        - text: Viață cotidiană
+    - generic [ref=f11e101]:
+      - strong [ref=f11e102]: Conversații recente
+      - button "🎓 eu vreau sa ma duc la erasmus, ce am nevoie avan Fixată" [ref=f11e104] [cursor=pointer]:
+        - generic [ref=f11e105]: 🎓
+        - generic [ref=f11e106]: eu vreau sa ma duc la erasmus, ce am nevoie avan
+        - generic "Fixată" [ref=f11e107]: 📌
+      - generic [ref=f11e112]:
+        - button "🏢 ce documente am nevoie ca sa deschid un srl" [active] [ref=f11e113] [cursor=pointer]:
+          - generic [ref=f11e114]: 🏢
+          - generic [ref=f11e115]: ce documente am nevoie ca sa deschid un srl
+        - generic [ref=f11e155]:
+          - button "Fixează conversația" [ref=f11e156] [cursor=pointer]: 📌
+          - button "Șterge conversația" [ref=f11e157] [cursor=pointer]: 🗑
+      - generic [ref=f11e108]:
+        - button "🪪 cum inregistrez o masina adusa din Germania?" [ref=f11e109] [cursor=pointer]:
+          - generic [ref=f11e110]: 🪪
+          - generic [ref=f11e111]: cum inregistrez o masina adusa din Germania?
+        - generic [ref=f11e158]:
+          - button "Fixează conversația" [ref=f11e159] [cursor=pointer]: 📌
+          - button "Șterge conversația" [ref=f11e160] [cursor=pointer]: 🗑
+      - button "🏢 ce documente am nevoie ca sa deschid un srl" [ref=f11e117] [cursor=pointer]:
+        - generic [ref=f11e118]: 🏢
+        - generic [ref=f11e119]: ce documente am nevoie ca sa deschid un srl
+      - 'button "🩺 Vreau informații despre: Înregistrare la medic" [ref=f11e121] [cursor=pointer]':
+        - generic [ref=f11e122]: 🩺
+        - generic [ref=f11e123]: "Vreau informații despre: Înregistrare la medic"
+      - 'button "🩺 Vreau informații despre: Înregistrare la medic" [ref=f11e125] [cursor=pointer]':
+        - generic [ref=f11e126]: 🩺
+        - generic [ref=f11e127]: "Vreau informații despre: Înregistrare la medic"
+      - button "💬 ce documente am nevoie ca sa deschid un srl" [ref=f11e129] [cursor=pointer]:
+        - generic [ref=f11e130]: 💬
+        - generic [ref=f11e131]: ce documente am nevoie ca sa deschid un srl
+      - button "🎓 eu vreau sa ma duc la erasmus, ce am nevoie avan" [ref=f11e133] [cursor=pointer]:
+        - generic [ref=f11e134]: 🎓
+        - generic [ref=f11e135]: eu vreau sa ma duc la erasmus, ce am nevoie avan
+      - button "🎓 eu vreau sa ma duc la erasmus, ce am nevoie avan" [ref=f11e137] [cursor=pointer]:
+        - generic [ref=f11e138]: 🎓
+        - generic [ref=f11e139]: eu vreau sa ma duc la erasmus, ce am nevoie avan
+      - button "🪪 cum inregistrez o masina adusa din Germania?" [ref=f11e141] [cursor=pointer]:
+        - generic [ref=f11e142]: 🪪
+        - generic [ref=f11e143]: cum inregistrez o masina adusa din Germania?
+  - generic [ref=f11e144]:
+    - generic [ref=f11e145]:
+      - strong [ref=f11e146]: Asistent DocuGuide
+      - generic [ref=f11e161]: 🏢 Afaceri și finanțe
+    - generic [ref=f11e147]:
+      - generic [ref=f11e162]: ce documente am nevoie ca sa deschid un srl
+      - generic [ref=f11e164]:
+        - generic [ref=f11e165]: ♧
+        - generic [ref=f11e166]: "Pentru a-ți pregăti un ghid personalizat, am nevoie de câteva detalii:"
+      - generic [ref=f11e167]:
+        - generic [ref=f11e168]: ♧
+        - generic [ref=f11e169]:
+          - strong [ref=f11e170]: Ce cetățenii ai? (poți alege mai multe)
+          - paragraph [ref=f11e171]: Poți alege mai multe variante.
+          - generic [ref=f11e172]:
+            - button "Republica Moldova +" [disabled] [ref=f11e173]:
+              - text: Republica Moldova
+              - generic [ref=f11e174]: +
+            - button "Un stat UE (ex. România) +" [disabled] [ref=f11e175]:
+              - text: Un stat UE (ex. România)
+              - generic [ref=f11e176]: +
+            - button "Altă cetățenie (specifică) +" [disabled] [ref=f11e177]:
+              - text: Altă cetățenie (specifică)
+              - generic [ref=f11e178]: +
+      - generic [ref=f11e179]: Republica Moldova
+      - generic [ref=f11e181]:
+        - generic [ref=f11e182]: ♧
+        - generic [ref=f11e183]:
+          - strong [ref=f11e184]: Locuiești în Republica Moldova?
+          - generic [ref=f11e185]:
+            - button "Da ›" [disabled] [ref=f11e186]:
+              - text: Da
+              - generic [ref=f11e187]: ›
+            - button "Nu ›" [disabled] [ref=f11e188]:
+              - text: Nu
+              - generic [ref=f11e189]: ›
+      - generic [ref=f11e190]: Da
+      - generic [ref=f11e192]:
+        - generic [ref=f11e193]: ♧
+        - generic [ref=f11e195]:
+          - paragraph [ref=f11e196]: Nu am găsit nimic despre această temă în sursele oficiale. DocuGuide ajută cu documente și proceduri administrative din Republica Moldova.
+          - list [ref=f11e197]:
+            - listitem [ref=f11e198]: "Reformulează cu situația concretă, de exemplu: «ce acte trebuie ca să deschid un SRL» sau «cum înregistrez o mașină adusă din Germania»."
+    - generic [ref=f11e151]:
+      - button "Adaugă" [ref=f11e152] [cursor=pointer]: +
+      - textbox "Scrie un mesaj" [ref=f11e153]:
+        - /placeholder: Scrie un mesaj...
+      - button "Trimite" [ref=f11e154] [cursor=pointer]: ↑

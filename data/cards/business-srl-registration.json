@@ -1,0 +1,319 @@
+{
+  "id": "business-srl-registration",
+  "category": "business",
+  "title": "Înregistrarea unui SRL în Republica Moldova",
+  "match_hints": [
+    "srl",
+    "s.r.l",
+    "firma",
+    "firme",
+    "companie",
+    "societate",
+    "intreprindere",
+    "afacere"
+  ],
+  "applies_when": {},
+  "slots": [
+    "citizenships"
+  ],
+  "last_verified": "2026-10-03",
+  "summary": "Rezervi denumirea, pregătești actele de constituire și declarațiile, achiți taxa și depui cererea la Agenția Servicii Publice (ASP).",
+  "profile_notes": {
+    "citizenships": {
+      "has_EU": "Ai și cetățenie UE: documentele pentru investiții străine (pasul 4) se aplică doar dacă printre fondatori, administratori sau beneficiari efectivi sunt persoane străine sau nerezidente.",
+      "no_EU": "Dacă toți fondatorii, administratorii și beneficiarii efectivi sunt cetățeni RM rezidenți, pasul 4 nu se aplică; altfel se cer documentele suplimentare pentru investiții străine."
+    }
+  },
+  "sources": {
+    "name": {
+      "url": "https://www.asp.gov.md/ro/servicii/persoane-juridice/inregistrare-afacere/223",
+      "title": "Verificarea și rezervarea denumirii companiei",
+      "organization": "Agenția Servicii Publice"
+    },
+    "srl": {
+      "url": "https://www.asp.gov.md/ro/servicii-info/persoane-juridice/documente-necesare/inregistrarea-srl",
+      "title": "Documente standard (obligatorii pentru înregistrare SRL)",
+      "organization": "Agenția Servicii Publice"
+    },
+    "reg": {
+      "url": "https://www.asp.gov.md/ro/servicii/persoane-juridice/inregistrare-afacere/211-1",
+      "title": "Înregistrarea de stat a persoanei juridice",
+      "organization": "Agenția Servicii Publice"
+    },
+    "faq": {
+      "url": "https://www.asp.gov.md/ro/intrebari-frecvente/persoane-juridice/0046",
+      "title": "Ce acte sunt necesare pentru a înregistra un SRL?",
+      "organization": "Agenția Servicii Publice"
+    },
+    "be": {
+      "url": "https://www.asp.gov.md/ro/servicii/persoane-juridice/inregistrare-afacere",
+      "title": "Înregistrare afacere — Cine este beneficiarul efectiv",
+      "organization": "Agenția Servicii Publice"
+    }
+  },
+  "documents": [
+    {
+      "id": "d-constitution",
+      "name": "Hotărârea de constituire și actele de constituire, aprobate de toți asociații fondatori (în două exemplare)",
+      "status": "required",
+      "where_to_get": null,
+      "source": "srl",
+      "used_in": "s2",
+      "quote": "Hotărârea de constituire și actele de constituire ale persoanei juridice, aprobate de toți asociații fondatori (în două exemplare)"
+    },
+    {
+      "id": "d-statute",
+      "name": "Statutul societății (variantă pentru SRL cu asociat unic, cu 2 sau mai mulți asociați etc.)",
+      "status": "required",
+      "where_to_get": "Pagina ASP listează variantele de statut: SRL cu 2 sau mai mulți asociați, cu asociat unic și altele",
+      "source": "srl",
+      "used_in": "s2",
+      "quote": "Statutul Societății",
+      "where_quote": "Statutul SRL cu 2 sau mai multi asociati Statutul SRL cu asociat unic"
+    },
+    {
+      "id": "d-be",
+      "name": "Informația privind beneficiarul efectiv / beneficiarii efectivi (Legea nr. 308/2017)",
+      "status": "required",
+      "where_to_get": "Pagina ASP listează formularele BE-1 (persoană fizică) și BE-2 (persoană juridică)",
+      "source": "srl",
+      "used_in": "s3",
+      "quote": "Informația privind beneficiarul efectiv/beneficiarii efectivi, conform Legii nr. 308/2017",
+      "where_quote": "Constituire de către persoana fizică (BE-1) Constituire de către persoana juridică (BE-2)"
+    },
+    {
+      "id": "d-record",
+      "name": "Declarația pe propria răspundere privind lipsa antecedentelor penale nestinse pentru infracțiuni de evaziune fiscală",
+      "status": "required",
+      "where_to_get": null,
+      "source": "srl",
+      "used_in": "s3",
+      "quote": "Declarația pe propria răspundere privind lipsa antecedentelor penale nestinse pentru infracțiuni de evaziune fiscal"
+    },
+    {
+      "id": "d-id",
+      "name": "Buletinele de identitate ale fondatorilor (sau ale reprezentanților lor împuterniciți prin procură autentificată) și ale administratorului",
+      "status": "required",
+      "where_to_get": null,
+      "source": "srl",
+      "used_in": "s6",
+      "quote": "buletinele de identitate ale fondatorilor sau ale reprezentanților acestora împuterniciți prin procură autentificată, precum și al administratorului persoanei juridice"
+    },
+    {
+      "id": "d-application",
+      "name": "Cererea de înregistrare, semnată de fondatorul desemnat sau de o persoană împuternicită prin hotărârea de constituire",
+      "status": "required",
+      "where_to_get": null,
+      "source": "srl",
+      "used_in": "s6",
+      "quote": "cererea de înregistrare semnată de fondatorul desemnat sau de o altă persoană împuternicită prin hotărârea de constituire"
+    },
+    {
+      "id": "d-fee",
+      "name": "Documentul care confirmă achitarea taxei de înregistrare",
+      "status": "required",
+      "where_to_get": null,
+      "source": "faq",
+      "used_in": "s7",
+      "quote": "documentul ce confirmă achitarea taxei de înregistrare"
+    },
+    {
+      "id": "d-f-extract",
+      "name": "Fondator persoană juridică străină: extrasul din registrul comerțului din țara de origine (tradus și legalizat/apostilat)",
+      "status": "possible",
+      "where_to_get": null,
+      "source": "srl",
+      "used_in": "s4",
+      "quote": "Extrasul din registrul comerțului din țara de origine a persoanei juridice străine ( tradus și legalizat/apostilat )."
+    },
+    {
+      "id": "d-f-passport",
+      "name": "Copia pașaportului administratorilor, fondatorilor și beneficiarilor efectivi nerezidenți / cetățeni străini",
+      "status": "possible",
+      "where_to_get": null,
+      "source": "srl",
+      "used_in": "s4",
+      "quote": "Copia pașaportului pentru administratorii, fondatorii și beneficiarii efectivi nerezidenți/cetățeni străini."
+    },
+    {
+      "id": "d-f-idnp",
+      "name": "Codul IDNP pentru administratorul străin (eliberat de Inspectoratul General pentru Migrație)",
+      "status": "possible",
+      "where_to_get": "Inspectoratul General pentru Migrație",
+      "source": "srl",
+      "used_in": "s4",
+      "where_quote": "eliberat de Inspectoratul General pentru Migrație",
+      "quote": "Codul IDNP pentru administratorul străin ( eliberat de Inspectoratul General pentru Migrație )."
+    },
+    {
+      "id": "d-poa",
+      "name": "Procură specială autentificată notarial, dacă fondatorul este reprezentat",
+      "status": "possible",
+      "where_to_get": null,
+      "source": "srl",
+      "used_in": "s6",
+      "quote": "Reprezentare prin împuternicit Procură specială autentificată notarial"
+    },
+    {
+      "id": "d-valuation",
+      "name": "Raport de evaluare / act de expertiză / raport de audit, dacă capitalul social este compus din bunuri",
+      "status": "possible",
+      "where_to_get": null,
+      "source": "srl",
+      "used_in": "s2",
+      "quote": "Capitalul social este compus din careva bunuri Raport de evaluare / Act de expertiză / Raport de audit"
+    },
+    {
+      "id": "d-regulated",
+      "name": "Avize/aprobări pentru situații speciale și domenii reglementate (doar pentru acele domenii)",
+      "status": "possible",
+      "where_to_get": null,
+      "source": "srl",
+      "used_in": "s5",
+      "quote": "Documente pentru situații speciale și domenii reglementate"
+    }
+  ],
+  "steps": [
+    {
+      "id": "s1",
+      "title": "Verifică și rezervă denumirea companiei",
+      "where": "Online, pe rsud.asp.gov.md",
+      "depends_on_step": null,
+      "source": "name",
+      "description": "Verificarea și rezervarea denumirii se face online pentru SRL. Denumirea se poate rezerva pe un termen de până la 6 luni. Dacă mai multe persoane cer denumiri care coincid sau se aseamănă, are drept de înregistrare cel care a depus primul cererea.",
+      "quotes": [
+        "Verificarea şi rezervarea denumirii se face online pe https://rsud.asp.gov.md/ exclusiv pentru organizaţiile necomerciale, societăţile pe acţiuni şi societăţile cu răspundere limitată",
+        "Denumirea persoanei juridice, la cerere, poate fi rezervată de organul înregistrării de stat pe un termen de până la 6 luni",
+        "drept de înregistrare are solicitantul care primul a depus cererea"
+      ],
+      "cost": null,
+      "duration": "1 oră – 5 zile lucrătoare (după termenul ales; tarifele nu se văd clar pe pagină)"
+    },
+    {
+      "id": "s2",
+      "title": "Pregătește hotărârea de constituire, actele de constituire și statutul",
+      "where": "Fondatorii",
+      "depends_on_step": 1,
+      "source": "srl",
+      "description": "Hotărârea de constituire (proces-verbal al adunării de constituire sau decizia fondatorului unic) și actele de constituire se aprobă de toți asociații fondatori, în două exemplare. Se adaugă statutul societății. Dacă capitalul social este compus din bunuri, se cere un raport de evaluare, act de expertiză sau raport de audit.",
+      "quotes": [
+        "Hotărârea de constituire și actele de constituire ale persoanei juridice, aprobate de toți asociații fondatori (în două exemplare)",
+        "Proces-verbal al Adunării de constituire a persoanei juridice Decizia a fondatorului unic al persoanei juridice",
+        "Capitalul social este compus din careva bunuri Raport de evaluare / Act de expertiză / Raport de audit"
+      ],
+      "cost": null,
+      "duration": null
+    },
+    {
+      "id": "s3",
+      "title": "Pregătește informația despre beneficiarul efectiv și declarația privind antecedentele",
+      "where": "Fondatorii / administratorul",
+      "depends_on_step": 2,
+      "source": "srl",
+      "description": "Se prezintă informația privind beneficiarul efectiv (formularul BE-1 pentru constituire de către persoana fizică, BE-2 pentru persoana juridică) și declarația pe propria răspundere privind lipsa antecedentelor penale nestinse pentru infracțiuni de evaziune fiscală (pentru fondator, respectiv administrator și fondator).",
+      "quotes": [
+        "Informația privind beneficiarul efectiv/beneficiarii efectivi, conform Legii nr. 308/2017",
+        "Constituire de către persoana fizică (BE-1) Constituire de către persoana juridică (BE-2)",
+        "Declarația pe propria răspundere privind lipsa antecedentelor penale nestinse pentru infracțiuni de evaziune fiscal"
+      ],
+      "cost": null,
+      "duration": null
+    },
+    {
+      "id": "s4",
+      "title": "Doar dacă ai fondatori, administratori sau beneficiari efectivi străini: adaugă documentele pentru investiții străine",
+      "where": "Fondatorii / administratorul străin",
+      "depends_on_step": 3,
+      "source": "srl",
+      "description": "Pentru un fondator persoană juridică străină: extrasul din registrul comerțului din țara de origine (tradus și legalizat/apostilat) și actele de constituire ale persoanei juridice străine. Pentru administratori, fondatori și beneficiari efectivi nerezidenți/cetățeni străini: copia pașaportului. Pentru administratorul străin: codul IDNP, eliberat de Inspectoratul General pentru Migrație. După caz pot fi solicitate acte suplimentare.",
+      "quotes": [
+        "Extrasul din registrul comerțului din țara de origine a persoanei juridice străine ( tradus și legalizat/apostilat ).",
+        "Copia pașaportului pentru administratorii, fondatorii și beneficiarii efectivi nerezidenți/cetățeni străini.",
+        "Codul IDNP pentru administratorul străin ( eliberat de Inspectoratul General pentru Migrație ).",
+        "Nota: După caz pot fi solicitate acte suplimentare"
+      ],
+      "cost": null,
+      "duration": null
+    },
+    {
+      "id": "s5",
+      "title": "Doar pentru activități reglementate: obține avizul/aprobarea prealabilă a autorității competente",
+      "where": "Autoritatea competentă pentru domeniul respectiv",
+      "depends_on_step": 3,
+      "source": "reg",
+      "description": "Dacă SRL-ul va desfășura activitate într-un domeniu reglementat, în cererea de înregistrare se declară pe proprie răspundere deținerea avizului sau aprobării prealabile a autorității competente privind constituirea. Un SRL obișnuit nu are nevoie de acest pas.",
+      "quotes": [
+        "În cazul în care persoana juridică intenţionează să desfăşoare activitate într-un domeniu reglementat, în cererea de înregistrare se declară pe proprie răspundere deţinerea avizului/aprobării prealabile a autorităţii competente privind constituirea acesteia"
+      ],
+      "cost": null,
+      "duration": null
+    },
+    {
+      "id": "s6",
+      "title": "Completează cererea de înregistrare și pregătește actele de identitate",
+      "where": "Fondatorul desemnat",
+      "depends_on_step": 3,
+      "source": "srl",
+      "description": "Cererea de înregistrare se semnează de fondatorul desemnat sau de o altă persoană împuternicită prin hotărârea de constituire. La ghișeu se prezintă buletinele de identitate ale fondatorilor (sau ale reprezentanților împuterniciți prin procură autentificată) și ale administratorului.",
+      "quotes": [
+        "cererea de înregistrare semnată de fondatorul desemnat sau de o altă persoană împuternicită prin hotărârea de constituire",
+        "buletinele de identitate ale fondatorilor sau ale reprezentanților acestora împuterniciți prin procură autentificată, precum și al administratorului persoanei juridice",
+        "Reprezentare prin împuternicit Procură specială autentificată notarial"
+      ],
+      "cost": null,
+      "duration": null
+    },
+    {
+      "id": "s7",
+      "title": "Achită taxa de înregistrare",
+      "where": "ASP",
+      "depends_on_step": 6,
+      "source": "reg",
+      "description": "Pagina ASP listează termene și tarife: 24 ore – 1 149 lei, 4 ore – 4 596 lei, plus o variantă „gratuit” cu înlesniri (nota 17, în baza Legii nr. 220/2007 și a altor acte). Documentul de plată face parte din actele depuse.",
+      "quotes": [
+        "Termen Tarif, lei Locul prestării 24 ore 1 149 Subdiviziunile ASP gratuit 17 4 ore 4 596"
+      ],
+      "cost": "1 149 lei (24 ore); 4 596 lei (4 ore); variantă gratuită cu înlesniri",
+      "duration": "24 ore sau 4 ore (după tarif)"
+    },
+    {
+      "id": "s8",
+      "title": "Depune cererea și actele la ASP",
+      "where": "Online (semnătură electronică), la sediul ASP sau prin scrisoare recomandată",
+      "depends_on_step": 7,
+      "source": "reg",
+      "description": "Pentru solicitarea serviciului trebuie să ai denumirea rezervată. Actele se perfectează în limba de stat. Setul se poate transmite electronic (documente semnate cu semnătură electronică), depune la sediul ASP pe hârtie sau expedia prin scrisoare recomandată. Online se poate depune exclusiv pentru SRL și SA.",
+      "quotes": [
+        "Pentru solicitarea serviciului este necesar să aveți o denumire rezervată",
+        "Documentele pentru înregistrarea de stat se perfectează în limba de stat",
+        "fie se vor transmit organului înregistrării de stat în formă de documente electronice semnate cu semnătura electronică",
+        "fie se depun la sediul organului înregistrării de stat pe suport de hârtie",
+        "fie se expediază organului înregistrării de stat pe suport de hârtie, prin scrisoare recomandată"
+      ],
+      "cost": null,
+      "duration": null
+    }
+  ],
+  "unconfirmed": [
+    "Corespondența exactă termen ↔ tarif din tabelul ASP este dedusă din ordinea afișată; verifică pe pagina ASP (inclusiv ce înseamnă varianta „gratuit”, nota 17)",
+    "Tarifele pentru rezervarea denumirii pe fiecare termen (pagina listează termene de la 1 oră la 5 zile lucrătoare, dar tarifele nu se văd clar)",
+    "Ce primești după înregistrare (extras/certificat) și pașii de după (cont bancar, înregistrare fiscală) — nu sunt descriși pe paginile verificate",
+    "Capitalul social minim — nu apare pe paginile verificate"
+  ],
+  "glossary": [
+    {
+      "terms": [
+        "beneficiar efectiv",
+        "beneficiarul efectiv",
+        "beneficiarii efectivi"
+      ],
+      "title": "Ce este beneficiarul efectiv",
+      "source": "be",
+      "text": "Beneficiarul efectiv este orice persoană fizică ce deține sau controlează în ultimă instanță persoana juridică. Deținerea a peste 25% din capitalul social (25% plus o acțiune) este un criteriu al exercitării directe a dreptului de proprietate. Informația se prezintă la înregistrare în formularul BE-1 (constituire de către persoana fizică) sau BE-2 (de către persoana juridică).",
+      "quotes": [
+        "Beneficiarul efectiv este orice persoană fizică ce deține sau controlează în ultimă instanță clientul",
+        "Deținerea de către o persoană fizică a 25% plus o acțiune sau participarea acesteia în capitalul social al unei persoane juridice cu peste 25% este un criteriu al exercitării directe a dreptului de proprietate"
+      ]
+    }
+  ]
+}

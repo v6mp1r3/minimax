@@ -20,9 +20,10 @@
       "id": "d-application",
       "name": "Cerere pentru mobilitate Erasmus",
       "status": "required",
-      "where_to_get": "Se descarcă de pe pagina Erasmus+ studenți a UTM",
+      "where_to_get": null,
       "source": "utm",
-      "quote": "Cerere pentru mobilitate Erasmus"
+      "quote": "Cerere pentru mobilitate Erasmus",
+      "used_in": "s2"
     },
     {
       "id": "d-motivation",
@@ -30,55 +31,68 @@
       "status": "required",
       "where_to_get": null,
       "source": "utm",
-      "quote": "Scrisoare de motivație care să justifice universitatea aleasă"
+      "quote": "Scrisoare de motivație care să justifice universitatea aleasă",
+      "used_in": "s2"
     },
     {
       "id": "d-recommendation",
       "name": "Recomandare din partea unui cadru didactic",
       "status": "required",
-      "where_to_get": "De la un cadru didactic",
+      "where_to_get": null,
       "source": "utm",
-      "quote": "Recomandare din partea unui cadru didactic"
+      "quote": "Recomandare din partea unui cadru didactic",
+      "used_in": "s2",
+      "hint": "sursa nu spune cine poate recomanda; de regulă este un cadru didactic care te cunoaște și îți poate evalua rezultatele. Dosarul se predă coordonatorului Erasmus+ al facultății, care te poate îndruma"
     },
     {
       "id": "d-la",
       "name": "Learning Agreement (for study / for traineeship)",
       "status": "required",
-      "where_to_get": "Se completează cu responsabilul Erasmus al facultății",
+      "where_to_get": "Împreună cu responsabilul pe internaționalizare din cadrul facultății (UTM)",
       "source": "utm",
-      "quote": "Learning Agreement for study/Learning Agreement for traineeship"
+      "quote": "Learning Agreement for study/Learning Agreement for traineeship",
+      "used_in": "s2",
+      "where_quote": "împreună cu responsabilul pe internaționalizare din cadrul facultății (UTM)"
     },
     {
       "id": "d-language",
       "name": "Certificat de competență lingvistică (minim B2) sau alte diplome recunoscute; nu se cere studenților care studiază limba respectivă ca parte din specializare",
       "status": "required",
-      "where_to_get": "Departamentul de Limbi străine UTM",
+      "where_to_get": "Departamentul de Limbi străine",
       "source": "utm",
-      "quote": "Certificat de competenta lingvistică (de la departamentul de Limbi străine, minim B2)"
+      "quote": "Certificat de competenta lingvistică (de la departamentul de Limbi străine, minim B2)",
+      "used_in": "s2",
+      "where_quote": "de la departamentul de Limbi străine"
     },
     {
       "id": "d-return-attendance",
       "name": "La întoarcere: Certificatul de prezență semnat de universitatea gazdă (cu data de început și de final)",
       "status": "required",
-      "where_to_get": "De la universitatea gazdă",
+      "where_to_get": "Universitatea gazdă",
       "source": "utm",
-      "quote": "Certificatul de prezență (care conține data de începere și data de finalizare a mobilității), semnat de către universitatea gazdă"
+      "quote": "Certificatul de prezență (care conține data de începere și data de finalizare a mobilității), semnat de către universitatea gazdă",
+      "used_in": "s8",
+      "where_quote": "documente de la universitatea gazdă"
     },
     {
       "id": "d-return-la",
       "name": "La întoarcere: Contractul de Studiu ECTS (Learning Agreement for studies și Changes to Learning Agreement, dacă e cazul), semnat",
       "status": "required",
-      "where_to_get": "De la universitatea gazdă",
+      "where_to_get": "Universitatea gazdă",
       "source": "utm",
-      "quote": "Contractului de Studiu ECTS (Learning agreement for studies și Changes to Learning Agreement, acolo unde este cazul), semnat"
+      "quote": "Contractului de Studiu ECTS (Learning agreement for studies și Changes to Learning Agreement, acolo unde este cazul), semnat",
+      "used_in": "s8",
+      "where_quote": "documente de la universitatea gazdă"
     },
     {
       "id": "d-return-transcript",
       "name": "La întoarcere: Situația școlară (Transcript of records)",
       "status": "required",
-      "where_to_get": "De la universitatea gazdă",
+      "where_to_get": "Universitatea gazdă",
       "source": "utm",
-      "quote": "Situația școlară (Transcript of records/ Releve de notes)"
+      "quote": "Situația școlară (Transcript of records/ Releve de notes)",
+      "used_in": "s8",
+      "where_quote": "documente de la universitatea gazdă"
     }
   ],
   "steps": [

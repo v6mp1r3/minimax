@@ -1,0 +1,44 @@
+- main [ref=e79]:
+  - complementary [ref=e80]:
+    - button "DocuGuide - Acasă" [ref=e81] [cursor=pointer]:
+      - generic [ref=e82]: ♧
+      - generic [ref=e83]: DocuGuide
+    - button "+ Conversație nouă" [active] [ref=e84] [cursor=pointer]
+    - button "Toate conversațiile" [ref=e85] [cursor=pointer]
+    - navigation [ref=e86]:
+      - button "🎓 Educație și studii" [ref=e87] [cursor=pointer]:
+        - generic [ref=e88]: 🎓
+        - text: Educație și studii
+      - button "🩺 Sănătate" [ref=e89] [cursor=pointer]:
+        - generic [ref=e90]: 🩺
+        - text: Sănătate
+      - button "✈️ Călătorii și relocare" [ref=e91] [cursor=pointer]:
+        - generic [ref=e92]: ✈️
+        - text: Călătorii și relocare
+      - button "🪪 Acte și servicii publice" [ref=e93] [cursor=pointer]:
+        - generic [ref=e94]: 🪪
+        - text: Acte și servicii publice
+      - button "💼 Muncă și carieră" [ref=e95] [cursor=pointer]:
+        - generic [ref=e96]: 💼
+        - text: Muncă și carieră
+      - button "🏢 Afaceri și finanțe" [ref=e97] [cursor=pointer]:
+        - generic [ref=e98]: 🏢
+        - text: Afaceri și finanțe
+      - button "🏠 Viață cotidiană" [ref=e99] [cursor=pointer]:
+        - generic [ref=e100]: 🏠
+        - text: Viață cotidiană
+    - generic [ref=e101]:
+      - strong [ref=e102]: Conversații recente
+      - button "🪪 cum inregistrez o masina adusa din Germania?" [ref=e103] [cursor=pointer]:
+        - generic [ref=e104]: 🪪
+        - generic [ref=e105]: cum inregistrez o masina adusa din Germania?
+  - generic [ref=e106]:
+    - strong [ref=e108]: Asistent DocuGuide
+    - generic [ref=e230]:
+      - generic [ref=e231]: ♧
+      - generic [ref=e232]: Bună! Sunt asistentul DocuGuide. Spune-mi ce documente sau procedură te interesează.
+    - generic [ref=e226]:
+      - button "Adaugă" [ref=e227] [cursor=pointer]: +
+      - textbox "Scrie un mesaj" [ref=e228]:
+        - /placeholder: Scrie un mesaj...
+      - button "Trimite" [ref=e229] [cursor=pointer]: ↑

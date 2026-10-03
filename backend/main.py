@@ -41,6 +41,58 @@ def cache_set(key, value):
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://127.0.0.1:11434")
 OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "llama3.2:3b")
 
+# Hosted LLM (Groq free plan). With GROQ_API_KEY set it is used first; Ollama stays as the fallback.
+GROQ_API_KEY = os.getenv("GROQ_API_KEY", "").strip()
+GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile")
+GROQ_BASE_URL = os.getenv("GROQ_BASE_URL", "https://api.groq.com/openai/v1").rstrip("/")
+LLM_PROVIDER = os.getenv("LLM_PROVIDER", "groq" if GROQ_API_KEY else "ollama").lower()
+# The free plan allows ~8,000 tokens/minute, so keep prompts small when Groq is the provider.
+LLM_MAX_PROMPT_CHARS = int(os.getenv("LLM_MAX_PROMPT_CHARS", "11000" if LLM_PROVIDER == "groq" else "0"))
+
+def _groq_chat(messages, json_mode, temperature, max_tokens, timeout):
+    payload = {"model": GROQ_MODEL, "messages": messages, "temperature": temperature,
+               "max_completion_tokens": max_tokens}
+    if json_mode:
+        payload["response_format"] = {"type": "json_object"}
+    headers = {"Authorization": f"Bearer {GROQ_API_KEY}"}
+    with httpx.Client(timeout=timeout) as client:
+        for attempt in (0, 1):
+            r = client.post(f"{GROQ_BASE_URL}/chat/completions", json=payload, headers=headers)
+            if r.status_code == 429 and attempt == 0:  # per-minute limit: wait once, then retry
+                try:
+                    wait = float(r.headers.get("retry-after", "5"))
+                except ValueError:
+                    wait = 5.0
+                time.sleep(min(max(wait, 1.0), 20.0))
+                continue
+            r.raise_for_status()
+            return r.json()["choices"][0]["message"]["content"] or ""
+
+def _ollama_chat(messages, json_mode, temperature, max_tokens, timeout):
+    payload = {"model": OLLAMA_MODEL, "stream": False, "messages": messages,
+               "options": {"temperature": temperature, "num_ctx": 6000, "num_predict": max_tokens}}
+    if json_mode:
+        payload["format"] = "json"
+    with httpx.Client(timeout=timeout) as client:
+        r = client.post(f"{OLLAMA_URL}/api/chat", json=payload)
+        r.raise_for_status()
+        return r.json().get("message", {}).get("content", "") or ""
+
+def llm_chat(messages, json_mode=False, temperature=0.2, max_tokens=600, timeout=120):
+    """One entry point for every model call: Groq if configured, otherwise (or on failure) Ollama."""
+    if LLM_PROVIDER == "groq" and GROQ_API_KEY:
+        try:
+            return _groq_chat(messages, json_mode, temperature, max_tokens, min(timeout, 60))
+        except Exception as groq_err:
+            try:
+                return _ollama_chat(messages, json_mode, temperature, max_tokens, timeout)
+            except Exception:
+                raise groq_err
+    return _ollama_chat(messages, json_mode, temperature, max_tokens, timeout)
+
+def llm_label() -> str:
+    return f"Groq · {GROQ_MODEL}" if (LLM_PROVIDER == "groq" and GROQ_API_KEY) else f"Ollama · {OLLAMA_MODEL}"
+
 app = FastAPI(title="DocuGuide — Evidence Research Demo")
 app.add_middleware(
     CORSMiddleware,
@@ -58,6 +110,8 @@ class ChatRequest(BaseModel):
     country: str = "auto"
     # Slot answers collected by the clarifying-question flow (client holds the state).
     answers: dict = {}
+    # Guide the user is currently looking at (lets follow-up questions refer to it).
+    context: dict = {}
 
 def load_json(path):
     return json.loads(path.read_text(encoding="utf-8"))
@@ -78,7 +132,8 @@ def detect_category(question: str) -> str:
         return "relocation"
     if any(x in q for x in ["angajare", "angajat", "contract de muncă", "contract de munca", "job", "salariat"]):
         return "employment"
-    if any(x in q for x in ["firmă", "firma", "companie", "societate", "deschid o firmă", "deschid o firma"]):
+    if any(x in q for x in ["firmă", "firma", "companie", "societate", "deschid o firmă", "deschid o firma", "srl", "s.r.l",
+                            "întreprindere", "intreprindere", "afacere", "afaceri", "persoană juridică", "persoana juridica"]):
         return "business"
     if any(x in q for x in ["medic", "spital", "servicii medicale", "asigurare medicală", "asigurare medicala"]):
         return "health"
@@ -184,7 +239,7 @@ def domain_guard(question: str):
     off_topic_patterns = [
         r"\bscrie(ți|te)?\s+(un\s+)?cod\b",
         r"\bc\+\+\b", r"\bpython\b", r"\bjavascript\b", r"\bjava\b",
-        r"\bc#\b", r"\blua\b", r"\broblox\b",
+        r"\bc#\b", r"\blua\b(?=.*\b(cod|script|program\w*)\b)", r"\broblox\b",
         r"\blinked\s*list\b", r"\balgoritm(ul)?\b",
         r"\bprogramare\b", r"\bdebug\b", r"\bbug\b",
         r"\bhtml\b", r"\bcss\b", r"\bsql\b",
@@ -201,7 +256,7 @@ def domain_guard(question: str):
         r"\buniversitate\b", r"\berasmus\b", r"\bburs", r"\bstudii\b",
         r"\bchirie\b", r"\bînchir", r"\binchir", r"\bapartament\b",
         r"\bcontract\b", r"\bangajare\b", r"\bjob\b", r"\bemployment\b",
-        r"\bfirmă\b", r"\bfirma\b", r"\bcompanie\b", r"\bautoriza",
+        r"\bfirmă\b", r"\bfirma\b", r"\bsrl\b", r"\bs\.r\.l\b", r"\bîntreprindere", r"\bintreprindere", r"\bafacere", r"\bcompanie\b", r"\bautoriza",
         r"\bmașin[aă]\b", r"\bmasin[aă]\b", r"\bautomobil\b", r"\bautoturism\b",
         r"\bvehicul\b", r"\bînmatricul", r"\binmatricul", r"\bnumere\b",
         r"\bplăcuțe\b", r"\bplacute\b", r"\bacte auto\b", r"\bvămuire\b", r"\bvamuire\b",
@@ -223,7 +278,17 @@ def domain_guard(question: str):
                 "category": "other"
             }
 
-    if any(re.search(p, q) for p in admin_patterns):
+    # "documente", "acte", "cât costă"... appear in any question ("ce documente am nevoie pentru un kebab"),
+    # so on their own they are NOT proof of an administrative topic: only specific topics are.
+    generic = [
+        r"\bdocument(e|e?le)?\b", r"\bact(e|ele)?\b", r"\bprocedur", r"\bacte necesare\b",
+        r"\bce trebuie să fac\b", r"\bce trebuie sa fac\b", r"\bunde trebuie să merg\b", r"\bunde trebuie sa merg\b",
+        r"\bcât costă\b", r"\bcat costa\b", r"\bcât durează\b", r"\bcat dureaza\b",
+        r"\bcontract\b", r"\badministrativ\b", r"\bjob\b",
+    ]
+    # specific topics also match inflected forms ("buletinul", "mașinii"): drop the closing word boundary
+    specific = [p[:-2] if p.endswith("\\b") else p for p in admin_patterns if p not in generic]
+    if any(re.search(p, q) for p in specific):
         return {"allowed": True, "reason": "", "category": "administrative"}
 
     # Ask a tiny local classification call only for ambiguous questions.
@@ -247,6 +312,12 @@ DocuGuide ONLY handles:
 - administrative health-service access
 - vehicle import, customs, registration and car paperwork
 
+A question is allowed ONLY if it names a recognisable administrative situation: a procedure, an official
+document, an institution, a legal status or a permit (e.g. "ce acte trebuie pentru buletin", "cum deschid un SRL").
+Generic words like "documente" or "acte" are NOT enough: the subject must be an administrative topic.
+Examples that are NOT allowed: "ce documente am nevoie pentru un kebab", "ce acte trebuie pentru pizza",
+"cum fac o prăjitură", "ce documente am nevoie pentru o pisică de jucărie".
+
 Return ONLY JSON:
 {{"allowed": true_or_false, "category": "education|public_services|relocation|rent|auto|employment|business|health|other", "reason": "short Romanian reason"}}
 
@@ -255,20 +326,10 @@ User question:
 """.strip()
 
     try:
-        payload = {
-            "model": OLLAMA_MODEL,
-            "stream": False,
-            "format": "json",
-            "messages": [
-                {"role": "system", "content": "Return valid JSON only."},
-                {"role": "user", "content": prompt}
-            ],
-            "options": {"temperature": 0}
-        }
-        with httpx.Client(timeout=45) as client:
-            r = client.post(f"{OLLAMA_URL}/api/chat", json=payload)
-            r.raise_for_status()
-            content = r.json().get("message", {}).get("content", "{}")
+        content = llm_chat(
+            [{"role": "system", "content": "Return valid JSON only."}, {"role": "user", "content": prompt}],
+            json_mode=True, temperature=0, max_tokens=150, timeout=45,
+        ) or "{}"
         result = json.loads(content)
         return {
             "allowed": bool(result.get("allowed", False)),
@@ -385,18 +446,20 @@ def excerpt(text: str, stems, limit: int = 2500, window: int = 600, stride: int 
     return " … ".join(w[1] for w in sorted(top))
 
 def _site_search(domain: str, queries):
-    """Search one approved domain with a site: filter. Returns raw ddgs hits."""
+    """Search one approved domain with a site: filter. Returns raw ddgs hits.
+    The search engine is flaky (rate limits, empty answers), so an empty answer is retried once."""
     hits = []
-    try:
-        with DDGS(timeout=10) as ddgs:
-            for query in queries:
-                try:
-                    for r in ddgs.text(f"site:{domain} {query}", max_results=4):
-                        hits.append(r)
-                except Exception:
-                    continue
-    except Exception:
-        pass
+    for query in queries:
+        for attempt in (0, 1):
+            try:
+                with DDGS(timeout=10) as ddgs:
+                    got = list(ddgs.text(f"site:{domain} {query}", max_results=4))
+            except Exception:
+                got = []
+            if got:
+                hits.extend(got)
+                break
+            time.sleep(0.8)
     return hits
 
 def search_web(question: str, category: str, country: str):
@@ -433,7 +496,7 @@ def search_web(question: str, category: str, country: str):
         r["relevance"] = relevance(f"{r['title']} {r['url']} {r['snippet']}", stems)
     results.sort(key=lambda x: (-x["relevance"], -x["authority"]))
     results = results[:10]
-    if results:
+    if results and results[0]["relevance"] > 0:  # a thin / irrelevant result set is not worth caching
         cache_set(cache_key, results)
     return results
 
@@ -462,20 +525,22 @@ def fetch_page(url: str):
     cached = cache_get(("page", url))
     if cached is not None:
         return cached
-    try:
-        headers = {"User-Agent": "DocuGuide-Hackathon/0.1"}
-        with httpx.Client(timeout=8, follow_redirects=True, headers=headers) as client:
-            r = client.get(url)
-            r.raise_for_status()
-        soup = BeautifulSoup(r.text, "html.parser")
-        title = clean_text(soup.title.get_text(" ")) if soup.title else ""
-        text = extract_content(soup)
-        out = (title, text[:12000])
-        if text:
-            cache_set(("page", url), out)
-        return out
-    except Exception:
-        return "", ""
+    headers = {"User-Agent": "DocuGuide-Hackathon/0.1"}
+    for timeout in (8, 15):  # one slow answer from an official site should not count as "unreachable"
+        try:
+            with httpx.Client(timeout=timeout, follow_redirects=True, headers=headers) as client:
+                r = client.get(url)
+                r.raise_for_status()
+            soup = BeautifulSoup(r.text, "html.parser")
+            title = clean_text(soup.title.get_text(" ")) if soup.title else ""
+            text = extract_content(soup)
+            out = (title, text[:12000])
+            if text:
+                cache_set(("page", url), out)
+            return out
+        except Exception:
+            continue
+    return "", ""
 
 def evidence_pack(results, question: str = "", category: str = "general"):
     """Fetch the top pages in parallel and keep source ids stable."""
@@ -655,34 +720,115 @@ SOURCE MATERIAL:
 {chr(10).join(sources)}
 """.strip()
 
-def call_ollama(prompt):
-    payload = {
-        "model": OLLAMA_MODEL,
-        "stream": False,
-        "format": "json",
-        "messages": [
-            {"role": "system", "content": "Return valid JSON only. Answer in Romanian."},
-            {"role": "user", "content": prompt},
-        ],
-        "options": {"temperature": 0.05, "num_ctx": 6000}
-    }
-    with httpx.Client(timeout=180) as client:
-        r = client.post(f"{OLLAMA_URL}/api/chat", json=payload)
-        r.raise_for_status()
-        data = r.json()
-    content = data.get("message", {}).get("content", "{}")
+def parse_json_lenient(text: str):
+    """json.loads, but also rescue answers cut off by the output limit or wrapped in prose."""
     try:
-        return json.loads(content)
-    except json.JSONDecodeError:
-        return {
-            "summary": content,
-            "clarification_needed": False,
-            "clarifying_questions": [],
-            "documents": [],
-            "steps": [],
-            "warnings": ["Modelul nu a returnat JSON perfect; răspunsul a fost păstrat ca text."],
-            "contradictions": []
-        }
+        return json.loads(text)
+    except (json.JSONDecodeError, TypeError):
+        pass
+    start = (text or "").find("{")
+    if start < 0:
+        return None
+    t = text[start:]
+    tries = 0
+    for i in range(len(t) - 1, 0, -1):
+        if t[i] not in "}]\"0123456789el":  # plausible end of a complete value
+            continue
+        tries += 1
+        if tries > 400:
+            break
+        cand, stack, in_str, esc = t[: i + 1], [], False, False
+        for ch in cand:
+            if in_str:
+                if esc:
+                    esc = False
+                elif ch == "\\":
+                    esc = True
+                elif ch == '"':
+                    in_str = False
+            elif ch == '"':
+                in_str = True
+            elif ch in "{[":
+                stack.append("}" if ch == "{" else "]")
+            elif ch in "}]" and stack:
+                stack.pop()
+        if in_str:
+            continue
+        try:
+            obj = json.loads(cand.rstrip().rstrip(",") + "".join(reversed(stack)))
+            if isinstance(obj, dict):
+                return obj
+        except json.JSONDecodeError:
+            continue
+    return None
+
+def call_ollama(prompt):
+    """Answer step (name kept for compatibility): returns the parsed JSON answer from the active provider."""
+    content = llm_chat(
+        [{"role": "system", "content": "Return valid JSON only. Answer in Romanian. Keep every text field short."},
+         {"role": "user", "content": prompt}],
+        json_mode=True, temperature=0.05, max_tokens=2000, timeout=240,
+    ) or "{}"
+    parsed = parse_json_lenient(content)
+    if parsed is not None:
+        return parsed
+    return {
+        "summary": "",
+        "clarification_needed": False,
+        "clarifying_questions": [],
+        "documents": [],
+        "steps": [],
+        "warnings": [],
+        "contradictions": [],
+    }
+
+BOILERPLATE = ("cookie", "©", "sugestiile si propunerile", "toate drepturile", "politica de confidentialitate", "filtru")
+
+GENERIC_QUESTION_WORDS = set("docum acte nevoi trebu neces avea fac fie sunt lipse cere obtin obtine cumpar cumpara ghid pasi pasii "
+                             "procedura procedur proces cost costa costul termen zile desch inchi vreau pleca merg mers aduce adus aduc "
+                             "schim muta mut cauta caut aplic aplica inscr depun depus primi prime primesc obtin".split())
+
+def topic_stems(question: str, category: str):
+    """Stems of what the question is actually ABOUT (generic admin words and category hints removed)."""
+    words = re.findall(r"[a-z0-9]+", fold(question))
+    stems = {w[:5] for w in words if len(w) >= 4 and w not in QUESTION_STOP}
+    stems -= {t[:5] for t in CATEGORY_TERMS.get(category, [])}
+    return {st for st in stems if st not in GENERIC_QUESTION_WORDS}
+
+def subject_in_sources(question: str, category: str, evidence: list) -> bool:
+    """False when the question's own subject (e.g. "kebab") occurs in none of the official pages found.
+    Only applies to questions with no recognised administrative topic (category "general"): a question
+    already recognised as business / auto / education ... is on-topic by definition."""
+    if category != "general":
+        return True
+    stems = topic_stems(question, category)
+    if not stems:
+        return True
+    blob = fold(" ".join(e["text"] for e in evidence))
+    hits = sum(1 for st in stems if st in blob)
+    # one shared word ("licență" on a page about university degrees) is not enough for a multi-word subject
+    return hits >= max(1, (len(stems) + 1) // 2)
+
+def build_extracts(evidence: list, question: str, category: str, limit: int = 3):
+    """Relevant passages straight from the official pages: used when no structured guide can be trusted.
+    Only passages that really match the question's terms are kept (no menus, cookie banners, footers)."""
+    stems = {st for st in stems_for(question, category)}
+    out = []
+    for e in evidence:
+        best, best_score = None, 0
+        for i in range(0, len(e["text"]), 450):
+            win = e["text"][i:i + 700].strip()
+            if not win or any(b in fold(win) for b in BOILERPLATE):
+                continue
+            score = sum(1 for st in stems if st in fold(win))
+            if score > best_score:
+                best, best_score = win, score
+        if best and best_score >= 2:
+            out.append({"id": e["id"], "text": best, "url": e["url"], "source": e["title"], "_score": best_score})
+    out.sort(key=lambda x: -x["_score"])
+    for x in out:
+        x.pop("_score")
+    return out[:limit]
 
 CARDS_DIR = DATA / "cards"
 
@@ -719,11 +865,11 @@ def _norm(t: str) -> str:
 
 def verify_card(card: dict):
     """Re-fetch every source page and check each quote is still there.
-    Returns ({item_id: 'confirmed'|'changed'|'unreachable'}, {source_key: page_ok})."""
+    Returns ({item_id: 'confirmed'|'changed'|'unreachable'}, {source_key: page_ok}, {item_id: where_confirmed})."""
     urls = {k: v["url"] for k, v in card["sources"].items()}
     with ThreadPoolExecutor(max_workers=max(1, len(urls))) as pool:
         texts = dict(zip(urls, pool.map(lambda u: _norm(fetch_page(u)[1]), urls.values())))
-    status = {}
+    status, where_ok = {}, {}
     for item in card["documents"] + card["steps"]:
         text = texts.get(item["source"], "")
         quotes = [item["quote"]] if "quote" in item else item["quotes"]
@@ -733,24 +879,27 @@ def verify_card(card: dict):
             status[item["id"]] = "confirmed"
         else:
             status[item["id"]] = "changed"
-    return status, {k: bool(t) for k, t in texts.items()}
+        # a "where to get it" value is shown as fact only if the page itself says it
+        wq = item.get("where_quote")
+        where_ok[item["id"]] = bool(wq and text and _norm(wq) in text)
+    return status, {k: bool(t) for k, t in texts.items()}, where_ok
 
 def card_answer(card: dict, profile: dict | None = None):
-    status, page_ok = verify_card(card)
+    status, page_ok, where_ok = verify_card(card)
     keys = list(card["sources"])
     sid = {k: i + 1 for i, k in enumerate(keys)}
     label = {"confirmed": "Confirmat acum pe pagina oficială", "changed": "Pagina oficială s-a schimbat — verifică manual",
              "unreachable": "Nu am putut deschide pagina oficială acum; ultima verificare: " + card["last_verified"]}
     docs = [{
         "name": d["name"], "status": d["status"] if status[d["id"]] != "changed" else "unknown",
-        "reason": label[status[d["id"]]], "where_to_get": d.get("where_to_get"),
+        "reason": label[status[d["id"]]], "where_to_get": d.get("where_to_get") if where_ok[d["id"]] else None,
         "sources": [sid[d["source"]]], "quote": d["quote"], "check": status[d["id"]],
     } for d in card["documents"]]
     steps = [{
         "title": st["title"], "description": st["description"], "where": st.get("where"),
         "cost": st.get("cost"), "duration": st.get("duration"), "depends_on_step": st.get("depends_on_step"),
         "link": card["sources"][st["source"]]["url"], "sources": [sid[st["source"]]],
-        "quote": st["quotes"][0], "check": status[st["id"]],
+        "quote": st["quotes"][0], "quotes": st["quotes"], "check": status[st["id"]],
     } for st in card["steps"]]
     n_ok = sum(v == "confirmed" for v in status.values())
     warnings = ["Neconfirmat în surse: " + x for x in card.get("unconfirmed", [])]
@@ -768,28 +917,232 @@ def card_answer(card: dict, profile: dict | None = None):
                 "authority": 5, "fetched": page_ok[k]} for k, v in card["sources"].items()]
     return answer, sources, f"{n_ok}/{len(status)}"
 
+
+QUESTION_STOP = set(STOPWORDS) | set("unde cand cine cui cum iau lua pot putea poti sunt pentru documentul document documente documentul "
+                                     "sa de la ce un o si sau din cat mai fi este era ceva pentru despre care".split())
+INTENT_WHERE = ("unde", "de la cine", "de la ce", "cine", "cui", "de la care")
+INTENT_COST = ("cat costa", "cost", "tarif", "taxa", "pret", "cat platesc", "plata")
+INTENT_TIME = ("cat dureaza", "durata", "termen", "cat timp", "cand", "zile", "cat se asteapta")
+
+def _qstems(text: str):
+    words = re.findall(r"[a-z0-9]+", fold(text))
+    return {w[:5] for w in words if len(w) >= 4 and w not in QUESTION_STOP}
+
+def _item_text(item: dict) -> str:
+    parts = [item.get("name") or item.get("title") or "", item.get("description", "")]
+    parts += [item["quote"]] if "quote" in item else item.get("quotes", [])
+    return fold(" ".join(parts))
+
+def best_item(card: dict, question: str):
+    """(item, kind, score) for the card document/step the question talks about.
+    Cost/time questions look at steps first; others at documents first."""
+    q = fold(question)
+    stems = _qstems(question)
+    money = any(k in q for k in INTENT_COST + INTENT_TIME)
+    groups = (("step", card["steps"]), ("doc", card["documents"])) if money else (("doc", card["documents"]), ("step", card["steps"]))
+    best = (None, None, 0)
+    for kind, items in groups:
+        for it in items:
+            text = _item_text(it)
+            n = sum(1 for st in stems if st in text)
+            if n and any(k in q for k in INTENT_COST) and any(w in text for w in ("drepturile", "tax", "cost", "grant", "tarif", " lei")):
+                n += 1
+            if n > best[2]:
+                best = (it, kind, n)
+    return best
+
+def general_answer(card: dict, item, question: str, where: str = ""):
+    """Helpful general-knowledge answer for a follow-up the official sources do not cover.
+    Always shown to the user as NOT coming from an official source."""
+    ctx = ""
+    if item is not None:
+        quotes = [item["quote"]] if "quote" in item else item.get("quotes", [])
+        facts = [item.get("description") or item.get("name") or ""]
+        if item.get("cost"):
+            facts.append(f"Cost oficial: {item['cost']}")
+        if item.get("duration"):
+            facts.append(f"Durată oficială: {item['duration']}")
+        ctx = (f"Element din ghid: {item.get('name') or item['title']}\n"
+               f"Fapte oficiale (din sursa verificată): {' | '.join(f for f in facts if f)}\n"
+               f"Citat din sursă: \"{quotes[0] if quotes else ''}\"\n")
+    prompt = f"""Utilizatorul urmărește ghidul: «{card['title']}».
+{ctx}Întrebarea utilizatorului: {question}
+
+Dă un răspuns util și concret, în română (maximum 6 propoziții sau o listă scurtă de puncte).
+Reguli:
+- Folosește cunoștințe generale. NU inventa reguli, termene, sume sau cerințe specifice ale unei instituții.
+- Nu contrazice niciodată faptele oficiale de mai sus; completează-le doar.
+- Dacă lucrul depinde de instituție, spune asta{f' și recomandă să întrebe la: {where}' if where else ''}.
+- Dacă nu ești sigur sau întrebarea cere o permisiune/regulă a unei instituții, spune clar că nu știi și cui să ceară confirmarea (nu afirma că „se poate” sau „nu se poate”).
+- Nu spune că informația provine dintr-o sursă oficială."""
+    try:
+        text = llm_chat(
+            [{"role": "system", "content": "Ești DocuGuide, asistent pentru documente și proceduri administrative în Republica Moldova. Răspunzi scurt, clar și practic, în română."},
+             {"role": "user", "content": prompt}],
+            temperature=0.3, max_tokens=350, timeout=150,
+        ).strip()
+        return text or None
+    except Exception:
+        return None
+
+CONTENT_CUES = ("contin", "cum scriu", "cum completez", "cum fac", "cum obtin", "exemplu", "ce este", "ce inseamn",
+                "de ce", "ce trebuie", "ce ar trebui", "ce informat", "cum ")
+
+def is_followup(card: dict, question: str) -> bool:
+    """True when the message continues the guide on screen (about one of its items, or a general
+    question in the same area). False for a new topic that has its own guide or is off-topic."""
+    if domain_guard(question)["allowed"] is False:
+        return False
+    if any(fold(t) in fold(question) for g in card.get("glossary", []) for t in g["terms"]):
+        return True
+    _, _, n = best_item(card, question)
+    other = card_for_slots(detect_category(question), question)
+    if other and other["id"] != card["id"] and n < 3:
+        return False
+    return n >= 1 or detect_category(question) in ("general", card["category"])
+
+def followup_answer(card: dict, question: str):
+    q = fold(question)
+    status, page_ok, where_ok = verify_card(card)
+    src = lambda it: card["sources"][it["source"]]
+    for g in card.get("glossary", []):
+        if any(fold(t) in q for t in g["terms"]):
+            meta = card["sources"][g["source"]]
+            text = _norm(fetch_page(meta["url"])[1])
+            ok = bool(text) and all(_norm(x) in text for x in g["quotes"])
+            return {"title": g["title"], "facts": [g["text"]], "unconfirmed": [] if ok else ["Pagina oficială nu a putut fi confirmată acum; verifică manual."],
+                    "hint": None, "general": None,
+                    "quotes": [{"text": x, "url": meta["url"], "source": meta["title"]} for x in g["quotes"]] if ok else [],
+                    "links": [{"label": meta["title"], "url": meta["url"]}]}
+    item, kind, n = best_item(card, question)
+    want_where = any(k in q for k in INTENT_WHERE)
+    want_cost = any(k in q for k in INTENT_COST)
+    want_time = any(k in q for k in INTENT_TIME)
+    wants_content = any(k in q for k in CONTENT_CUES) and not want_where
+    out = {"title": None, "facts": [], "unconfirmed": [], "hint": None, "quotes": [], "links": [], "general": None}
+
+    def quote_entries(it):
+        qs = [it["quote"]] if "quote" in it else it["quotes"]
+        if status[it["id"]] != "confirmed":
+            out["unconfirmed"].append("Pagina oficială nu a putut fi confirmată acum pentru acest element; verifică manual.")
+            return []
+        return [{"text": t, "url": src(it)["url"], "source": src(it)["title"]} for t in qs]
+
+    n_stems = max(len(_qstems(question)), 1)
+    if item is not None and not (n >= 3 or n / n_stems >= 0.6):
+        item = None  # only a weak word overlap: do not pretend the guide answers this
+    if item is None:
+        # nothing in the guide matches: look for passages in the official pages themselves
+        stems = _qstems(question)
+        for key, meta in card["sources"].items():
+            text = fetch_page(meta["url"])[1]
+            if not text or not stems:
+                continue
+            wins = [(i, text[i:i + 500]) for i in range(0, len(text), 350)]
+            scored = sorted(wins, key=lambda w: -sum(1 for st in stems if st in fold(w[1])))
+            top = [w for w in scored[:1] if sum(1 for st in stems if st in fold(w[1])) >= 3]
+            for _, t in top:
+                out["quotes"].append({"text": t.strip(), "url": meta["url"], "source": meta["title"]})
+        if out["quotes"]:
+            out["title"] = "Ce apare în sursa oficială"
+            out["facts"].append("Nu am găsit exact acest lucru în ghidul verificat. Cel mai apropiat fragment din pagina oficială:")
+        else:
+            out["title"] = "Nu am găsit informații despre asta"
+            out["facts"].append("Sursele oficiale verificate pentru acest ghid nu menționează acest lucru.")
+        out["unconfirmed"] += [u for u in card.get("unconfirmed", [])][:3]
+        out["general"] = general_answer(card, None, question)
+        return out
+
+    out["title"] = item.get("name") or item["title"]
+    out["quotes"] = quote_entries(item)
+    out["links"] = [{"label": src(item)["title"], "url": src(item)["url"]}]
+    if kind == "doc":
+        if want_cost or want_time:
+            out["unconfirmed"].append("Sursele oficiale verificate nu precizează costul sau termenul pentru acest document.")
+        if wants_content:
+            out["facts"].append("Sursa oficială menționează acest document, dar nu detaliază ce trebuie să conțină.")
+        elif where_ok[item["id"]] and item.get("where_to_get"):
+            out["facts"].append(f"Conform sursei, îl obții: {item['where_to_get']}.")
+        else:
+            out["facts"].append("Sursa oficială nu precizează de unde sau de la cine se obține acest document.")
+            if item.get("hint"):
+                out["hint"] = item["hint"]
+        step = next((st for st in card["steps"] if st["id"] == item.get("used_in")), None)
+        if step:
+            out["facts"].append(f"Îl folosești la pasul {step['order'] if 'order' in step else card['steps'].index(step) + 1}: {step['title']}"
+                                + (f" ({step['where']})." if step.get("where") else "."))
+    else:
+        out["facts"].append(item["description"])
+        if item.get("where"):
+            out["facts"].append(f"Unde: {item['where']}.")
+        if want_cost:
+            out["facts"].append(f"Cost: {item['cost']}." if item.get("cost") else "Costul acestui pas nu este precizat în sursele verificate.")
+            if not item.get("cost"):
+                out["unconfirmed"] += [u for u in card.get("unconfirmed", []) if re.search(r"sum|tarif|cost", fold(u))][:2]
+        if want_time:
+            out["facts"].append(f"Durată: {item['duration']}." if item.get("duration") else "Durata acestui pas nu este precizată în sursele verificate.")
+            if not item.get("duration"):
+                out["unconfirmed"] += [u for u in card.get("unconfirmed", []) if re.search(r"termen|durat|deadline", fold(u))][:2]
+
+    incomplete = any("nu precizeaz" in fold(f) or "nu este precizat" in fold(f) or "nu detaliaz" in fold(f) for f in out["facts"]) \
+        or bool(out["unconfirmed"])
+    if wants_content or incomplete:
+        st = next((x for x in card["steps"] if x["id"] == item.get("used_in")), None) if kind == "doc" else item
+        out["general"] = general_answer(card, item, question, (st or {}).get("where") or "")
+        if out["general"]:
+            out["hint"] = None  # the generated answer replaces the static suggestion
+    return out
+
 @app.get("/api/health")
 def health():
+    info = {"provider": LLM_PROVIDER, "active": llm_label()}
+    groq = LLM_PROVIDER == "groq" and bool(GROQ_API_KEY)
+    if groq:
+        try:
+            with httpx.Client(timeout=5) as client:
+                r = client.get(f"{GROQ_BASE_URL}/models", headers={"Authorization": f"Bearer {GROQ_API_KEY}"})
+            info["groq_ok"] = r.status_code == 200
+            if r.status_code != 200:
+                info["groq_error"] = f"HTTP {r.status_code} (cheie invalidă sau limită depășită?)"
+        except Exception as e:
+            info["groq_ok"] = False
+            info["groq_error"] = str(e)
     try:
         with httpx.Client(timeout=3) as client:
             r = client.get(f"{OLLAMA_URL}/api/tags")
             r.raise_for_status()
             models = [m.get("name") for m in r.json().get("models", [])]
-        return {
-            "ok": True,
-            "ai": "ollama",
-            "model": OLLAMA_MODEL,
-            "model_installed": OLLAMA_MODEL in models,
-            "installed_models": models
-        }
+        info.update({"ollama_ok": True, "model": OLLAMA_MODEL, "model_installed": OLLAMA_MODEL in models, "installed_models": models})
     except Exception as e:
-        return {"ok": False, "ai": "ollama", "model": OLLAMA_MODEL, "error": str(e)}
+        info.update({"ollama_ok": False, "model": OLLAMA_MODEL, "ollama_error": str(e)})
+    # "ok" = at least one provider can answer
+    info["ok"] = bool(info.get("groq_ok")) or (info.get("ollama_ok") and info.get("model_installed"))
+    info["ai"] = "groq" if groq else "ollama"
+    return info
 
 @app.post("/api/chat")
 def chat(req: ChatRequest):
     question = req.question.strip()
     if not question:
         raise HTTPException(400, "Întrebarea este goală.")
+
+    # A short follow-up that refers back ("da ștampila cum o primesc?") is read together with the previous question.
+    prev_q = str((req.context or {}).get("prev_question") or "").strip()
+    if prev_q and len(question.split()) <= 8 and detect_category(question) == "general" \
+            and re.search(r"\b(o|il|le|ii|asta|aceasta|acesta|aceea|atunci|dar|si|da)\b", fold(question)):
+        question = f"{prev_q} — {question}"
+
+    # Follow-up about the guide on screen ("de unde iau documentul X?"): answer from that guide.
+    ctx_id = (req.context or {}).get("card_id")
+    if ctx_id:
+        ctx_card = next((c for c in load_cards() if c["id"] == ctx_id), None)
+        if ctx_card and is_followup(ctx_card, question):
+            return {
+                "allowed": True, "needs_clarification": False, "followup": followup_answer(ctx_card, question),
+                "category": ctx_card["category"], "profile": req.answers,
+                "card": {"id": ctx_card["id"], "title": ctx_card["title"], "last_verified": ctx_card["last_verified"]},
+                "sources": [], "source_count": 0, "policy": {"allowed_only": True, "curated_card": True, "followup": True},
+            }
 
     # Domain Guard runs BEFORE web search and BEFORE the answer model.
     domain = get_domain_decision(question)
@@ -884,17 +1237,43 @@ def chat(req: ChatRequest):
             "policy": {"allowed_only": True, "local_ai": True, "no_evidence": True},
         }
 
+    if not subject_in_sources(question, category, evidence):
+        return {
+            "allowed": True, "needs_clarification": False, "profile": profile, "domain_guard": domain,
+            "answer": {
+                "summary": "Nu am găsit nimic despre această temă în sursele oficiale. DocuGuide ajută cu documente și proceduri administrative din Republica Moldova.",
+                "clarification_needed": False, "clarifying_questions": [], "documents": [], "steps": [],
+                "warnings": ["Reformulează cu situația concretă, de exemplu: «ce acte trebuie ca să deschid un SRL» sau «cum înregistrez o mașină adusă din Germania»."],
+                "contradictions": [],
+            },
+            "category": category, "country": country, "search_queries": build_queries(question, category, country),
+            "sources": [], "source_count": 0, "policy": {"allowed_only": True, "local_ai": True, "no_evidence": True},
+        }
+
+    if LLM_MAX_PROMPT_CHARS:
+        # shrink the evidence evenly so the whole prompt stays within the provider's token budget
+        room = max(LLM_MAX_PROMPT_CHARS - 3500, 1200)
+        per_source = max(room // max(len(evidence), 1), 500)
+        for e in evidence:
+            e["text"] = e["text"][:per_source]
     prompt = make_prompt(question, category, country, evidence, profile)
 
     try:
         answer = call_ollama(prompt)
     except httpx.HTTPStatusError as e:
-        if e.response.status_code == 404:
+        if e.response.status_code == 404 and LLM_PROVIDER != "groq":
             raise HTTPException(503, f"Modelul {OLLAMA_MODEL} nu este instalat în Ollama. Rulează în terminal: ollama pull {OLLAMA_MODEL}")
-        raise HTTPException(503, f"Ollama a returnat o eroare: {e}")
+        if e.response.status_code == 429:
+            raise HTTPException(503, "Limita gratuită a serviciului AI a fost atinsă. Încearcă din nou peste un minut.")
+        raise HTTPException(503, f"Serviciul AI ({llm_label()}) a returnat o eroare: {e}")
     except Exception as e:
-        raise HTTPException(503, f"Ollama nu a putut genera răspunsul: {e}")
+        raise HTTPException(503, f"Serviciul AI ({llm_label()}) nu a putut genera răspunsul: {e}")
     answer = sanitize_answer(answer, evidence)
+    if not answer["documents"] and not answer["steps"]:
+        answer["extracts"] = build_extracts(evidence, question, category)
+        if answer["extracts"]:
+            answer["summary"] = ("Nu am putut construi un ghid structurat și verificat, dar iată fragmentele "
+                                 "relevante din sursele oficiale găsite:")
 
     # Add source metadata for UI. IDs match evidence IDs.
     source_cards = []

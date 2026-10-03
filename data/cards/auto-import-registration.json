@@ -34,17 +34,20 @@
       "id": "d-id-customs",
       "name": "Actul de identitate al proprietarului (pașaport sau buletin) — pentru vamă",
       "status": "required",
-      "where_to_get": "Original și copie",
+      "where_to_get": null,
       "source": "customs",
-      "quote": "actul de identitate (pașaportul sau buletinul de identitate) al proprietarului sau persoanei împuternicite legal să declare bunul"
+      "quote": "actul de identitate (pașaportul sau buletinul de identitate) al proprietarului sau persoanei împuternicite legal să declare bunul",
+      "used_in": "s1"
     },
     {
       "id": "d-ownership",
       "name": "Document care confirmă dreptul de proprietate sau folosință (contract, factura comercială sau document de plată)",
       "status": "required",
-      "where_to_get": "De la vânzător",
+      "where_to_get": null,
       "source": "customs",
-      "quote": "documentul ce confirmă dreptul de proprietate sau folosință asupra bunurilor (contractul, factura comercială sau documentul de plată)"
+      "quote": "documentul ce confirmă dreptul de proprietate sau folosință asupra bunurilor (contractul, factura comercială sau documentul de plată)",
+      "used_in": "s1",
+      "hint": "de regulă se obține de la vânzătorul mașinii: contractul de vânzare-cumpărare, factura sau dovada plății"
     },
     {
       "id": "d-tech-passport",
@@ -52,7 +55,8 @@
       "status": "required",
       "where_to_get": null,
       "source": "customs",
-      "quote": "pașaportul tehnic al mijlocului de transport"
+      "quote": "pașaportul tehnic al mijlocului de transport",
+      "used_in": "s1"
     },
     {
       "id": "d-poa",
@@ -60,15 +64,17 @@
       "status": "possible",
       "where_to_get": null,
       "source": "customs",
-      "quote": "procura eliberată persoanei care va efectua declararea bunului autorității vamale (în cazul reprezentării proprietarului acestuia)"
+      "quote": "procura eliberată persoanei care va efectua declararea bunului autorității vamale (în cazul reprezentării proprietarului acestuia)",
+      "used_in": "s2"
     },
     {
       "id": "d-app",
       "name": "Cerere de eliberare a certificatului de înmatriculare (VP)",
       "status": "required",
-      "where_to_get": "ASP",
+      "where_to_get": null,
       "source": "asp",
-      "quote": "cerere de eliberare VP, actele de însoțire a vehiculului importat"
+      "quote": "cerere de eliberare VP, actele de însoțire a vehiculului importat",
+      "used_in": "s5"
     },
     {
       "id": "d-fee-proof",
@@ -76,7 +82,8 @@
       "status": "required",
       "where_to_get": null,
       "source": "asp",
-      "quote": "document de confirmare a taxelor pentru serviciile prestate"
+      "quote": "document de confirmare a taxelor pentru serviciile prestate",
+      "used_in": "s5"
     },
     {
       "id": "d-id-asp",
@@ -84,7 +91,8 @@
       "status": "required",
       "where_to_get": null,
       "source": "asp",
-      "quote": "documente de identitate, sau procură, după caz"
+      "quote": "documente de identitate, sau procură, după caz",
+      "used_in": "s5"
     }
   ],
   "steps": [

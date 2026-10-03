@@ -1,0 +1,241 @@
+- main [ref=e79]:
+  - complementary [ref=e80]:
+    - button "DocuGuide - Acasă" [ref=e81] [cursor=pointer]:
+      - generic [ref=e82]: ♧
+      - generic [ref=e83]: DocuGuide
+    - button "+ Conversație nouă" [ref=e84] [cursor=pointer]
+    - button "Toate conversațiile" [ref=e85] [cursor=pointer]
+    - navigation [ref=e86]:
+      - button "🎓 Educație și studii" [ref=e87] [cursor=pointer]:
+        - generic [ref=e88]: 🎓
+        - text: Educație și studii
+      - button "🩺 Sănătate" [ref=e89] [cursor=pointer]:
+        - generic [ref=e90]: 🩺
+        - text: Sănătate
+      - button "✈️ Călătorii și relocare" [ref=e91] [cursor=pointer]:
+        - generic [ref=e92]: ✈️
+        - text: Călătorii și relocare
+      - button "🪪 Acte și servicii publice" [ref=e93] [cursor=pointer]:
+        - generic [ref=e94]: 🪪
+        - text: Acte și servicii publice
+      - button "💼 Muncă și carieră" [ref=e95] [cursor=pointer]:
+        - generic [ref=e96]: 💼
+        - text: Muncă și carieră
+      - button "🏢 Afaceri și finanțe" [ref=e97] [cursor=pointer]:
+        - generic [ref=e98]: 🏢
+        - text: Afaceri și finanțe
+      - button "🏠 Viață cotidiană" [ref=e99] [cursor=pointer]:
+        - generic [ref=e100]: 🏠
+        - text: Viață cotidiană
+    - generic [ref=e101]:
+      - strong [ref=e102]: Conversații recente
+      - button "🎓 eu vreau sa ma duc la erasmus, ce am nevoie avan" [ref=e103] [cursor=pointer]:
+        - generic [ref=e104]: 🎓
+        - generic [ref=e105]: eu vreau sa ma duc la erasmus, ce am nevoie avan
+      - button "🪪 cum inregistrez o masina adusa din Germania?" [ref=e106] [cursor=pointer]:
+        - generic [ref=e107]: 🪪
+        - generic [ref=e108]: cum inregistrez o masina adusa din Germania?
+      - button "🎓 eu vreau sa ma duc la erasmus, ce am nevoie avan" [ref=e109] [cursor=pointer]:
+        - generic [ref=e110]: 🎓
+        - generic [ref=e111]: eu vreau sa ma duc la erasmus, ce am nevoie avan
+  - generic [ref=e112]:
+    - generic [ref=e113]:
+      - strong [ref=e114]: Asistent DocuGuide
+      - generic [ref=e115]: 🎓 Educație și studii
+    - generic [ref=e116]:
+      - generic [ref=e117]: eu vreau sa ma duc la erasmus, ce am nevoie avand cetatenia in republica moldova?
+      - generic [ref=e119]:
+        - generic [ref=e120]: ♧
+        - generic [ref=e122]:
+          - paragraph [ref=e123]: Dosarul se depune la coordonatorul Erasmus+ al facultății; după selecție, universitatea gazdă confirmă, iar la întoarcere aduci documentele de recunoaștere a studiilor.
+          - list [ref=e124]:
+            - listitem [ref=e125]: "Ai doar cetățenia Republicii Moldova (sau non-UE): verifică la ambasada/consulatul țării gazdă ce cerințe de intrare și ședere ți se aplică — pagina UTM nu le descrie."
+            - listitem [ref=e126]: "Neconfirmat în surse: Viza, permisul de ședere sau alte acte pentru țara gazdă — nu sunt descrise pe pagina UTM verificată și depind de cetățenii; verifică ambasada/consulatul țării gazdă"
+            - listitem [ref=e127]: "Neconfirmat în surse: Termenele-limită ale concursului — se afișează în calendarul Erasmus+ din fiecare semestru"
+            - listitem [ref=e128]: "Neconfirmat în surse: Costul asigurării de sănătate și al călătoriei — nu apare în surse"
+          - generic [ref=e129]:
+            - heading "Documente" [level=4] [ref=e130]
+            - list [ref=e131]:
+              - listitem [ref=e132]:
+                - generic [ref=e133]:
+                  - strong [ref=e134]: Cerere pentru mobilitate Erasmus
+                  - generic [ref=e135]: Obligatoriu
+                  - link "1" [ref=e136] [cursor=pointer]:
+                    - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-studenti/
+                - paragraph [ref=e137]: Confirmat acum pe pagina oficială
+              - listitem [ref=e138]:
+                - generic [ref=e139]:
+                  - strong [ref=e140]: Scrisoare de motivație care justifică universitatea aleasă
+                  - generic [ref=e141]: Obligatoriu
+                  - link "1" [ref=e142] [cursor=pointer]:
+                    - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-studenti/
+                - paragraph [ref=e143]: Confirmat acum pe pagina oficială
+              - listitem [ref=e144]:
+                - generic [ref=e145]:
+                  - strong [ref=e146]: Recomandare din partea unui cadru didactic
+                  - generic [ref=e147]: Obligatoriu
+                  - link "1" [ref=e148] [cursor=pointer]:
+                    - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-studenti/
+                - paragraph [ref=e149]: Confirmat acum pe pagina oficială
+              - listitem [ref=e150]:
+                - generic [ref=e151]:
+                  - strong [ref=e152]: Learning Agreement (for study / for traineeship)
+                  - generic [ref=e153]: Obligatoriu
+                  - link "1" [ref=e154] [cursor=pointer]:
+                    - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-studenti/
+                - paragraph [ref=e155]: Confirmat acum pe pagina oficială
+                - paragraph [ref=e156]: "Unde: Împreună cu responsabilul pe internaționalizare din cadrul facultății (UTM)"
+              - listitem [ref=e157]:
+                - generic [ref=e158]:
+                  - strong [ref=e159]: Certificat de competență lingvistică (minim B2) sau alte diplome recunoscute; nu se cere studenților care studiază limba respectivă ca parte din specializare
+                  - generic [ref=e160]: Obligatoriu
+                  - link "1" [ref=e161] [cursor=pointer]:
+                    - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-studenti/
+                - paragraph [ref=e162]: Confirmat acum pe pagina oficială
+                - paragraph [ref=e163]: "Unde: Departamentul de Limbi străine"
+              - listitem [ref=e164]:
+                - generic [ref=e165]:
+                  - strong [ref=e166]: "La întoarcere: Certificatul de prezență semnat de universitatea gazdă (cu data de început și de final)"
+                  - generic [ref=e167]: Obligatoriu
+                  - link "1" [ref=e168] [cursor=pointer]:
+                    - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-studenti/
+                - paragraph [ref=e169]: Confirmat acum pe pagina oficială
+                - paragraph [ref=e170]: "Unde: Universitatea gazdă"
+              - listitem [ref=e171]:
+                - generic [ref=e172]:
+                  - strong [ref=e173]: "La întoarcere: Contractul de Studiu ECTS (Learning Agreement for studies și Changes to Learning Agreement, dacă e cazul), semnat"
+                  - generic [ref=e174]: Obligatoriu
+                  - link "1" [ref=e175] [cursor=pointer]:
+                    - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-studenti/
+                - paragraph [ref=e176]: Confirmat acum pe pagina oficială
+                - paragraph [ref=e177]: "Unde: Universitatea gazdă"
+              - listitem [ref=e178]:
+                - generic [ref=e179]:
+                  - strong [ref=e180]: "La întoarcere: Situația școlară (Transcript of records)"
+                  - generic [ref=e181]: Obligatoriu
+                  - link "1" [ref=e182] [cursor=pointer]:
+                    - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-studenti/
+                - paragraph [ref=e183]: Confirmat acum pe pagina oficială
+                - paragraph [ref=e184]: "Unde: Universitatea gazdă"
+          - generic [ref=e185]:
+            - heading "Pași de urmat" [level=4] [ref=e186]
+            - list [ref=e187]:
+              - listitem [ref=e188]:
+                - generic [ref=e189]:
+                  - strong [ref=e190]: Verifică dacă poți aplica
+                  - link "1" [ref=e191] [cursor=pointer]:
+                    - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-studenti/
+                - paragraph [ref=e192]: Se pot înscrie studenții înmatriculați la UTM, la licență (fără anul I), master sau doctorat cu frecvență, fără restanțe. Nu se pot înscrie cei care au deja 12 luni de Erasmus+ în ciclul respectiv, cei cu burse din fonduri europene (dublă finanțare) și cei înmatriculați la alte universități decât UTM.
+                - paragraph [ref=e193]: "Unde: UTM"
+                - link "Deschide pagina oficială" [ref=e194] [cursor=pointer]:
+                  - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-studenti/
+              - listitem [ref=e195]:
+                - generic [ref=e196]:
+                  - strong [ref=e197]: Întocmește dosarul și predă-l coordonatorului Erasmus+ al facultății
+                  - link "1" [ref=e198] [cursor=pointer]:
+                    - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-studenti/
+                - paragraph [ref=e199]: "Dosarul conține: cerere pentru mobilitate, scrisoare de motivație, recomandare de la un cadru didactic, Learning Agreement și certificat de competență lingvistică (minim B2)."
+                - paragraph [ref=e200]: "Unde: Coordonatorul Erasmus+ al facultății · După pasul 1"
+                - link "Deschide pagina oficială" [ref=e201] [cursor=pointer]:
+                  - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-studenti/
+              - listitem [ref=e202]:
+                - generic [ref=e203]:
+                  - strong [ref=e204]: Așteaptă selecția făcută de Comisia Erasmus+ UTM
+                  - link "1" [ref=e205] [cursor=pointer]:
+                    - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-studenti/
+                - paragraph [ref=e206]: Selecția se face în funcție de numărul de burse alocate și de calendarul Erasmus+ al semestrului, afișat pe site-ul UTM și la avizierele facultăților.
+                - paragraph [ref=e207]: "Unde: Comisia Erasmus+ UTM · După pasul 2"
+                - link "Deschide pagina oficială" [ref=e208] [cursor=pointer]:
+                  - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-studenti/
+              - listitem [ref=e209]:
+                - generic [ref=e210]:
+                  - strong [ref=e211]: Universitatea gazdă confirmă acceptarea
+                  - link "1" [ref=e212] [cursor=pointer]:
+                    - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-studenti/
+                - paragraph [ref=e213]: Centrul Universitar Erasmus+ anunță universitatea gazdă de rezultatele selecției, iar aceasta confirmă acceptarea și te informează despre pașii următori.
+                - paragraph [ref=e214]: "Unde: Universitatea gazdă · După pasul 3"
+                - link "Deschide pagina oficială" [ref=e215] [cursor=pointer]:
+                  - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-studenti/
+              - listitem [ref=e216]:
+                - generic [ref=e217]:
+                  - strong [ref=e218]: Pregătește documentele mobilității și trimite-le la aprobare universității gazdă
+                  - link "1" [ref=e219] [cursor=pointer]:
+                    - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-studenti/
+                - paragraph [ref=e220]: "Pregătești documentele împreună cu responsabilul facultății, iar acordul de studiu detaliază curriculumul și durata. Disciplinele trebuie să asigure ECTS: 3 luni – 20, un semestru – 30, un an universitar – 60."
+                - paragraph [ref=e221]: "Unde: Responsabilul pe internaționalizare al facultății (UTM) · După pasul 4"
+                - link "Deschide pagina oficială" [ref=e222] [cursor=pointer]:
+                  - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-studenti/
+              - listitem [ref=e223]:
+                - generic [ref=e224]:
+                  - strong [ref=e225]: Află grantul și durata mobilității
+                  - link "1" [ref=e226] [cursor=pointer]:
+                    - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-studenti/
+                - paragraph [ref=e227]: Grantul Erasmus+ pentru mobilitățile de studiu este între 800 și 900 euro/lună. O mobilitate poate dura de la 3 până la 12 luni pe ciclu academic (se recomandă câte un semestru).
+                - paragraph [ref=e228]: "Unde: UTM · Cost: Grant primit: 800–900 EUR/lună · Durată: 3–12 luni pe ciclu · După pasul 4"
+                - link "Deschide pagina oficială" [ref=e229] [cursor=pointer]:
+                  - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-studenti/
+              - listitem [ref=e230]:
+                - generic [ref=e231]:
+                  - strong [ref=e232]: Organizează deplasarea, cazarea și asigurarea de sănătate
+                  - link "1" [ref=e233] [cursor=pointer]:
+                    - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-studenti/
+                - paragraph [ref=e234]: Organizarea deplasării (transport, cazare, asigurare de sănătate etc.) este obligația beneficiarului.
+                - paragraph [ref=e235]: "Unde: Tu (beneficiarul) · După pasul 4"
+                - link "Deschide pagina oficială" [ref=e236] [cursor=pointer]:
+                  - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-studenti/
+              - listitem [ref=e237]:
+                - generic [ref=e238]:
+                  - strong [ref=e239]: "La întoarcere: adu documentele de la universitatea gazdă"
+                  - link "1" [ref=e240] [cursor=pointer]:
+                    - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-studenti/
+                - paragraph [ref=e241]: Aduci certificatul de prezență semnat, Contractul de Studiu ECTS semnat și situația școlară (Transcript of records).
+                - paragraph [ref=e242]: "Unde: De la universitatea gazdă, apoi la facultate · După pasul 7"
+                - link "Deschide pagina oficială" [ref=e243] [cursor=pointer]:
+                  - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-studenti/
+              - listitem [ref=e244]:
+                - generic [ref=e245]:
+                  - strong [ref=e246]: Echivalarea notelor
+                  - link "1" [ref=e247] [cursor=pointer]:
+                    - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-studenti/
+                - paragraph [ref=e248]: Pe baza notelor de la universitatea gazdă, notele se echivalează cu Certificatul de echivalare, aprobat de comisia de echivalare.
+                - paragraph [ref=e249]: "Unde: Comisia de echivalare a studiilor Erasmus+ · După pasul 8"
+                - link "Deschide pagina oficială" [ref=e250] [cursor=pointer]:
+                  - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-studenti/
+              - listitem [ref=e251]:
+                - generic [ref=e252]:
+                  - strong [ref=e253]: Completează chestionarul UE online
+                  - link "1" [ref=e254] [cursor=pointer]:
+                    - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-studenti/
+                - paragraph [ref=e255]: Chestionarul se completează în 10 zile calendaristice de la primirea invitației. Cine nu îl trimite poate fi obligat să ramburseze total sau parțial sprijinul financiar.
+                - paragraph [ref=e256]: "Unde: Online (invitație primită după întoarcere) · Durată: 10 zile calendaristice de la invitație · După pasul 8"
+                - link "Deschide pagina oficială" [ref=e257] [cursor=pointer]:
+                  - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-studenti/
+          - generic [ref=e258]:
+            - heading "Surse oficiale" [level=4] [ref=e259]
+            - list [ref=e260]:
+              - listitem [ref=e261]:
+                - generic [ref=e262]: "1"
+                - link "Universitatea Tehnică a Moldovei – Erasmus+ studenți" [ref=e263] [cursor=pointer]:
+                  - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-studenti/
+          - paragraph [ref=e264]: "Ghid verificat (18/18 elemente confirmate acum). Ultima verificare manuală: 2026-10-03."
+      - generic [ref=e269]: pentru documentul "Recomandare din partea unui cadru didactic" de la ce cadru didactic as putea lua recomandarea
+      - generic [ref=e271]:
+        - generic [ref=e272]: ♧
+        - generic [ref=e274]:
+          - heading "Recomandare din partea unui cadru didactic" [level=4] [ref=e275]
+          - paragraph [ref=e276]: Sursa oficială nu precizează de unde sau de la cine se obține acest document.
+          - paragraph [ref=e277]: "Îl folosești la pasul 2: Întocmește dosarul și predă-l coordonatorului Erasmus+ al facultății (Coordonatorul Erasmus+ al facultății)."
+          - blockquote [ref=e278]:
+            - text: „Recomandare din partea unui cadru didactic”
+            - link "Erasmus+ studenți" [ref=e279] [cursor=pointer]:
+              - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-studenti/
+          - paragraph [ref=e280]:
+            - strong [ref=e281]: "Sugestie (neconfirmată în sursele oficiale):"
+            - text: sursa nu spune cine poate recomanda; de regulă este un cadru didactic care te cunoaște și îți poate evalua rezultatele. Dosarul se predă coordonatorului Erasmus+ al facultății, care te poate îndruma
+          - link "Deschide pagina oficială" [ref=e282] [cursor=pointer]:
+            - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-studenti/
+    - generic [ref=e265]:
+      - button "Adaugă" [ref=e266] [cursor=pointer]: +
+      - textbox "Scrie un mesaj" [ref=e267]:
+        - /placeholder: Scrie un mesaj...
+      - button "Trimite" [ref=e268] [cursor=pointer]: ↑

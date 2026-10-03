@@ -1244,3 +1244,282 @@ input:focus-visible {
 .chat-input-area input:disabled {
   cursor: wait;
 }
+
+/* CATEGORY ICONS + HISTORY */
+
+.sidebar-categories button,
+.recent-conversations button {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.side-icon {
+  flex-shrink: 0;
+  width: 22px;
+  text-align: center;
+  font-size: 15px;
+}
+
+.recent-title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.recent-conversations button.active {
+  background: #eaf6f1;
+  color: #293832;
+}
+
+.recent-empty {
+  margin: 0 9px;
+  color: #9aa8a1;
+  font-size: 12px;
+}
+
+.chat-category {
+  margin-left: 12px;
+  padding: 4px 11px;
+  border-radius: 999px;
+  background: #e5f7f0;
+  color: #087e6c;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* FOLLOW-UP ANSWERS */
+
+.followup-title {
+  margin: 0 0 8px;
+}
+
+.source-quote {
+  margin: 10px 0;
+  padding: 8px 12px;
+  border-left: 3px solid #b8d9cc;
+  background: #f4faf7;
+  color: #3b4a43;
+  font-size: 13px;
+  font-style: italic;
+  white-space: pre-line;
+}
+
+.source-quote a {
+  display: block;
+  margin-top: 4px;
+  font-size: 11px;
+  font-style: normal;
+  color: #087e6c;
+}
+
+.hint-unconfirmed {
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: #fff7e6;
+  color: #7a5a14;
+  font-size: 13px;
+}
+
+.general-answer {
+  margin: 12px 0;
+  padding: 10px 14px;
+  border: 1px dashed #d4b45a;
+  border-radius: 10px;
+  background: #fffaf0;
+  color: #4a3c10;
+  font-size: 14px;
+}
+
+.general-answer strong {
+  display: block;
+  margin-bottom: 6px;
+  color: #7a5a14;
+  font-size: 12px;
+}
+
+.general-text {
+  white-space: pre-wrap;
+}
+
+.general-answer small {
+  display: block;
+  margin-top: 8px;
+  color: #8a7430;
+  font-size: 11px;
+}
+
+/* ANSWER LAYOUT: timeline, checklist, collapsibles */
+
+.step-list li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 23px;
+  top: 38px;
+  bottom: -12px;
+  width: 2px;
+  background: #cfe6dd;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.chip {
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: #f1f7f4;
+  color: #4b5f56;
+  font-size: 12px;
+}
+
+.tick {
+  color: #087e6c;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.progress {
+  margin-left: 8px;
+  color: #7b8b83;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.check-list label.doc-head {
+  cursor: pointer;
+}
+
+.check-list input[type="checkbox"] {
+  width: 17px;
+  height: 17px;
+  accent-color: #087e6c;
+  flex-shrink: 0;
+}
+
+.check-list li.done strong {
+  color: #8a9a92;
+  text-decoration: line-through;
+}
+
+.source-toggle {
+  margin-top: 8px;
+  font-size: 12px;
+}
+
+.source-toggle summary,
+.unconfirmed-box summary {
+  cursor: pointer;
+  color: #087e6c;
+  font-weight: 700;
+}
+
+.source-toggle a {
+  display: inline-block;
+  margin-top: 4px;
+  color: #087e6c;
+  font-weight: 700;
+}
+
+.unconfirmed-box {
+  margin-top: 20px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: #fff9ef;
+  color: #6b4a14;
+  font-size: 13px;
+}
+
+.unconfirmed-box summary {
+  color: #7a5a14;
+}
+
+.unconfirmed-box ul {
+  margin: 8px 0 0;
+  padding-left: 20px;
+  line-height: 1.55;
+}
+
+.check-list label.doc-head strong {
+  flex: 1 1 220px;
+  min-width: 0;
+}
+
+/* HISTORY: pin + delete */
+
+.recent-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-radius: 7px;
+}
+
+.recent-item:hover,
+.recent-item:focus-within {
+  background: #f4faf7;
+}
+
+.recent-item.active {
+  background: #eaf6f1;
+}
+
+.recent-conversations .recent-item button.recent-open {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+}
+
+.recent-conversations .recent-item button.recent-open:hover {
+  background: transparent;
+}
+
+.recent-item.active .recent-open {
+  color: #293832;
+}
+
+.pin-mark {
+  flex-shrink: 0;
+  font-size: 11px;
+}
+
+.recent-actions {
+  display: none;
+  gap: 2px;
+  padding-right: 6px;
+}
+
+.recent-item:hover .recent-actions,
+.recent-item:focus-within .recent-actions {
+  display: flex;
+}
+
+.recent-item:hover .pin-mark,
+.recent-item:focus-within .pin-mark {
+  display: none;
+}
+
+.recent-conversations .recent-item button.icon-action {
+  padding: 4px 6px;
+  border-radius: 6px;
+  background: transparent;
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.recent-conversations .recent-item button.icon-action:hover {
+  background: #dcefe7;
+}
+
+@media (hover: none) {
+  .recent-actions {
+    display: flex;
+  }
+  .pin-mark {
+    display: none;
+  }
+}

@@ -1,0 +1,72 @@
+- main [ref=f11e79]:
+  - complementary [ref=f11e80]:
+    - button "DocuGuide - Acasă" [ref=f11e81] [cursor=pointer]:
+      - generic [ref=f11e82]: ♧
+      - generic [ref=f11e83]: DocuGuide
+    - button "+ Conversație nouă" [ref=f11e84] [cursor=pointer]
+    - button "Toate conversațiile" [ref=f11e85] [cursor=pointer]
+    - navigation [ref=f11e86]:
+      - button "🎓 Educație și studii" [ref=f11e87] [cursor=pointer]:
+        - generic [ref=f11e88]: 🎓
+        - text: Educație și studii
+      - button "🩺 Sănătate" [ref=f11e89] [cursor=pointer]:
+        - generic [ref=f11e90]: 🩺
+        - text: Sănătate
+      - button "✈️ Călătorii și relocare" [ref=f11e91] [cursor=pointer]:
+        - generic [ref=f11e92]: ✈️
+        - text: Călătorii și relocare
+      - button "🪪 Acte și servicii publice" [ref=f11e93] [cursor=pointer]:
+        - generic [ref=f11e94]: 🪪
+        - text: Acte și servicii publice
+      - button "💼 Muncă și carieră" [ref=f11e95] [cursor=pointer]:
+        - generic [ref=f11e96]: 💼
+        - text: Muncă și carieră
+      - button "🏢 Afaceri și finanțe" [ref=f11e97] [cursor=pointer]:
+        - generic [ref=f11e98]: 🏢
+        - text: Afaceri și finanțe
+      - button "🏠 Viață cotidiană" [ref=f11e99] [cursor=pointer]:
+        - generic [ref=f11e100]: 🏠
+        - text: Viață cotidiană
+    - generic [ref=f11e101]:
+      - strong [ref=f11e102]: Conversații recente
+      - button "🎓 eu vreau sa ma duc la erasmus, ce am nevoie avan Fixată" [ref=f11e104] [cursor=pointer]:
+        - generic [ref=f11e105]: 🎓
+        - generic [ref=f11e106]: eu vreau sa ma duc la erasmus, ce am nevoie avan
+        - generic "Fixată" [ref=f11e107]: 📌
+      - button "🪪 cum inregistrez o masina adusa din Germania?" [ref=f11e109] [cursor=pointer]:
+        - generic [ref=f11e110]: 🪪
+        - generic [ref=f11e111]: cum inregistrez o masina adusa din Germania?
+      - button "🏢 ce documente am nevoie ca sa deschid un srl" [ref=f11e113] [cursor=pointer]:
+        - generic [ref=f11e114]: 🏢
+        - generic [ref=f11e115]: ce documente am nevoie ca sa deschid un srl
+      - button "🏢 ce documente am nevoie ca sa deschid un srl" [ref=f11e117] [cursor=pointer]:
+        - generic [ref=f11e118]: 🏢
+        - generic [ref=f11e119]: ce documente am nevoie ca sa deschid un srl
+      - 'button "🩺 Vreau informații despre: Înregistrare la medic" [ref=f11e121] [cursor=pointer]':
+        - generic [ref=f11e122]: 🩺
+        - generic [ref=f11e123]: "Vreau informații despre: Înregistrare la medic"
+      - 'button "🩺 Vreau informații despre: Înregistrare la medic" [ref=f11e125] [cursor=pointer]':
+        - generic [ref=f11e126]: 🩺
+        - generic [ref=f11e127]: "Vreau informații despre: Înregistrare la medic"
+      - button "💬 ce documente am nevoie ca sa deschid un srl" [ref=f11e129] [cursor=pointer]:
+        - generic [ref=f11e130]: 💬
+        - generic [ref=f11e131]: ce documente am nevoie ca sa deschid un srl
+      - button "🎓 eu vreau sa ma duc la erasmus, ce am nevoie avan" [ref=f11e133] [cursor=pointer]:
+        - generic [ref=f11e134]: 🎓
+        - generic [ref=f11e135]: eu vreau sa ma duc la erasmus, ce am nevoie avan
+      - button "🎓 eu vreau sa ma duc la erasmus, ce am nevoie avan" [ref=f11e137] [cursor=pointer]:
+        - generic [ref=f11e138]: 🎓
+        - generic [ref=f11e139]: eu vreau sa ma duc la erasmus, ce am nevoie avan
+      - button "🪪 cum inregistrez o masina adusa din Germania?" [ref=f11e141] [cursor=pointer]:
+        - generic [ref=f11e142]: 🪪
+        - generic [ref=f11e143]: cum inregistrez o masina adusa din Germania?
+  - generic [ref=f11e144]:
+    - strong [ref=f11e146]: Asistent DocuGuide
+    - generic [ref=f11e148]:
+      - generic [ref=f11e149]: ♧
+      - generic [ref=f11e150]: Bună! Sunt asistentul DocuGuide. Spune-mi ce documente sau procedură te interesează.
+    - generic [ref=f11e151]:
+      - button "Adaugă" [ref=f11e152] [cursor=pointer]: +
+      - textbox "Scrie un mesaj" [ref=f11e153]:
+        - /placeholder: Scrie un mesaj...
+      - button "Trimite" [ref=f11e154] [cursor=pointer]: ↑

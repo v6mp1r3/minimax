@@ -1,0 +1,72 @@
+- generic [ref=f11e3]:
+  - banner [ref=f11e4]:
+    - button "DocuGuide - Acasă" [ref=f11e5] [cursor=pointer]:
+      - generic [ref=f11e6]: ♧
+      - generic [ref=f11e7]: DocuGuide
+    - generic [ref=f11e8]:
+      - button "RO" [ref=f11e9] [cursor=pointer]
+      - button "Deschide Chat" [ref=f11e10] [cursor=pointer]
+  - generic [ref=f11e11]:
+    - generic [ref=f11e12]: ✦
+    - generic [ref=f11e16]: ✦
+    - generic [ref=f11e20]:
+      - generic [ref=f11e21]:
+        - generic [ref=f11e22]: ✦
+        - text: Asistent AI pentru documente
+      - heading "Orice situație. Un singur ghid." [level=1] [ref=f11e23]
+      - paragraph [ref=f11e24]: Obține rapid informații despre documentele necesare, pașii de urmat și procedurile oficiale, pentru orice situație.
+      - generic [ref=f11e25]:
+        - generic [ref=f11e26]: ⌕
+        - textbox "Descrie situația ta" [ref=f11e27]:
+          - /placeholder: Scrie ce vrei să faci...
+        - button "Trimite întrebarea" [ref=f11e28] [cursor=pointer]: →
+      - generic [ref=f11e29]:
+        - generic [ref=f11e30]: "Exemple:"
+        - button "Vreau să plec cu Erasmus în Franța" [ref=f11e31] [cursor=pointer]
+        - button "Cum mă înregistrez la medic?" [ref=f11e32] [cursor=pointer]
+        - button "Mi-am pierdut buletinul" [ref=f11e33] [cursor=pointer]
+  - generic [ref=f11e34]:
+    - heading "Explorează categoriile principale" [level=2] [ref=f11e35]
+    - generic [ref=f11e36]:
+      - button "🎓 Educație și studii Erasmus, burse, universitate și echivalarea diplomelor. →" [ref=f11e37] [cursor=pointer]:
+        - generic [ref=f11e38]: 🎓
+        - generic [ref=f11e39]:
+          - strong [ref=f11e40]: Educație și studii
+          - generic [ref=f11e41]: Erasmus, burse, universitate și echivalarea diplomelor.
+        - generic [ref=f11e42]: →
+      - button "🩺 Sănătate Înregistrarea la medic, asigurare și acces la servicii. →" [ref=f11e43] [cursor=pointer]:
+        - generic [ref=f11e44]: 🩺
+        - generic [ref=f11e45]:
+          - strong [ref=f11e46]: Sănătate
+          - generic [ref=f11e47]: Înregistrarea la medic, asigurare și acces la servicii.
+        - generic [ref=f11e48]: →
+      - button "✈️ Călătorii și relocare Vize, ședere și documente de călătorie. →" [ref=f11e49] [cursor=pointer]:
+        - generic [ref=f11e50]: ✈️
+        - generic [ref=f11e51]:
+          - strong [ref=f11e52]: Călătorii și relocare
+          - generic [ref=f11e53]: Vize, ședere și documente de călătorie.
+        - generic [ref=f11e54]: →
+      - button "🪪 Acte și servicii publice Buletin, pașaport, stare civilă și servicii publice. →" [ref=f11e55] [cursor=pointer]:
+        - generic [ref=f11e56]: 🪪
+        - generic [ref=f11e57]:
+          - strong [ref=f11e58]: Acte și servicii publice
+          - generic [ref=f11e59]: Buletin, pașaport, stare civilă și servicii publice.
+        - generic [ref=f11e60]: →
+      - button "💼 Muncă și carieră Angajare, acte de muncă și calificări. →" [ref=f11e61] [cursor=pointer]:
+        - generic [ref=f11e62]: 💼
+        - generic [ref=f11e63]:
+          - strong [ref=f11e64]: Muncă și carieră
+          - generic [ref=f11e65]: Angajare, acte de muncă și calificări.
+        - generic [ref=f11e66]: →
+      - button "🏢 Afaceri și finanțe Înregistrare firmă, autorizații și acte fiscale. →" [ref=f11e67] [cursor=pointer]:
+        - generic [ref=f11e68]: 🏢
+        - generic [ref=f11e69]:
+          - strong [ref=f11e70]: Afaceri și finanțe
+          - generic [ref=f11e71]: Înregistrare firmă, autorizații și acte fiscale.
+        - generic [ref=f11e72]: →
+      - button "🏠 Viață cotidiană Închiriere, schimbarea domiciliului și utilități. →" [ref=f11e73] [cursor=pointer]:
+        - generic [ref=f11e74]: 🏠
+        - generic [ref=f11e75]:
+          - strong [ref=f11e76]: Viață cotidiană
+          - generic [ref=f11e77]: Închiriere, schimbarea domiciliului și utilități.
+        - generic [ref=f11e78]: →
