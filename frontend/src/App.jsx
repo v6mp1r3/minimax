@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { Icon } from "./icons.jsx";
 
 const categories = [
   {
     id: "education",
     title: "Educație și studii",
     description: "Erasmus, burse, universitate și echivalarea diplomelor.",
-    icon: "🎓",
+    icon: "education",
     color: "mint",
     topics: ["Erasmus", "Înscriere la universitate", "Echivalarea diplomelor", "Burse și finanțare"],
   },
@@ -13,7 +14,7 @@ const categories = [
     id: "health",
     title: "Sănătate",
     description: "Înregistrarea la medic, asigurare și acces la servicii.",
-    icon: "🩺",
+    icon: "health",
     color: "pink",
     topics: ["Înregistrare la medic", "Asigurare medicală", "Servicii medicale"],
   },
@@ -21,7 +22,7 @@ const categories = [
     id: "travel",
     title: "Călătorii și relocare",
     description: "Vize, ședere și documente de călătorie.",
-    icon: "✈️",
+    icon: "travel",
     color: "blue",
     topics: ["Viză", "Permis de ședere", "Relocare în străinătate"],
   },
@@ -29,7 +30,7 @@ const categories = [
     id: "public",
     title: "Acte și servicii publice",
     description: "Buletin, pașaport, stare civilă și servicii publice.",
-    icon: "🪪",
+    icon: "public",
     color: "mint",
     topics: ["Buletin", "Pașaport", "Stare civilă", "Alte servicii publice"],
   },
@@ -37,7 +38,7 @@ const categories = [
     id: "career",
     title: "Muncă și carieră",
     description: "Angajare, acte de muncă și calificări.",
-    icon: "💼",
+    icon: "career",
     color: "orange",
     topics: ["Angajare", "Contract de muncă", "Recunoașterea calificărilor"],
   },
@@ -45,7 +46,7 @@ const categories = [
     id: "business",
     title: "Afaceri și finanțe",
     description: "Înregistrare firmă, autorizații și acte fiscale.",
-    icon: "🏢",
+    icon: "business",
     color: "purple",
     topics: ["Deschiderea unei firme", "Acte fiscale", "Autorizații"],
   },
@@ -53,7 +54,7 @@ const categories = [
     id: "daily",
     title: "Viață cotidiană",
     description: "Închiriere, schimbarea domiciliului și utilități.",
-    icon: "🏠",
+    icon: "daily",
     color: "blue",
     topics: ["Închiriere", "Schimbarea domiciliului", "Utilități"],
   },
@@ -103,7 +104,7 @@ const examples = [
 function Logo({ onClick }) {
   return (
     <button className="logo" onClick={onClick} aria-label="DocuGuide - Acasă">
-      <span className="logo-icon">♧</span>
+      <span className="logo-icon"><Icon name="logo" size={20} /></span>
       <span>DocuGuide</span>
     </button>
   );
@@ -137,20 +138,20 @@ function HomePage({ onChat, onCategory }) {
     <>
       <section className="hero">
         <div className="hero-decoration decoration-one">
-          <span>✦</span>
+          <span><Icon name="spark" size={20} /></span>
           <div />
           <div />
         </div>
 
         <div className="hero-decoration decoration-two">
-          <span>✦</span>
+          <span><Icon name="spark" size={20} /></span>
           <div />
           <div />
         </div>
 
         <div className="hero-content">
           <div className="hero-label">
-            <span>✦</span> Asistent AI pentru documente
+            <Icon name="spark" size={16} /> Asistent AI pentru documente
           </div>
 
           <h1>
@@ -163,7 +164,7 @@ function HomePage({ onChat, onCategory }) {
           </p>
 
           <div className="search-box">
-            <span className="search-icon">⌕</span>
+            <span className="search-icon"><Icon name="search" size={22} /></span>
             <input
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
@@ -176,7 +177,7 @@ function HomePage({ onChat, onCategory }) {
               onClick={sendQuestion}
               aria-label="Trimite întrebarea"
             >
-              →
+              <Icon name="go" size={20} />
             </button>
           </div>
 
@@ -209,7 +210,7 @@ function HomePage({ onChat, onCategory }) {
               onClick={() => onCategory(category)}
             >
               <span className={`category-icon ${category.color}`}>
-                {category.icon}
+                <Icon name={category.icon} size={24} />
               </span>
 
               <span className="category-text">
@@ -217,7 +218,7 @@ function HomePage({ onChat, onCategory }) {
                 <small>{category.description}</small>
               </span>
 
-              <span className="category-arrow">→</span>
+              <span className="category-arrow"><Icon name="go" size={18} /></span>
             </button>
           ))}
         </div>
@@ -241,7 +242,7 @@ function CategoryPage({ category, onChat, onHome }) {
     <main className="category-page">
       <section className="category-banner">
         <span className={`category-icon large ${category.color}`}>
-          {category.icon}
+          <Icon name={category.icon} size={30} />
         </span>
         <div>
           <h1>{category.title}</h1>
@@ -277,7 +278,7 @@ function CategoryPage({ category, onChat, onHome }) {
                 Află ce documente sunt necesare și care sunt pașii de urmat.
               </p>
               <button onClick={() => onChat(`Vreau informații despre: ${topic}`)}>
-                Vezi pașii <span>→</span>
+                Vezi pașii <Icon name="go" size={16} className="icon-after" />
               </button>
             </div>
           </article>
@@ -290,12 +291,12 @@ function CategoryPage({ category, onChat, onHome }) {
           <p>Descrie situația ta și primești un ghid adaptat.</p>
         </div>
         <button className="primary-button" onClick={() => onChat("")}>
-          Întreabă DocuGuide <span>→</span>
+          Întreabă DocuGuide <Icon name="go" size={16} className="icon-after" />
         </button>
       </section>
 
       <button className="back-link" onClick={onHome}>
-        ← Înapoi la pagina principală
+        <Icon name="back" size={16} className="icon-before" /> Înapoi la pagina principală
       </button>
     </main>
   );
@@ -404,7 +405,7 @@ function AnswerCard({ data }) {
               <li key={i}>
                 <div className="doc-head">
                   <strong>{s.title}</strong>
-                  {s.check === "confirmed" && <span className="tick" title="Confirmat acum pe pagina oficială">✓</span>}
+                  {s.check === "confirmed" && <span className="tick" title="Confirmat acum pe pagina oficială"><Icon name="check" size={14} strokeWidth={2.75} /></span>}
                   {s.check && s.check !== "confirmed" && (
                     <span className="badge unknown">
                       {s.check === "changed" ? "Pagină schimbată" : "Neverificat acum"}
@@ -415,9 +416,9 @@ function AnswerCard({ data }) {
                 {s.description && <p>{s.description}</p>}
                 {(s.where || s.cost || s.duration || s.depends_on_step) && (
                   <div className="chips">
-                    {s.where && <span className="chip">📍 {s.where}</span>}
-                    {s.cost && <span className="chip">💰 {s.cost}</span>}
-                    {s.duration && <span className="chip">⏱ {s.duration}</span>}
+                    {s.where && <span className="chip"><Icon name="location" size={13} /> {s.where}</span>}
+                    {s.cost && <span className="chip"><Icon name="cost" size={13} /> {s.cost}</span>}
+                    {s.duration && <span className="chip"><Icon name="time" size={13} /> {s.duration}</span>}
                     {s.depends_on_step && <span className="chip">după pasul {s.depends_on_step}</span>}
                   </div>
                 )}
@@ -440,7 +441,7 @@ function AnswerCard({ data }) {
                   <input type="checkbox" checked={isChecked(d.name)} onChange={() => toggleCheck(d.name)} />
                   <strong>{d.name}</strong>
                   <span className={`badge ${d.status}`}>{STATUS_LABEL[d.status]}</span>
-                  {d.check === "confirmed" && <span className="tick" title="Confirmat acum pe pagina oficială">✓</span>}
+                  {d.check === "confirmed" && <span className="tick" title="Confirmat acum pe pagina oficială"><Icon name="check" size={14} strokeWidth={2.75} /></span>}
                   <SourceRefs ids={d.sources} sources={sources} />
                 </label>
                 {d.reason && d.check !== "confirmed" && <p>{d.reason}</p>}
@@ -597,7 +598,9 @@ function QuestionCard({ q, active, onSubmit }) {
             onClick={() => (isMulti ? toggle(o.value) : onSubmit(o.value, o.label))}
           >
             {o.label}
-            <span>{isMulti ? (picked.includes(o.value) ? "✓" : "+") : "›"}</span>
+            <span className="option-mark">
+              <Icon name={isMulti ? (picked.includes(o.value) ? "check" : "plus") : "next"} size={18} />
+            </span>
           </button>
         ))}
 
@@ -801,7 +804,7 @@ function ChatPage({ initialMessage, onHome }) {
         <Logo onClick={onHome} />
 
         <button className="new-chat-button" onClick={newChat}>
-          + Conversație nouă
+          <Icon name="plus" size={16} className="icon-before" /> Conversație nouă
         </button>
 
         <button className="all-conversations">Toate conversațiile</button>
@@ -812,7 +815,7 @@ function ChatPage({ initialMessage, onHome }) {
               key={category.id}
               onClick={() => sendMessage(`Vreau informații despre ${category.title}`)}
             >
-              <span className="side-icon">{category.icon}</span>
+              <span className="side-icon"><Icon name={category.icon} size={16} /></span>
               {category.title}
             </button>
           ))}
@@ -833,9 +836,9 @@ function ChatPage({ initialMessage, onHome }) {
                   onClick={() => openHistory(item)}
                   title={c ? c.title : "Conversație"}
                 >
-                  <span className="side-icon">{c ? c.icon : "💬"}</span>
+                  <span className="side-icon"><Icon name={c ? c.icon : "chat"} size={16} /></span>
                   <span className="recent-title">{item.title}</span>
-                  {item.pinned && <span className="pin-mark" aria-label="Fixată">📌</span>}
+                  {item.pinned && <span className="pin-mark" aria-label="Fixată"><Icon name="pin" size={12} /></span>}
                 </button>
                 <div className="recent-actions">
                   <button
@@ -844,7 +847,7 @@ function ChatPage({ initialMessage, onHome }) {
                     title={item.pinned ? "Anulează fixarea" : "Fixează în partea de sus"}
                     aria-label={item.pinned ? "Anulează fixarea" : "Fixează conversația"}
                   >
-                    {item.pinned ? "📍" : "📌"}
+                    <Icon name={item.pinned ? "unpin" : "pin"} size={15} />
                   </button>
                   <button
                     className="icon-action"
@@ -852,7 +855,7 @@ function ChatPage({ initialMessage, onHome }) {
                     title="Șterge conversația"
                     aria-label="Șterge conversația"
                   >
-                    🗑
+                    <Icon name="trash" size={15} />
                   </button>
                 </div>
               </div>
@@ -866,7 +869,8 @@ function ChatPage({ initialMessage, onHome }) {
           <strong>Asistent DocuGuide</strong>
           {categoryById(categoryId) && (
             <span className="chat-category">
-              {categoryById(categoryId).icon} {categoryById(categoryId).title}
+              <Icon name={categoryById(categoryId).icon} size={14} className="icon-before" />
+              {categoryById(categoryId).title}
             </span>
           )}
           <button className="mobile-home" onClick={onHome}>Acasă</button>
@@ -875,7 +879,7 @@ function ChatPage({ initialMessage, onHome }) {
         <div className="chat-messages">
           {conversation.length === 0 && (
             <div className="chat-welcome">
-              <span className="chat-avatar">♧</span>
+              <span className="chat-avatar"><Icon name="logo" size={20} /></span>
               <div className="assistant-bubble">
                 Bună! Sunt asistentul DocuGuide. Spune-mi ce documente
                 sau procedură te interesează.
@@ -888,7 +892,7 @@ function ChatPage({ initialMessage, onHome }) {
               className={`message-row ${item.role === "user" ? "user-row" : ""}`}
               key={index}
             >
-              {item.role === "assistant" && <span className="chat-avatar">♧</span>}
+              {item.role === "assistant" && <span className="chat-avatar"><Icon name="logo" size={20} /></span>}
 
               {item.type === "question" ? (
                 <QuestionCard
@@ -914,7 +918,7 @@ function ChatPage({ initialMessage, onHome }) {
 
           {busy && (
             <div className="message-row">
-              <span className="chat-avatar">♧</span>
+              <span className="chat-avatar"><Icon name="logo" size={20} /></span>
               <div className="assistant-bubble typing" role="status">
                 Caut în sursele oficiale<span>.</span><span>.</span><span>.</span>
               </div>
@@ -931,7 +935,7 @@ function ChatPage({ initialMessage, onHome }) {
           }}
         >
           <button type="button" className="add-button" aria-label="Adaugă">
-            +
+            <Icon name="plus" size={20} />
           </button>
           <input
             value={message}
@@ -941,7 +945,7 @@ function ChatPage({ initialMessage, onHome }) {
             disabled={busy}
           />
           <button type="submit" className="chat-send" aria-label="Trimite" disabled={busy}>
-            ↑
+            <Icon name="send" size={20} />
           </button>
         </form>
       </section>

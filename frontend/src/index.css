@@ -189,10 +189,9 @@ input:focus-visible {
 }
 
 .search-icon {
+  display: grid;
+  place-items: center;
   color: #71847a;
-  font-size: 26px;
-  font-weight: 700;
-  transform: rotate(-25deg);
 }
 
 .search-box input {
@@ -213,6 +212,8 @@ input:focus-visible {
   width: 43px;
   height: 43px;
   flex-shrink: 0;
+  display: grid;
+  place-items: center;
   border: none;
   border-radius: 50%;
   background: #087e6c;
@@ -400,6 +401,7 @@ input:focus-visible {
 }
 
 .category-arrow {
+  display: grid;
   position: absolute;
   right: 17px;
   bottom: 10px;
@@ -813,8 +815,8 @@ input:focus-visible {
 }
 
 .answer-options button span {
+  display: inline-flex;
   color: #70827a;
-  font-size: 22px;
 }
 
 .answer-options button:hover,
@@ -1257,8 +1259,8 @@ input:focus-visible {
 .side-icon {
   flex-shrink: 0;
   width: 22px;
-  text-align: center;
-  font-size: 15px;
+  display: grid;
+  place-items: center;
 }
 
 .recent-title {
@@ -1370,6 +1372,9 @@ input:focus-visible {
 }
 
 .chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   padding: 3px 10px;
   border-radius: 999px;
   background: #f1f7f4;
@@ -1378,9 +1383,8 @@ input:focus-visible {
 }
 
 .tick {
+  display: inline-flex;
   color: #087e6c;
-  font-size: 13px;
-  font-weight: 800;
 }
 
 .progress {
@@ -1483,7 +1487,8 @@ input:focus-visible {
 
 .pin-mark {
   flex-shrink: 0;
-  font-size: 11px;
+  display: inline-flex;
+  color: #087e6c;
 }
 
 .recent-actions {
@@ -1505,8 +1510,8 @@ input:focus-visible {
 .recent-conversations .recent-item button.icon-action {
   padding: 4px 6px;
   border-radius: 6px;
+  display: inline-flex;
   background: transparent;
-  font-size: 13px;
   line-height: 1;
   cursor: pointer;
 }
@@ -1522,4 +1527,23 @@ input:focus-visible {
   .pin-mark {
     display: none;
   }
+}
+
+/* ICONS (lucide-react via src/icons.jsx) */
+
+.icon {
+  flex-shrink: 0;
+  vertical-align: -0.2em;
+}
+
+.icon-before {
+  margin-right: 6px;
+}
+
+.icon-after {
+  margin-left: 6px;
+}
+
+.hero-label .icon {
+  vertical-align: -0.15em;
 }
