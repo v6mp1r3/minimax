@@ -1,5 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Icon } from "./icons.jsx";
+import { useSpeechRecognition } from "./useSpeechRecognition.js";
+
+const SPEECH_LANG = "ro-RO"; // language used for dictation
 
 const categories = [
   {
@@ -729,6 +732,7 @@ function ChatPage({ initialMessage, onHome }) {
   const endRef = useRef(null);
   const [chatId, setChatId] = useState(() => String(Date.now()));
   const [categoryId, setCategoryId] = useState(null);
+  const speech = useSpeechRecognition({ lang: SPEECH_LANG, onTranscript: setMessage });
 
   const push = (...items) => setConversation((old) => [...old, ...items]);
 
@@ -845,6 +849,7 @@ function ChatPage({ initialMessage, onHome }) {
 
   const openHistory = (item) => {
     if (busy) return;
+    speech.abort();
     // an unanswered clarification question cannot be resumed: drop it
     const conv = [...item.conversation];
     while (conv.length && conv[conv.length - 1].type === "question") conv.pop();
@@ -861,6 +866,7 @@ function ChatPage({ initialMessage, onHome }) {
 
   const sendMessage = (text) => {
     if (busy || !text.trim()) return;
+    speech.abort(); // stop dictating; a late result must not refill the input
     push({ role: "user", type: "text", text });
     setMessage("");
     setPending(null);
@@ -875,6 +881,7 @@ function ChatPage({ initialMessage, onHome }) {
 
   const newChat = () => {
     if (busy) return; // an answer is still on its way: it would land in the wrong conversation
+    speech.abort();
     lastQuestion.current = "";
     setChatId(String(Date.now()));
     setCategoryId(null);
@@ -1049,6 +1056,18 @@ function ChatPage({ initialMessage, onHome }) {
           <div ref={endRef} />
         </div>
 
+        {(speech.listening || speech.error) && (
+          <div className={`speech-status ${speech.error ? "error" : ""}`} role="status" aria-live="polite">
+            {speech.error ? (
+              speech.error
+            ) : (
+              <>
+                <span className="rec-dot" aria-hidden="true" /> Ascult… vorbește acum
+              </>
+            )}
+          </div>
+        )}
+
         <form
           className="chat-input-area"
           onSubmit={(e) => {
@@ -1061,10 +1080,31 @@ function ChatPage({ initialMessage, onHome }) {
           </button>
           <input
             value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            placeholder={busy ? "DocuGuide lucrează… poți scrie următorul mesaj" : "Scrie un mesaj..."}
+            onChange={(e) => {
+              if (speech.listening) speech.abort(); // typing takes over from dictation
+              setMessage(e.target.value);
+            }}
+            placeholder={
+              speech.listening
+                ? "Vorbește acum…"
+                : busy
+                  ? "DocuGuide lucrează… poți scrie următorul mesaj"
+                  : "Scrie un mesaj..."
+            }
             aria-label="Scrie un mesaj"
           />
+          {speech.supported && (
+            <button
+              type="button"
+              className={`mic-button ${speech.listening ? "listening" : ""}`}
+              onClick={() => (speech.listening ? speech.stop() : speech.start(message))}
+              aria-pressed={speech.listening}
+              aria-label={speech.listening ? "Oprește dictarea" : "Dictează mesajul"}
+              title={speech.listening ? "Oprește dictarea" : "Dictează mesajul"}
+            >
+              <Icon name={speech.listening ? "stop" : "mic"} size={speech.listening ? 16 : 20} fill={speech.listening ? "currentColor" : "none"} />
+            </button>
+          )}
           <button
             type="submit"
             className="chat-send"

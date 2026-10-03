@@ -7,12 +7,13 @@ import {
   Check,
   ChevronRight,
   Clock,
-  FileCheck,
+  FileSearchCorner,
   GraduationCap,
   House,
   IdCard,
   LoaderCircle,
   MapPin,
+  Mic,
   MessageSquare,
   Pin,
   PinOff,
@@ -20,6 +21,7 @@ import {
   Plus,
   Search,
   Sparkles,
+  Square,
   Stethoscope,
   Trash2,
   Wallet,
@@ -28,7 +30,7 @@ import {
 // One registry for every icon in the app: change a glyph here and it changes everywhere.
 const ICONS = {
   // brand + assistant
-  logo: FileCheck,
+  logo: FileSearchCorner,
   spark: Sparkles,
   // categories (match `icon` in the categories list)
   education: GraduationCap,
@@ -51,6 +53,8 @@ const ICONS = {
   trash: Trash2,
   chat: MessageSquare,
   loader: LoaderCircle,
+  mic: Mic,
+  stop: Square,
   // details
   location: MapPin,
   cost: Wallet,
