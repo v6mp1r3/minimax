@@ -1,0 +1,195 @@
+{
+  "category": "education",
+  "match_hints": [],
+  "last_verified": "2026-10-04",
+  "slots": [],
+  "id": "mobility-staff",
+  "title": "Mobilitate Erasmus+ pentru personalul universitar (muncă / predare și formare)",
+  "applies_when": {
+    "mobility_program": [
+      "staff"
+    ]
+  },
+  "summary": "Cadrele didactice și personalul administrativ din UTM pot pleca la predare sau formare prin Erasmus+, la universități cu care UTM are acorduri. Pagina indică mobilități de 5 zile – 2 luni.",
+  "sources": {
+    "staff": {
+      "url": "https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-pentru-personalul-universitar-al-utm/",
+      "title": "Erasmus+ pentru personalul universitar",
+      "organization": "Universitatea Tehnică a Moldovei"
+    }
+  },
+  "documents": [
+    {
+      "id": "d-app",
+      "name": "Cererea de participare la concurs",
+      "status": "required",
+      "where_to_get": null,
+      "source": "staff",
+      "used_in": "s3",
+      "quote": "Cererea de participare la concurs"
+    },
+    {
+      "id": "d-employee",
+      "name": "Documentul care certifică statutul de angajat în cadrul universității",
+      "status": "required",
+      "where_to_get": null,
+      "source": "staff",
+      "used_in": "s3",
+      "quote": "Documentul ce certifică statutul de angajat în cadrul universității"
+    },
+    {
+      "id": "d-motivation",
+      "name": "Scrisoare de motivație",
+      "status": "required",
+      "where_to_get": null,
+      "source": "staff",
+      "used_in": "s3",
+      "quote": "Scrisoare de motivație"
+    },
+    {
+      "id": "d-other",
+      "name": "Alte documente relevante (CV, copia pașaportului etc.)",
+      "status": "possible",
+      "where_to_get": null,
+      "source": "staff",
+      "used_in": "s3",
+      "quote": "Alte documente relevante (CV, copia pașaportului, etc.)"
+    },
+    {
+      "id": "d-invite",
+      "name": "Scrisoare de invitație / accept din partea universității gazdă",
+      "status": "required",
+      "where_to_get": null,
+      "source": "staff",
+      "used_in": "s5",
+      "quote": "scrisoare de invitație/ accept din partea universității gazdă"
+    },
+    {
+      "id": "d-agreement",
+      "name": "Program de predare (Mobility Agreement for Teaching) sau de formare (Mobility Agreement for Training), semnat",
+      "status": "required",
+      "where_to_get": null,
+      "source": "staff",
+      "used_in": "s5",
+      "quote": "program de predare (Mobility Agreement for Teaching)/ program de formare (Mobility Agreement for Training) semnat"
+    },
+    {
+      "id": "d-insurance",
+      "name": "Poliță de asigurare de călătorie valabilă pe toată durata mobilității",
+      "status": "required",
+      "where_to_get": null,
+      "source": "staff",
+      "used_in": "s5",
+      "quote": "poliță de asigurare de călătorie valabilă pe toată durata mobilității"
+    }
+  ],
+  "steps": [
+    {
+      "id": "s1",
+      "title": "Verifică dacă ești eligibil",
+      "where": "UTM",
+      "depends_on_step": null,
+      "source": "staff",
+      "description": "Ai relații contractuale de muncă cu UTM și cunoști bine limba în care vei preda sau te vei forma. Pagina indică minimum 2 zile consecutive de activitate (proiect KA131/103) sau 5 zile (KA107), fără zilele de călătorie.",
+      "quotes": [
+        "deține relații contractuale de muncă cu UTM în calitate de cadru didactic",
+        "are cunoștințe bune de limbă străină în care vor realiza activități de predare/ formare la universitatea gazdă",
+        "minimum 2 zile consecutive de activitate didactică, exclusiv zilele de călătorie"
+      ],
+      "cost": null,
+      "duration": null
+    },
+    {
+      "id": "s2",
+      "title": "Verifică unde poți merge",
+      "where": "Direcția Relații Internaționale / Centrul Erasmus+",
+      "depends_on_step": 1,
+      "source": "staff",
+      "description": "Poți merge în universități din țări participante la Erasmus+ (KA131/103) sau din țări partenere (KA107), cu care UTM are acorduri bilaterale inter-instituționale pentru domeniul tău.",
+      "quotes": [
+        "universități din țările participante la programul Erasmus+ (proiect instituțional KA131/103)",
+        "universități din țările partenere programului Erasmus+ (proiect instituțional KA107)",
+        "cu care UTM are acorduri bilaterale inter-instituționale încheiate, pentru domeniile de studiu în care se va derula activitatea de predare"
+      ],
+      "cost": null,
+      "duration": null
+    },
+    {
+      "id": "s3",
+      "title": "Depune dosarul de aplicație",
+      "where": "Centrul Erasmus+ al UTM",
+      "depends_on_step": 2,
+      "source": "staff",
+      "description": "Dosarul include cererea de participare, documentul care certifică statutul de angajat, scrisoarea de motivație și alte documente relevante (CV, copia pașaportului). Se evaluează doar dosarele complete.",
+      "quotes": [
+        "La înscrierea în concurs, fiecare candidat la mobilitate va depune un dosar de aplicație care va include",
+        "În procesul de selecție, vor fi considerate eligibile doar dosarele candidaților complete"
+      ],
+      "cost": null,
+      "duration": null
+    },
+    {
+      "id": "s4",
+      "title": "Selecția și nominalizarea",
+      "where": "Comisia de selecție a candidaților",
+      "depends_on_step": 3,
+      "source": "staff",
+      "description": "Dosarele sunt evaluate de Comisia de selecție. Înscrierea durează minimum 2 săptămâni, concursul 1 zi, contestațiile 1–2 zile; apoi se afișează rezultatele finale și documentele se trimit universităților partenere. Prioritate au cei care pleacă pentru prima dată în program.",
+      "quotes": [
+        "Evaluarea dosarelor candidaților și realizarea selecției se efectuează de către Comisia de selecție a candidaților",
+        "înscrierea și selecția participanților la mobilități (minim 2 săptămâni)",
+        "nominalizarea- trimiterea documentelor către universitățile partenere",
+        "Se acordă prioritate cadrelor care pleacă pentru prima dată în cadrul acestui program"
+      ],
+      "cost": null,
+      "duration": "înscriere minim 2 săptămâni, concurs 1 zi, contestații 1–2 zile"
+    },
+    {
+      "id": "s5",
+      "title": "Înainte de plecare: trimite documentele către Centrul Erasmus+",
+      "where": "Centrul Erasmus+ al UTM",
+      "depends_on_step": 4,
+      "source": "staff",
+      "description": "Trimiți invitația/acceptul universității gazdă, programul de predare sau de formare semnat de ambele universități și o poliță de asigurare de călătorie valabilă pe toată durata mobilității.",
+      "quotes": [
+        "Înainte de începerea perioadei de mobilitate, personalul Erasmus+ outgoing va trimite către Centrul Erasmus+, următoarele documente"
+      ],
+      "cost": null,
+      "duration": null
+    },
+    {
+      "id": "s6",
+      "title": "Durata și sprijinul financiar",
+      "where": "Centrul Erasmus+ al UTM",
+      "depends_on_step": 4,
+      "source": "staff",
+      "description": "Mobilitățile durează între 5 zile și 2 luni. Grantul Erasmus+ acoperă doar o parte din costurile de călătorie și subzistență; poți fi anunțat că trebuie să cofinanțezi o parte.",
+      "quotes": [
+        "prin intermediul proiectelor de Mobilitate Internațională de Credite (între 5 zile și 2 luni)",
+        "Grantul Erasmus+ nu acoperă integral costurile mobilității, ci reprezintă doar o contribuţie la costul călătoriei şi al subzistenţei"
+      ],
+      "cost": "Grant parțial (suma nu este indicată pe pagină)",
+      "duration": "5 zile – 2 luni"
+    },
+    {
+      "id": "s7",
+      "title": "La întoarcere: raportul individual de activitate",
+      "where": "Centrul Erasmus+ al UTM",
+      "depends_on_step": 5,
+      "source": "staff",
+      "description": "La revenire completezi raportul individual de activitate. UTM recunoaște perioada de mobilitate ca perioadă de activitate profesională și păstrează drepturile angajatului.",
+      "quotes": [
+        "Raport individual de activitate (la revenire din mobilitate-formă liberă)",
+        "UTM recunoaște perioada de mobilitate ca fiind perioada de activitate profesională"
+      ],
+      "cost": null,
+      "duration": null
+    }
+  ],
+  "unconfirmed": [
+    "Termenele-limită ale concursului și calendarul sesiunilor — nu sunt pe pagina verificată",
+    "Cuantumul grantului — pagina trimite la Ghidul programului pentru nivelurile burselor",
+    "Dacă UTM are acord cu o universitate din țara dorită (ex. Ucraina) — pagina nu listează destinațiile; întreabă Centrul Erasmus+",
+    "Durata: pagina indică atât «între 5 zile și 2 luni» pentru Mobilitatea Internațională de Credite, cât și minimum 2 zile pentru proiectul KA131/103; confirmă durata care ți se aplică la Centrul Erasmus+"
+  ]
+}

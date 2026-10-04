@@ -1,0 +1,196 @@
+- main [ref=f27e134]:
+  - complementary [ref=f27e135]:
+    - button "DocuGuide - Acasă" [ref=f27e137] [cursor=pointer]:
+      - generic [ref=f27e144]: DocuGuide
+    - button "Conversație nouă" [ref=f27e145] [cursor=pointer]
+    - button "Toate conversațiile" [ref=f27e147] [cursor=pointer]
+    - navigation [ref=f27e148]:
+      - button [ref=f27e149] [cursor=pointer]
+      - button [ref=f27e154] [cursor=pointer]
+      - button [ref=f27e160] [cursor=pointer]
+      - button [ref=f27e164] [cursor=pointer]
+      - button [ref=f27e170] [cursor=pointer]
+      - button [ref=f27e175] [cursor=pointer]
+      - button [ref=f27e181] [cursor=pointer]
+    - generic [ref=f27e186]:
+      - strong [ref=f27e187]: Conversații recente
+      - button "cum inregistrez o masina adusa din Germania?" [ref=f27e189] [cursor=pointer]
+  - generic [ref=f27e196]:
+    - generic [ref=f27e197]:
+      - generic [ref=f27e206]:
+        - strong [ref=f27e207]: Asistent DocuGuide
+        - generic [ref=f27e208]: Activ acum
+      - generic [ref=f27e209]: Acte și servicii publice
+    - generic [ref=f27e214]:
+      - generic [ref=f27e215]: cum inregistrez o masina adusa din Germania?
+      - generic [ref=f27e226]:
+        - button "Exportă PDF" [ref=f27e228] [cursor=pointer]
+        - paragraph [ref=f27e232]: Mașina se declară mai întâi la vamă (import), apoi se înmatriculează la Agenția Servicii Publice (ASP).
+        - generic [ref=f27e233]:
+          - heading "Pași de urmat" [level=4] [ref=f27e234]
+          - list [ref=f27e235]:
+            - listitem [ref=f27e236]:
+              - generic [ref=f27e237]:
+                - strong [ref=f27e238]: Pregătește documentele pentru vamă (original și copie)
+                - generic "Confirmat acum pe pagina oficială" [ref=f27e239]
+                - link "1" [ref=f27e242] [cursor=pointer]:
+                  - /url: https://customs.gov.md/ro/articles/importul-mijloacelor-de-transport-cerinte-si-documente-2466-ro
+              - paragraph [ref=f27e243]: Pentru import, la postul vamal se prezintă actul de identitate, documentul de proprietate sau folosință, pașaportul tehnic și, la reprezentare, procura — în original și copie.
+              - generic [ref=f27e244]: Înainte de a ajunge la postul vamal
+              - group [ref=f27e249]:
+                - generic "Vezi sursa" [ref=f27e250] [cursor=pointer]
+            - listitem [ref=f27e251]:
+              - generic [ref=f27e252]:
+                - strong [ref=f27e253]: Declară mașina la vamă (regim vamal de import)
+                - generic "Confirmat acum pe pagina oficială" [ref=f27e254]
+                - link "1" [ref=f27e257] [cursor=pointer]:
+                  - /url: https://customs.gov.md/ro/articles/importul-mijloacelor-de-transport-cerinte-si-documente-2466-ro
+              - paragraph [ref=f27e258]: Declararea o face proprietarul, persoana împuternicită legal sau un broker vamal licențiat. Persoanele fizice o fac pe declarația vamală standard (H1) sau pe hârtie, pe formularul primit de la funcționarul vamal.
+              - generic [ref=f27e259]:
+                - generic [ref=f27e260]: Post vamal de frontieră sau post vamal intern
+                - generic [ref=f27e264]: după pasul 1
+              - group [ref=f27e265]:
+                - generic "Vezi sursa" [ref=f27e266] [cursor=pointer]
+            - listitem [ref=f27e267]:
+              - generic [ref=f27e268]:
+                - strong [ref=f27e269]: Drepturile de import (calculate la vămuire)
+                - generic "Confirmat acum pe pagina oficială" [ref=f27e270]
+                - link "1" [ref=f27e273] [cursor=pointer]:
+                  - /url: https://customs.gov.md/ro/articles/importul-mijloacelor-de-transport-cerinte-si-documente-2466-ro
+              - paragraph [ref=f27e274]: Suma depinde de termenul de exploatare, capacitatea cilindrică a motorului și valoarea în vamă. Termenul de exploatare se calculează după anul de producere, nu după anul primei înmatriculări. Cota accizului se calculează conform anexei nr.2 la Titlul IV din Codul Fiscal.
+              - generic [ref=f27e275]:
+                - generic [ref=f27e276]: Serviciul Vamal
+                - generic [ref=f27e280]: după pasul 2
+              - group [ref=f27e281]:
+                - generic "Vezi sursa" [ref=f27e282] [cursor=pointer]
+            - listitem [ref=f27e283]:
+              - generic [ref=f27e284]:
+                - strong [ref=f27e285]: Identificarea vehiculului la ASP
+                - generic "Confirmat acum pe pagina oficială" [ref=f27e286]
+                - link "2" [ref=f27e289] [cursor=pointer]:
+                  - /url: https://www.asp.gov.md/ro/servicii/vehicule/inmatriculare-vehicule/421
+              - paragraph [ref=f27e290]: "Procedura de înmatriculare începe cu identificarea vehiculului importat: se verifică datele (nr. motor, caroserie, șasiu) și autenticitatea actelor de însoțire, iar datele se înscriu în Raportul de identificare."
+              - generic [ref=f27e291]:
+                - generic [ref=f27e292]: ASP — Departamentul înmatriculare a mijloacelor de transport și calificare a conducătorilor auto
+                - generic [ref=f27e296]: după pasul 3
+              - group [ref=f27e297]:
+                - generic "Vezi sursa" [ref=f27e298] [cursor=pointer]
+            - listitem [ref=f27e299]:
+              - generic [ref=f27e300]:
+                - strong [ref=f27e301]: Depune dosarul de înmatriculare și achită taxele ASP
+                - generic "Confirmat acum pe pagina oficială" [ref=f27e302]
+                - link "2" [ref=f27e305] [cursor=pointer]:
+                  - /url: https://www.asp.gov.md/ro/servicii/vehicule/inmatriculare-vehicule/421
+              - paragraph [ref=f27e306]: "Dosarul se formează pe baza cererii: cerere VP, actele de însoțire a vehiculului importat, confirmarea achitării taxelor și actele de identitate (sau procura)."
+              - generic [ref=f27e307]:
+                - generic [ref=f27e308]: ASP
+                - generic [ref=f27e312]: după pasul 4
+              - group [ref=f27e313]:
+                - generic "Vezi sursa" [ref=f27e314] [cursor=pointer]
+            - listitem [ref=f27e315]:
+              - generic [ref=f27e316]:
+                - strong [ref=f27e317]: Primești certificatul de înmatriculare provizoriu și numerele
+                - generic "Confirmat acum pe pagina oficială" [ref=f27e318]
+                - link "2" [ref=f27e321] [cursor=pointer]:
+                  - /url: https://www.asp.gov.md/ro/servicii/vehicule/inmatriculare-vehicule/421
+              - paragraph [ref=f27e322]: Certificatul provizoriu (VPP) se eliberează odată cu setul numerelor de înmatriculare, contra semnătură.
+              - generic [ref=f27e323]:
+                - generic [ref=f27e324]: ASP
+                - generic [ref=f27e328]: după pasul 5
+              - group [ref=f27e329]:
+                - generic "Vezi sursa" [ref=f27e330] [cursor=pointer]
+        - generic [ref=f27e331]:
+          - heading "Documente 1/7 pregătite" [level=4] [ref=f27e332]:
+            - text: Documente
+            - generic [ref=f27e333]: 1/7 pregătite
+          - list [ref=f27e334]:
+            - listitem [ref=f27e335]:
+              - generic [ref=f27e336] [cursor=pointer]:
+                - checkbox "Actul de identitate al proprietarului (pașaport sau buletin) — pentru vamă Obligatoriu 1" [checked] [ref=f27e337]
+                - strong [ref=f27e338]: Actul de identitate al proprietarului (pașaport sau buletin) — pentru vamă
+                - generic [ref=f27e339]: Obligatoriu
+                - generic "Confirmat acum pe pagina oficială" [ref=f27e340]
+                - link "1" [ref=f27e343]:
+                  - /url: https://customs.gov.md/ro/articles/importul-mijloacelor-de-transport-cerinte-si-documente-2466-ro
+              - group [ref=f27e344]:
+                - generic "Vezi sursa" [ref=f27e345] [cursor=pointer]
+            - listitem [ref=f27e346]:
+              - generic [ref=f27e347] [cursor=pointer]:
+                - checkbox "Document care confirmă dreptul de proprietate sau folosință (contract, factura comercială sau document de plată) Obligatoriu 1" [ref=f27e348]
+                - strong [ref=f27e349]: Document care confirmă dreptul de proprietate sau folosință (contract, factura comercială sau document de plată)
+                - generic [ref=f27e350]: Obligatoriu
+                - generic "Confirmat acum pe pagina oficială" [ref=f27e351]
+                - link "1" [ref=f27e354]:
+                  - /url: https://customs.gov.md/ro/articles/importul-mijloacelor-de-transport-cerinte-si-documente-2466-ro
+              - group [ref=f27e355]:
+                - generic "Vezi sursa" [ref=f27e356] [cursor=pointer]
+            - listitem [ref=f27e357]:
+              - generic [ref=f27e358] [cursor=pointer]:
+                - checkbox "Pașaportul tehnic al mijlocului de transport Obligatoriu 1" [ref=f27e359]
+                - strong [ref=f27e360]: Pașaportul tehnic al mijlocului de transport
+                - generic [ref=f27e361]: Obligatoriu
+                - generic "Confirmat acum pe pagina oficială" [ref=f27e362]
+                - link "1" [ref=f27e365]:
+                  - /url: https://customs.gov.md/ro/articles/importul-mijloacelor-de-transport-cerinte-si-documente-2466-ro
+              - group [ref=f27e366]:
+                - generic "Vezi sursa" [ref=f27e367] [cursor=pointer]
+            - listitem [ref=f27e368]:
+              - generic [ref=f27e369] [cursor=pointer]:
+                - checkbox "Procura persoanei care declară bunul, dacă proprietarul este reprezentat Posibil 1" [ref=f27e370]
+                - strong [ref=f27e371]: Procura persoanei care declară bunul, dacă proprietarul este reprezentat
+                - generic [ref=f27e372]: Posibil
+                - generic "Confirmat acum pe pagina oficială" [ref=f27e373]
+                - link "1" [ref=f27e376]:
+                  - /url: https://customs.gov.md/ro/articles/importul-mijloacelor-de-transport-cerinte-si-documente-2466-ro
+              - group [ref=f27e377]:
+                - generic "Vezi sursa" [ref=f27e378] [cursor=pointer]
+            - listitem [ref=f27e379]:
+              - generic [ref=f27e380] [cursor=pointer]:
+                - checkbox "Cerere de eliberare a certificatului de înmatriculare (VP) Obligatoriu 2" [ref=f27e381]
+                - strong [ref=f27e382]: Cerere de eliberare a certificatului de înmatriculare (VP)
+                - generic [ref=f27e383]: Obligatoriu
+                - generic "Confirmat acum pe pagina oficială" [ref=f27e384]
+                - link "2" [ref=f27e387]:
+                  - /url: https://www.asp.gov.md/ro/servicii/vehicule/inmatriculare-vehicule/421
+              - group [ref=f27e388]:
+                - generic "Vezi sursa" [ref=f27e389] [cursor=pointer]
+            - listitem [ref=f27e390]:
+              - generic [ref=f27e391] [cursor=pointer]:
+                - checkbox "Document de confirmare a taxelor pentru serviciile ASP Obligatoriu 2" [ref=f27e392]
+                - strong [ref=f27e393]: Document de confirmare a taxelor pentru serviciile ASP
+                - generic [ref=f27e394]: Obligatoriu
+                - generic "Confirmat acum pe pagina oficială" [ref=f27e395]
+                - link "2" [ref=f27e398]:
+                  - /url: https://www.asp.gov.md/ro/servicii/vehicule/inmatriculare-vehicule/421
+              - group [ref=f27e399]:
+                - generic "Vezi sursa" [ref=f27e400] [cursor=pointer]
+            - listitem [ref=f27e401]:
+              - generic [ref=f27e402] [cursor=pointer]:
+                - checkbox "Documente de identitate sau procură, după caz — pentru ASP Obligatoriu 2" [ref=f27e403]
+                - strong [ref=f27e404]: Documente de identitate sau procură, după caz — pentru ASP
+                - generic [ref=f27e405]: Obligatoriu
+                - generic "Confirmat acum pe pagina oficială" [ref=f27e406]
+                - link "2" [ref=f27e409]:
+                  - /url: https://www.asp.gov.md/ro/servicii/vehicule/inmatriculare-vehicule/421
+              - group [ref=f27e410]:
+                - generic "Vezi sursa" [ref=f27e411] [cursor=pointer]
+        - group [ref=f27e412]:
+          - generic "⚠ Ce nu este confirmat în surse (4) — vezi ce trebuie verificat" [ref=f27e413] [cursor=pointer]
+        - generic [ref=f27e414]:
+          - heading "Surse oficiale" [level=4] [ref=f27e415]
+          - list [ref=f27e416]:
+            - listitem [ref=f27e417]:
+              - generic [ref=f27e418]: "1"
+              - 'link "Serviciul Vamal al Republicii Moldova – Importul mijloacelor de transport: Cerințe și documente" [ref=f27e419] [cursor=pointer]':
+                - /url: https://customs.gov.md/ro/articles/importul-mijloacelor-de-transport-cerinte-si-documente-2466-ro
+            - listitem [ref=f27e420]:
+              - generic [ref=f27e421]: "2"
+              - link "Agenția Servicii Publice – Eliberarea certificatului de înmatriculare pentru vehicul" [ref=f27e422] [cursor=pointer]:
+                - /url: https://www.asp.gov.md/ro/servicii/vehicule/inmatriculare-vehicule/421
+        - paragraph [ref=f27e423]: "Ghid verificat (13/13 elemente confirmate acum). Ultima verificare manuală: 2026-10-03."
+    - generic [ref=f27e424]:
+      - button "Adaugă" [ref=f27e425] [cursor=pointer]
+      - textbox "Scrie un mesaj" [ref=f27e427]:
+        - /placeholder: Scrie un mesaj...
+      - button "Dictează mesajul" [ref=f27e428] [cursor=pointer]
+      - button "Trimite" [disabled] [ref=f27e432]

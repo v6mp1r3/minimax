@@ -13,17 +13,8 @@
     "afacere"
   ],
   "applies_when": {},
-  "slots": [
-    "citizenships"
-  ],
   "last_verified": "2026-10-03",
   "summary": "Rezervi denumirea, pregătești actele de constituire și declarațiile, achiți taxa și depui cererea la Agenția Servicii Publice (ASP).",
-  "profile_notes": {
-    "citizenships": {
-      "has_EU": "Ai și cetățenie UE: documentele pentru investiții străine (pasul 4) se aplică doar dacă printre fondatori, administratori sau beneficiari efectivi sunt persoane străine sau nerezidente.",
-      "no_EU": "Dacă toți fondatorii, administratorii și beneficiarii efectivi sunt cetățeni RM rezidenți, pasul 4 nu se aplică; altfel se cer documentele suplimentare pentru investiții străine."
-    }
-  },
   "sources": {
     "name": {
       "url": "https://www.asp.gov.md/ro/servicii/persoane-juridice/inregistrare-afacere/223",
@@ -59,7 +50,39 @@
       "where_to_get": null,
       "source": "srl",
       "used_in": "s2",
-      "quote": "Hotărârea de constituire și actele de constituire ale persoanei juridice, aprobate de toți asociații fondatori (în două exemplare)"
+      "quote": "Hotărârea de constituire și actele de constituire ale persoanei juridice, aprobate de toți asociații fondatori (în două exemplare)",
+      "unless": {
+        "slot": "founders",
+        "answered": true
+      }
+    },
+    {
+      "id": "d-decision-single",
+      "name": "Decizia fondatorului unic (hotărârea de constituire), în două exemplare",
+      "status": "required",
+      "where_to_get": null,
+      "source": "srl",
+      "used_in": "s2",
+      "quote": "Decizia a fondatorului unic al persoanei juridice",
+      "when": {
+        "slot": "founders",
+        "equals": "single"
+      },
+      "show_if_unknown": false
+    },
+    {
+      "id": "d-minutes-multi",
+      "name": "Procesul-verbal al adunării de constituire (hotărârea de constituire), aprobat de toți asociații fondatori, în două exemplare",
+      "status": "required",
+      "where_to_get": null,
+      "source": "srl",
+      "used_in": "s2",
+      "quote": "Proces-verbal al Adunării de constituire a persoanei juridice",
+      "when": {
+        "slot": "founders",
+        "equals": "multiple"
+      },
+      "show_if_unknown": false
     },
     {
       "id": "d-statute",
@@ -69,7 +92,41 @@
       "source": "srl",
       "used_in": "s2",
       "quote": "Statutul Societății",
-      "where_quote": "Statutul SRL cu 2 sau mai multi asociati Statutul SRL cu asociat unic"
+      "where_quote": "Statutul SRL cu 2 sau mai multi asociati Statutul SRL cu asociat unic",
+      "unless": {
+        "slot": "founders",
+        "answered": true
+      }
+    },
+    {
+      "id": "d-statute-single",
+      "name": "Statutul SRL cu asociat unic",
+      "status": "required",
+      "where_to_get": "Pagina ASP listează varianta de statut pentru SRL cu asociat unic",
+      "where_quote": "Statutul SRL cu asociat unic",
+      "source": "srl",
+      "used_in": "s2",
+      "quote": "Statutul SRL cu asociat unic",
+      "when": {
+        "slot": "founders",
+        "equals": "single"
+      },
+      "show_if_unknown": false
+    },
+    {
+      "id": "d-statute-multi",
+      "name": "Statutul SRL cu 2 sau mai mulți asociați",
+      "status": "required",
+      "where_to_get": "Pagina ASP listează varianta de statut pentru SRL cu 2 sau mai mulți asociați",
+      "where_quote": "Statutul SRL cu 2 sau mai multi asociati",
+      "source": "srl",
+      "used_in": "s2",
+      "quote": "Statutul SRL cu 2 sau mai multi asociati",
+      "when": {
+        "slot": "founders",
+        "equals": "multiple"
+      },
+      "show_if_unknown": false
     },
     {
       "id": "d-be",
@@ -124,7 +181,12 @@
       "where_to_get": null,
       "source": "srl",
       "used_in": "s4",
-      "quote": "Extrasul din registrul comerțului din țara de origine a persoanei juridice străine ( tradus și legalizat/apostilat )."
+      "quote": "Extrasul din registrul comerțului din țara de origine a persoanei juridice străine ( tradus și legalizat/apostilat ).",
+      "when": {
+        "slot": "foreign",
+        "equals": "yes"
+      },
+      "condition_text": "ai fondatori, administratori sau beneficiari efectivi străini sau nerezidenți"
     },
     {
       "id": "d-f-passport",
@@ -133,7 +195,12 @@
       "where_to_get": null,
       "source": "srl",
       "used_in": "s4",
-      "quote": "Copia pașaportului pentru administratorii, fondatorii și beneficiarii efectivi nerezidenți/cetățeni străini."
+      "quote": "Copia pașaportului pentru administratorii, fondatorii și beneficiarii efectivi nerezidenți/cetățeni străini.",
+      "when": {
+        "slot": "foreign",
+        "equals": "yes"
+      },
+      "condition_text": "ai fondatori, administratori sau beneficiari efectivi străini sau nerezidenți"
     },
     {
       "id": "d-f-idnp",
@@ -143,7 +210,12 @@
       "source": "srl",
       "used_in": "s4",
       "where_quote": "eliberat de Inspectoratul General pentru Migrație",
-      "quote": "Codul IDNP pentru administratorul străin ( eliberat de Inspectoratul General pentru Migrație )."
+      "quote": "Codul IDNP pentru administratorul străin ( eliberat de Inspectoratul General pentru Migrație ).",
+      "when": {
+        "slot": "foreign",
+        "equals": "yes"
+      },
+      "condition_text": "ai fondatori, administratori sau beneficiari efectivi străini sau nerezidenți"
     },
     {
       "id": "d-poa",
@@ -170,7 +242,12 @@
       "where_to_get": null,
       "source": "srl",
       "used_in": "s5",
-      "quote": "Documente pentru situații speciale și domenii reglementate"
+      "quote": "Documente pentru situații speciale și domenii reglementate",
+      "when": {
+        "slot": "regulated",
+        "equals": "yes"
+      },
+      "condition_text": "activitatea este într-un domeniu reglementat"
     }
   ],
   "steps": [
@@ -221,7 +298,7 @@
     },
     {
       "id": "s4",
-      "title": "Doar dacă ai fondatori, administratori sau beneficiari efectivi străini: adaugă documentele pentru investiții străine",
+      "title": "Adaugă documentele pentru investiții străine",
       "where": "Fondatorii / administratorul străin",
       "depends_on_step": 3,
       "source": "srl",
@@ -233,11 +310,16 @@
         "Nota: După caz pot fi solicitate acte suplimentare"
       ],
       "cost": null,
-      "duration": null
+      "duration": null,
+      "when": {
+        "slot": "foreign",
+        "equals": "yes"
+      },
+      "condition_text": "ai fondatori, administratori sau beneficiari efectivi străini sau nerezidenți"
     },
     {
       "id": "s5",
-      "title": "Doar pentru activități reglementate: obține avizul/aprobarea prealabilă a autorității competente",
+      "title": "Obține avizul/aprobarea prealabilă a autorității competente (activități reglementate)",
       "where": "Autoritatea competentă pentru domeniul respectiv",
       "depends_on_step": 3,
       "source": "reg",
@@ -246,7 +328,12 @@
         "În cazul în care persoana juridică intenţionează să desfăşoare activitate într-un domeniu reglementat, în cererea de înregistrare se declară pe proprie răspundere deţinerea avizului/aprobării prealabile a autorităţii competente privind constituirea acesteia"
       ],
       "cost": null,
-      "duration": null
+      "duration": null,
+      "when": {
+        "slot": "regulated",
+        "equals": "yes"
+      },
+      "condition_text": "activitatea este într-un domeniu reglementat"
     },
     {
       "id": "s6",
@@ -313,6 +400,83 @@
       "quotes": [
         "Beneficiarul efectiv este orice persoană fizică ce deține sau controlează în ultimă instanță clientul",
         "Deținerea de către o persoană fizică a 25% plus o acțiune sau participarea acesteia în capitalul social al unei persoane juridice cu peste 25% este un criteriu al exercitării directe a dreptului de proprietate"
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "key": "founders",
+      "type": "single",
+      "ask": "Câți fondatori (asociați) are SRL-ul?",
+      "no_other": true,
+      "options": [
+        {
+          "value": "single",
+          "label": "Unul singur (asociat unic)",
+          "keywords": [
+            "asociat unic",
+            "fondator unic",
+            "unic fondator",
+            "un singur fondator",
+            "singur fondator"
+          ]
+        },
+        {
+          "value": "multiple",
+          "label": "Doi sau mai mulți",
+          "keywords": [
+            "doi asociat",
+            "mai multi asociat",
+            "doi fondator",
+            "mai multi fondator",
+            "2 asociat",
+            "2 fondator"
+          ]
+        },
+        {
+          "value": "unknown",
+          "label": "Nu știu încă"
+        }
+      ]
+    },
+    {
+      "key": "foreign",
+      "type": "single",
+      "ask": "Printre fondatori, administratori sau beneficiari efectivi este cineva cu cetățenie străină sau nerezident în Republica Moldova?",
+      "no_other": true,
+      "options": [
+        {
+          "value": "yes",
+          "label": "Da"
+        },
+        {
+          "value": "no",
+          "label": "Nu"
+        },
+        {
+          "value": "unknown",
+          "label": "Nu știu"
+        }
+      ]
+    },
+    {
+      "key": "regulated",
+      "type": "single",
+      "ask": "SRL-ul va avea o activitate reglementată (ex. audit, pază și detectivi, creditare nebancară, monedă electronică)?",
+      "no_other": true,
+      "options": [
+        {
+          "value": "yes",
+          "label": "Da"
+        },
+        {
+          "value": "no",
+          "label": "Nu"
+        },
+        {
+          "value": "unknown",
+          "label": "Nu știu"
+        }
       ]
     }
   ]

@@ -42,6 +42,8 @@ export function DocumentList({ documents, sources, guideKey }) {
               )}
               <SourceRefs ids={d.sources} sources={sources} />
             </label>
+            {d.applies === "yes" && <p className="meta"><span className="chip applies">Se aplică în cazul tău</span></p>}
+            {d.applies === "maybe" && d.condition_text && <p className="meta"><span className="chip maybe">Doar dacă {d.condition_text}</span></p>}
             {d.reason && d.check !== "confirmed" && <p>{d.reason}</p>}
             {d.where_to_get && <p className="meta">Unde: {d.where_to_get}</p>}
             <SourceToggle quotes={d.quote ? [d.quote] : []} url={byId[(d.sources || [])[0]]?.url} />

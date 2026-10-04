@@ -1,0 +1,234 @@
+- main [ref=f20e134]:
+  - complementary [ref=f20e135]:
+    - button "DocuGuide - Acasă" [ref=f20e137] [cursor=pointer]:
+      - generic [ref=f20e144]: DocuGuide
+    - button "Conversație nouă" [ref=f20e145] [cursor=pointer]
+    - button "Toate conversațiile" [ref=f20e147] [cursor=pointer]
+    - navigation [ref=f20e148]:
+      - button [ref=f20e149] [cursor=pointer]
+      - button [ref=f20e154] [cursor=pointer]
+      - button [ref=f20e160] [cursor=pointer]
+      - button [ref=f20e164] [cursor=pointer]
+      - button [ref=f20e170] [cursor=pointer]
+      - button [ref=f20e175] [cursor=pointer]
+      - button [ref=f20e181] [cursor=pointer]
+    - generic [ref=f20e186]:
+      - strong [ref=f20e187]: Conversații recente
+      - button "eu vreau sa ma duc la erasmus, ce am nevoie avan Fixată" [ref=f20e189] [cursor=pointer]:
+        - generic [ref=f20e194]: eu vreau sa ma duc la erasmus, ce am nevoie avan
+        - generic "Fixată" [ref=f20e195]
+      - button "vreau sa plec in mobilitate in Ucraina, ce am ne" [ref=f20e199] [cursor=pointer]
+      - button "vreau să plec în mobilitatea în Ucraina ce docum" [ref=f20e206] [cursor=pointer]
+      - button "vreau să plec în mobilitatea în Ucraina ce docum" [ref=f20e213] [cursor=pointer]
+      - button "vreau să plec în mobilitatea în Ucraina ce docum" [ref=f20e220] [cursor=pointer]
+      - button "vreau sa plec in mobilitate in Ucraina, ce am ne" [ref=f20e227] [cursor=pointer]
+      - 'button "Vreau informații despre: Înscriere la universita" [ref=f20e233] [cursor=pointer]'
+      - button "ce documente am nevoie sa pentru confirmarea pol" [ref=f20e240] [cursor=pointer]
+      - button "ce documente am nevoie sa pentru confirmarea pol" [ref=f20e248] [cursor=pointer]
+      - button "cum inregistrez o masina adusa din Germania?" [ref=f20e256] [cursor=pointer]
+      - button "ce documente am nevoie ca sa deschid un srl" [ref=f20e264] [cursor=pointer]
+      - 'button "Vreau informații despre: Înregistrare la medic" [ref=f20e272] [cursor=pointer]'
+      - 'button "Vreau informații despre: Înregistrare la medic" [ref=f20e280] [cursor=pointer]'
+      - button "ce documente am nevoie ca sa deschid un srl" [ref=f20e288] [cursor=pointer]
+      - button "eu vreau sa ma duc la erasmus, ce am nevoie avan" [ref=f20e294] [cursor=pointer]
+      - button "eu vreau sa ma duc la erasmus, ce am nevoie avan" [ref=f20e301] [cursor=pointer]
+      - button "cum inregistrez o masina adusa din Germania?" [ref=f20e308] [cursor=pointer]
+  - generic [ref=f20e315]:
+    - generic [ref=f20e316]:
+      - generic [ref=f20e325]:
+        - strong [ref=f20e326]: Asistent DocuGuide
+        - generic [ref=f20e327]: Activ acum
+      - generic [ref=f20e328]: Educație și studii
+    - generic [ref=f20e332]:
+      - generic [ref=f20e333]: vreau sa plec in mobilitate in Ucraina, ce am nevoie?
+      - generic [ref=f20e335]: "Pentru a-ți pregăti un ghid personalizat, am nevoie de câteva detalii:"
+      - generic [ref=f20e345]:
+        - strong [ref=f20e346]: Despre ce fel de mobilitate este vorba?
+        - generic [ref=f20e347]:
+          - button [disabled] [ref=f20e348]
+          - button [disabled] [ref=f20e352]
+          - button [disabled] [ref=f20e356]
+          - button [disabled] [ref=f20e360]
+          - button [disabled] [ref=f20e364]
+      - generic [ref=f20e382]: "Mobilitate pentru personal (muncă: predare / formare)"
+      - generic [ref=f20e393]:
+        - paragraph [ref=f20e394]: Cadrele didactice și personalul administrativ din UTM pot pleca la predare sau formare (5 zile – 2 luni) prin Erasmus+, la universități cu care UTM are acorduri.
+        - generic [ref=f20e395]:
+          - heading "Pași de urmat" [level=4] [ref=f20e396]
+          - list [ref=f20e397]:
+            - listitem [ref=f20e398]:
+              - generic [ref=f20e399]:
+                - strong [ref=f20e400]: Verifică dacă ești eligibil
+                - generic "Confirmat acum pe pagina oficială" [ref=f20e401]
+                - link "1" [ref=f20e404] [cursor=pointer]:
+                  - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-pentru-personalul-universitar-al-utm/
+              - paragraph [ref=f20e405]: Ai relații contractuale de muncă cu UTM și cunoști bine limba în care vei preda sau te vei forma. Activitatea durează minimum 2 zile consecutive (proiect KA131/103) sau 5 zile (KA107), fără zilele de călătorie.
+              - generic [ref=f20e406]: UTM
+              - group [ref=f20e411]:
+                - generic "Vezi sursa" [ref=f20e412] [cursor=pointer]
+            - listitem [ref=f20e413]:
+              - generic [ref=f20e414]:
+                - strong [ref=f20e415]: Verifică unde poți merge
+                - generic "Confirmat acum pe pagina oficială" [ref=f20e416]
+                - link "1" [ref=f20e419] [cursor=pointer]:
+                  - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-pentru-personalul-universitar-al-utm/
+              - paragraph [ref=f20e420]: Poți merge în universități din țări participante la Erasmus+ (KA131/103) sau din țări partenere (KA107), cu care UTM are acorduri bilaterale inter-instituționale pentru domeniul tău.
+              - generic [ref=f20e421]:
+                - generic [ref=f20e422]: Direcția Relații Internaționale / Centrul Erasmus+
+                - generic [ref=f20e426]: după pasul 1
+              - group [ref=f20e427]:
+                - generic "Vezi sursa" [ref=f20e428] [cursor=pointer]
+            - listitem [ref=f20e429]:
+              - generic [ref=f20e430]:
+                - strong [ref=f20e431]: Depune dosarul de aplicație
+                - generic "Confirmat acum pe pagina oficială" [ref=f20e432]
+                - link "1" [ref=f20e435] [cursor=pointer]:
+                  - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-pentru-personalul-universitar-al-utm/
+              - paragraph [ref=f20e436]: Dosarul include cererea de participare, documentul care certifică statutul de angajat, scrisoarea de motivație și alte documente relevante (CV, copia pașaportului). Se evaluează doar dosarele complete.
+              - generic [ref=f20e437]:
+                - generic [ref=f20e438]: Centrul Erasmus+ al UTM
+                - generic [ref=f20e442]: după pasul 2
+              - group [ref=f20e443]:
+                - generic "Vezi sursa" [ref=f20e444] [cursor=pointer]
+            - listitem [ref=f20e445]:
+              - generic [ref=f20e446]:
+                - strong [ref=f20e447]: Selecția și nominalizarea
+                - generic "Confirmat acum pe pagina oficială" [ref=f20e448]
+                - link "1" [ref=f20e451] [cursor=pointer]:
+                  - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-pentru-personalul-universitar-al-utm/
+              - paragraph [ref=f20e452]: Dosarele sunt evaluate de Comisia de selecție. Înscrierea durează minimum 2 săptămâni, concursul 1 zi, contestațiile 1–2 zile; apoi se afișează rezultatele finale și documentele se trimit universităților partenere. Prioritate au cei care pleacă pentru prima dată în program.
+              - generic [ref=f20e453]:
+                - generic [ref=f20e454]: Comisia de selecție a candidaților
+                - generic [ref=f20e458]: înscriere minim 2 săptămâni, concurs 1 zi, contestații 1–2 zile
+                - generic [ref=f20e462]: după pasul 3
+              - group [ref=f20e463]:
+                - generic "Vezi sursa" [ref=f20e464] [cursor=pointer]
+            - listitem [ref=f20e465]:
+              - generic [ref=f20e466]:
+                - strong [ref=f20e467]: "Înainte de plecare: trimite documentele către Centrul Erasmus+"
+                - generic "Confirmat acum pe pagina oficială" [ref=f20e468]
+                - link "1" [ref=f20e471] [cursor=pointer]:
+                  - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-pentru-personalul-universitar-al-utm/
+              - paragraph [ref=f20e472]: Trimiți invitația/acceptul universității gazdă, programul de predare sau de formare semnat de ambele universități și o poliță de asigurare de călătorie valabilă pe toată durata mobilității.
+              - generic [ref=f20e473]:
+                - generic [ref=f20e474]: Centrul Erasmus+ al UTM
+                - generic [ref=f20e478]: după pasul 4
+              - group [ref=f20e479]:
+                - generic "Vezi sursa" [ref=f20e480] [cursor=pointer]
+            - listitem [ref=f20e481]:
+              - generic [ref=f20e482]:
+                - strong [ref=f20e483]: Durata și sprijinul financiar
+                - generic "Confirmat acum pe pagina oficială" [ref=f20e484]
+                - link "1" [ref=f20e487] [cursor=pointer]:
+                  - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-pentru-personalul-universitar-al-utm/
+              - paragraph [ref=f20e488]: Mobilitățile durează între 5 zile și 2 luni. Grantul Erasmus+ acoperă doar o parte din costurile de călătorie și subzistență; poți fi anunțat că trebuie să cofinanțezi o parte.
+              - generic [ref=f20e489]:
+                - generic [ref=f20e490]: Centrul Erasmus+ al UTM
+                - generic [ref=f20e494]: Grant parțial (suma nu este indicată pe pagină)
+                - generic [ref=f20e498]: 5 zile – 2 luni
+                - generic [ref=f20e502]: după pasul 4
+              - group [ref=f20e503]:
+                - generic "Vezi sursa" [ref=f20e504] [cursor=pointer]
+            - listitem [ref=f20e505]:
+              - generic [ref=f20e506]:
+                - strong [ref=f20e507]: "La întoarcere: raportul individual de activitate"
+                - generic "Confirmat acum pe pagina oficială" [ref=f20e508]
+                - link "1" [ref=f20e511] [cursor=pointer]:
+                  - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-pentru-personalul-universitar-al-utm/
+              - paragraph [ref=f20e512]: La revenire completezi raportul individual de activitate. UTM recunoaște perioada de mobilitate ca perioadă de activitate profesională și păstrează drepturile angajatului.
+              - generic [ref=f20e513]:
+                - generic [ref=f20e514]: Centrul Erasmus+ al UTM
+                - generic [ref=f20e518]: după pasul 5
+              - group [ref=f20e519]:
+                - generic "Vezi sursa" [ref=f20e520] [cursor=pointer]
+        - generic [ref=f20e521]:
+          - heading "Documente 0/7 pregătite" [level=4] [ref=f20e522]:
+            - text: Documente
+            - generic [ref=f20e523]: 0/7 pregătite
+          - list [ref=f20e524]:
+            - listitem [ref=f20e525]:
+              - generic [ref=f20e526] [cursor=pointer]:
+                - checkbox "Cererea de participare la concurs Obligatoriu 1" [ref=f20e527]
+                - strong [ref=f20e528]: Cererea de participare la concurs
+                - generic [ref=f20e529]: Obligatoriu
+                - generic "Confirmat acum pe pagina oficială" [ref=f20e530]
+                - link "1" [ref=f20e533]:
+                  - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-pentru-personalul-universitar-al-utm/
+              - group [ref=f20e534]:
+                - generic "Vezi sursa" [ref=f20e535] [cursor=pointer]
+            - listitem [ref=f20e536]:
+              - generic [ref=f20e537] [cursor=pointer]:
+                - checkbox "Documentul care certifică statutul de angajat în cadrul universității Obligatoriu 1" [ref=f20e538]
+                - strong [ref=f20e539]: Documentul care certifică statutul de angajat în cadrul universității
+                - generic [ref=f20e540]: Obligatoriu
+                - generic "Confirmat acum pe pagina oficială" [ref=f20e541]
+                - link "1" [ref=f20e544]:
+                  - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-pentru-personalul-universitar-al-utm/
+              - group [ref=f20e545]:
+                - generic "Vezi sursa" [ref=f20e546] [cursor=pointer]
+            - listitem [ref=f20e547]:
+              - generic [ref=f20e548] [cursor=pointer]:
+                - checkbox "Scrisoare de motivație Obligatoriu 1" [ref=f20e549]
+                - strong [ref=f20e550]: Scrisoare de motivație
+                - generic [ref=f20e551]: Obligatoriu
+                - generic "Confirmat acum pe pagina oficială" [ref=f20e552]
+                - link "1" [ref=f20e555]:
+                  - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-pentru-personalul-universitar-al-utm/
+              - group [ref=f20e556]:
+                - generic "Vezi sursa" [ref=f20e557] [cursor=pointer]
+            - listitem [ref=f20e558]:
+              - generic [ref=f20e559] [cursor=pointer]:
+                - checkbox "Alte documente relevante (CV, copia pașaportului etc.) Posibil 1" [ref=f20e560]
+                - strong [ref=f20e561]: Alte documente relevante (CV, copia pașaportului etc.)
+                - generic [ref=f20e562]: Posibil
+                - generic "Confirmat acum pe pagina oficială" [ref=f20e563]
+                - link "1" [ref=f20e566]:
+                  - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-pentru-personalul-universitar-al-utm/
+              - group [ref=f20e567]:
+                - generic "Vezi sursa" [ref=f20e568] [cursor=pointer]
+            - listitem [ref=f20e569]:
+              - generic [ref=f20e570] [cursor=pointer]:
+                - checkbox "Scrisoare de invitație / accept din partea universității gazdă Obligatoriu 1" [ref=f20e571]
+                - strong [ref=f20e572]: Scrisoare de invitație / accept din partea universității gazdă
+                - generic [ref=f20e573]: Obligatoriu
+                - generic "Confirmat acum pe pagina oficială" [ref=f20e574]
+                - link "1" [ref=f20e577]:
+                  - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-pentru-personalul-universitar-al-utm/
+              - group [ref=f20e578]:
+                - generic "Vezi sursa" [ref=f20e579] [cursor=pointer]
+            - listitem [ref=f20e580]:
+              - generic [ref=f20e581] [cursor=pointer]:
+                - checkbox "Program de predare (Mobility Agreement for Teaching) sau de formare (Mobility Agreement for Training), semnat Obligatoriu 1" [ref=f20e582]
+                - strong [ref=f20e583]: Program de predare (Mobility Agreement for Teaching) sau de formare (Mobility Agreement for Training), semnat
+                - generic [ref=f20e584]: Obligatoriu
+                - generic "Confirmat acum pe pagina oficială" [ref=f20e585]
+                - link "1" [ref=f20e588]:
+                  - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-pentru-personalul-universitar-al-utm/
+              - group [ref=f20e589]:
+                - generic "Vezi sursa" [ref=f20e590] [cursor=pointer]
+            - listitem [ref=f20e591]:
+              - generic [ref=f20e592] [cursor=pointer]:
+                - checkbox "Poliță de asigurare de călătorie valabilă pe toată durata mobilității Obligatoriu 1" [ref=f20e593]
+                - strong [ref=f20e594]: Poliță de asigurare de călătorie valabilă pe toată durata mobilității
+                - generic [ref=f20e595]: Obligatoriu
+                - generic "Confirmat acum pe pagina oficială" [ref=f20e596]
+                - link "1" [ref=f20e599]:
+                  - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-pentru-personalul-universitar-al-utm/
+              - group [ref=f20e600]:
+                - generic "Vezi sursa" [ref=f20e601] [cursor=pointer]
+        - group [ref=f20e602]:
+          - generic "Ce nu este confirmat în surse (3)" [ref=f20e603] [cursor=pointer]
+        - generic [ref=f20e604]:
+          - heading "Surse oficiale" [level=4] [ref=f20e605]
+          - list [ref=f20e606]:
+            - listitem [ref=f20e607]:
+              - generic [ref=f20e608]: "1"
+              - link "Universitatea Tehnică a Moldovei – Erasmus+ pentru personalul universitar" [ref=f20e609] [cursor=pointer]:
+                - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-pentru-personalul-universitar-al-utm/
+        - paragraph [ref=f20e610]: "Ghid verificat (14/14 elemente confirmate acum). Ultima verificare manuală: 2026-10-04."
+    - generic [ref=f20e371]:
+      - button "Adaugă" [ref=f20e372] [cursor=pointer]
+      - textbox "Scrie un mesaj" [ref=f20e374]:
+        - /placeholder: Scrie un mesaj...
+      - button "Dictează mesajul" [ref=f20e375] [cursor=pointer]
+      - button "Trimite" [disabled] [ref=f20e379]

@@ -112,38 +112,60 @@
       "duration": null
     },
     {
+      "id": "s1b",
+      "title": "Verifică dacă UTM are acord cu o universitate din țara dorită",
+      "where": "Coordonatorul Erasmus+ al facultății și site-ul universității gazdă",
+      "description": "Mobilitățile de studiu se fac în baza unui acord bilateral între UTM și universitatea parteneră. Se recomandă să vizitezi site-ul universității gazdă pentru programele de studiu, aspectele practice și costurile de subzistență. Pagina UTM nu listează aici destinațiile: întreabă la facultate dacă există acord pentru țara dorită.",
+      "depends_on_step": 1,
+      "source": "utm",
+      "quotes": [
+        "Mobilitățile pentru studenți se realizează în baza unui acord bilateral încheiat între UTM și universitatea parteneră",
+        "Este recomandat să se viziteze site-ul universităţii unde se va realiza mobilitate"
+      ],
+      "cost": null,
+      "duration": null
+    },
+    {
       "id": "s2",
       "title": "Întocmește dosarul și predă-l coordonatorului Erasmus+ al facultății",
       "where": "Coordonatorul Erasmus+ al facultății",
       "description": "Dosarul conține: cerere pentru mobilitate, scrisoare de motivație, recomandare de la un cadru didactic, Learning Agreement și certificat de competență lingvistică (minim B2).",
-      "depends_on_step": 1,
+      "depends_on_step": 2,
       "source": "utm",
       "quotes": [
         "Înainte de efectuarea mobilității, studentul trebuie sa întocmească un dosar care sa-l predea coordonatorului Erasmus+ al facultății"
       ],
       "cost": null,
-      "duration": null
+      "duration": null,
+      "unless": {
+        "slot": "selected",
+        "equals": "yes"
+      }
     },
     {
       "id": "s3",
       "title": "Așteaptă selecția făcută de Comisia Erasmus+ UTM",
       "where": "Comisia Erasmus+ UTM",
       "description": "Selecția se face în funcție de numărul de burse alocate și de calendarul Erasmus+ al semestrului, afișat pe site-ul UTM și la avizierele facultăților.",
-      "depends_on_step": 2,
+      "depends_on_step": 3,
       "source": "utm",
       "quotes": [
         "Selecţia candidaților se face de către Comisia Erasmus+UTM în funcţie de numărul de burse alocate",
         "care poate fi consultat atât pe site-ul UTM cât și la avizierele facultăților"
       ],
       "cost": null,
-      "duration": null
+      "duration": null,
+      "unless": {
+        "slot": "selected",
+        "equals": "yes"
+      }
     },
     {
       "id": "s4",
       "title": "Universitatea gazdă confirmă acceptarea",
       "where": "Universitatea gazdă",
       "description": "Centrul Universitar Erasmus+ anunță universitatea gazdă de rezultatele selecției, iar aceasta confirmă acceptarea și te informează despre pașii următori.",
-      "depends_on_step": 3,
+      "depends_on_step": 4,
       "source": "utm",
       "quotes": [
         "Centrul Universitar Erasmus+ va anunța universitatea/instituția gazdă de rezultatele selecției",
@@ -157,7 +179,7 @@
       "title": "Pregătește documentele mobilității și trimite-le la aprobare universității gazdă",
       "where": "Responsabilul pe internaționalizare al facultății (UTM)",
       "description": "Pregătești documentele împreună cu responsabilul facultății, iar acordul de studiu detaliază curriculumul și durata. Disciplinele trebuie să asigure ECTS: 3 luni – 20, un semestru – 30, un an universitar – 60.",
-      "depends_on_step": 4,
+      "depends_on_step": 5,
       "source": "utm",
       "quotes": [
         "Studentul selectat va pregăti documentele necesare mobilității împreună cu responsabilul pe internaționalizare din cadrul facultății (UTM) și le va trimite pentru aprobare de către universitatea/instituția gazdă",
@@ -171,7 +193,7 @@
       "title": "Află grantul și durata mobilității",
       "where": "UTM",
       "description": "Grantul Erasmus+ pentru mobilitățile de studiu este între 800 și 900 euro/lună. O mobilitate poate dura de la 3 până la 12 luni pe ciclu academic (se recomandă câte un semestru).",
-      "depends_on_step": 4,
+      "depends_on_step": 5,
       "source": "utm",
       "quotes": [
         "Grantul Erasmus+ pentru mobilitățile de studiu este între 800 și 900 euro/lună",
@@ -185,7 +207,7 @@
       "title": "Organizează deplasarea, cazarea și asigurarea de sănătate",
       "where": "Tu (beneficiarul)",
       "description": "Organizarea deplasării (transport, cazare, asigurare de sănătate etc.) este obligația beneficiarului.",
-      "depends_on_step": 4,
+      "depends_on_step": 5,
       "source": "utm",
       "quotes": [
         "Organizarea deplasării (transportul, cazarea, asigurarea de sănătate etc) este obligația beneficiarului"
@@ -198,7 +220,7 @@
       "title": "La întoarcere: adu documentele de la universitatea gazdă",
       "where": "De la universitatea gazdă, apoi la facultate",
       "description": "Aduci certificatul de prezență semnat, Contractul de Studiu ECTS semnat și situația școlară (Transcript of records).",
-      "depends_on_step": 7,
+      "depends_on_step": 8,
       "source": "utm",
       "quotes": [
         "La întoarcere din mobilitate, studentul trebuie să aducă următoarele documente de la universitatea gazdă",
@@ -212,7 +234,7 @@
       "title": "Echivalarea notelor",
       "where": "Comisia de echivalare a studiilor Erasmus+",
       "description": "Pe baza notelor de la universitatea gazdă, notele se echivalează cu Certificatul de echivalare, aprobat de comisia de echivalare.",
-      "depends_on_step": 8,
+      "depends_on_step": 9,
       "source": "utm",
       "quotes": [
         "Pe baza notelor obtinute la universitatea gazdă, se vor echivala notele cu Certificatul de echivalare"
@@ -225,7 +247,7 @@
       "title": "Completează chestionarul UE online",
       "where": "Online (invitație primită după întoarcere)",
       "description": "Chestionarul se completează în 10 zile calendaristice de la primirea invitației. Cine nu îl trimite poate fi obligat să ramburseze total sau parțial sprijinul financiar.",
-      "depends_on_step": 8,
+      "depends_on_step": 9,
       "source": "utm",
       "quotes": [
         "va completa și transmite online chestionarul UE după întoarcerea din mobilitate în termen de 10 de zile calendaristice de la primirea invitației de completare",
@@ -238,15 +260,132 @@
   "unconfirmed": [
     "Viza, permisul de ședere sau alte acte pentru țara gazdă — nu sunt descrise pe pagina UTM verificată și depind de cetățenii; verifică ambasada/consulatul țării gazdă",
     "Termenele-limită ale concursului — se afișează în calendarul Erasmus+ din fiecare semestru",
-    "Costul asigurării de sănătate și al călătoriei — nu apare în surse"
+    "Costul asigurării de sănătate și al călătoriei — nu apare în surse",
+    "Destinațiile și universitățile partenere ale UTM — pagina verificată nu le listează; confirmă la coordonatorul Erasmus+"
   ],
-  "slots": [
-    "citizenships"
-  ],
-  "profile_notes": {
-    "citizenships": {
-      "has_EU": "Ai și cetățenie UE: verifică dacă o folosești pentru intrarea/șederea în țara gazdă — pagina UTM nu descrie această situație.",
-      "no_EU": "Ai doar cetățenia Republicii Moldova (sau non-UE): verifică la ambasada/consulatul țării gazdă ce cerințe de intrare și ședere ți se aplică — pagina UTM nu le descrie."
+  "questions": [
+    {
+      "key": "level",
+      "type": "single",
+      "ask": "La ce nivel studiezi la UTM?",
+      "no_other": true,
+      "options": [
+        {
+          "value": "bachelor_y1",
+          "label": "Licență, anul I",
+          "keywords": [
+            "anul 1",
+            "anul i ",
+            "anul intai"
+          ]
+        },
+        {
+          "value": "bachelor",
+          "label": "Licență, anul II sau mai mare"
+        },
+        {
+          "value": "master",
+          "label": "Master",
+          "keywords": [
+            "master",
+            "masterat"
+          ]
+        },
+        {
+          "value": "phd",
+          "label": "Doctorat cu frecvență"
+        },
+        {
+          "value": "phd_pt",
+          "label": "Doctorat fără frecvență"
+        },
+        {
+          "value": "unknown",
+          "label": "Nu știu"
+        }
+      ]
+    },
+    {
+      "key": "selected",
+      "type": "single",
+      "ask": "Ai fost deja selectat/ă de comisia Erasmus+ a UTM?",
+      "no_other": true,
+      "options": [
+        {
+          "value": "yes",
+          "label": "Da"
+        },
+        {
+          "value": "no",
+          "label": "Nu"
+        },
+        {
+          "value": "unknown",
+          "label": "Nu știu"
+        }
+      ]
+    },
+    {
+      "key": "exclusions",
+      "type": "single",
+      "ask": "Ai deja 12 luni de Erasmus+ în acest ciclu de studii sau o altă bursă din fonduri europene?",
+      "no_other": true,
+      "options": [
+        {
+          "value": "yes",
+          "label": "Da"
+        },
+        {
+          "value": "no",
+          "label": "Nu"
+        },
+        {
+          "value": "unknown",
+          "label": "Nu știu"
+        }
+      ]
     }
-  }
+  ],
+  "alerts": [
+    {
+      "id": "a-year1",
+      "source": "utm",
+      "when": {
+        "slot": "level",
+        "equals": "bachelor_y1"
+      },
+      "show_if_unknown": false,
+      "text": "Conform paginii UTM, studenții din anul I de la licență nu se pot înscrie în concursul Erasmus+.",
+      "quotes": [
+        "licență, cu excepţia studenţilor din anul I"
+      ]
+    },
+    {
+      "id": "a-phd-pt",
+      "source": "utm",
+      "when": {
+        "slot": "level",
+        "equals": "phd_pt"
+      },
+      "show_if_unknown": false,
+      "text": "Pagina UTM menționează doar doctoratul cu frecvență; pentru doctoratul fără frecvență întreabă coordonatorul Erasmus+ al facultății.",
+      "quotes": [
+        "doctorat, forma cu frecvenţă"
+      ]
+    },
+    {
+      "id": "a-excl",
+      "source": "utm",
+      "when": {
+        "slot": "exclusions",
+        "equals": "yes"
+      },
+      "show_if_unknown": false,
+      "text": "Conform paginii UTM, nu te poți înscrie dacă ai beneficiat deja de 12 luni de Erasmus+ în ciclul de studii sau primești o bursă din fonduri europene (dublă finanțare).",
+      "quotes": [
+        "studenţii care au beneficiat deja de statutul de student Erasmus+ pentru o perioadă de 12 luni pe ciclu de învăţământ",
+        "studenţii care beneficiază de burse din fonduri europene (nu pot beneficia de dubla finanțare europeană)"
+      ]
+    }
+  ]
 }

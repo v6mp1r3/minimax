@@ -1,0 +1,209 @@
+- main [ref=f24e134]:
+  - complementary [ref=f24e135]:
+    - button "DocuGuide - Acasă" [ref=f24e137] [cursor=pointer]:
+      - generic [ref=f24e144]: DocuGuide
+    - button "Conversație nouă" [ref=f24e145] [cursor=pointer]
+    - button "Toate conversațiile" [ref=f24e147] [cursor=pointer]
+    - navigation [ref=f24e148]:
+      - button [ref=f24e149] [cursor=pointer]
+      - button [ref=f24e154] [cursor=pointer]
+      - button [ref=f24e160] [cursor=pointer]
+      - button [ref=f24e164] [cursor=pointer]
+      - button [ref=f24e170] [cursor=pointer]
+      - button [ref=f24e175] [cursor=pointer]
+      - button [ref=f24e181] [cursor=pointer]
+    - generic [ref=f24e186]:
+      - strong [ref=f24e187]: Conversații recente
+      - button "eu vreau sa ma duc la erasmus, ce am nevoie avan Fixată" [ref=f24e189] [cursor=pointer]:
+        - generic [ref=f24e194]: eu vreau sa ma duc la erasmus, ce am nevoie avan
+        - generic "Fixată" [ref=f24e195]
+      - button "vreau sa plec in mobilitate" [ref=f24e199] [cursor=pointer]
+      - button "ce documente am nevoie ca sa deschid un srl" [ref=f24e206] [cursor=pointer]
+      - button "vreau sa plec in mobilitate" [ref=f24e214] [cursor=pointer]
+      - button "vreau sa plec in mobilitate in Ucraina, ce am ne" [ref=f24e221] [cursor=pointer]
+      - button "vreau să plec în mobilitatea în Ucraina ce docum" [ref=f24e228] [cursor=pointer]
+      - button "vreau să plec în mobilitatea în Ucraina ce docum" [ref=f24e235] [cursor=pointer]
+      - button "vreau să plec în mobilitatea în Ucraina ce docum" [ref=f24e242] [cursor=pointer]
+      - button "vreau sa plec in mobilitate in Ucraina, ce am ne" [ref=f24e249] [cursor=pointer]
+      - 'button "Vreau informații despre: Înscriere la universita" [ref=f24e255] [cursor=pointer]'
+      - button "ce documente am nevoie sa pentru confirmarea pol" [ref=f24e262] [cursor=pointer]
+      - button "ce documente am nevoie sa pentru confirmarea pol" [ref=f24e270] [cursor=pointer]
+      - button "cum inregistrez o masina adusa din Germania?" [ref=f24e278] [cursor=pointer]
+      - button "ce documente am nevoie ca sa deschid un srl" [ref=f24e286] [cursor=pointer]
+      - 'button "Vreau informații despre: Înregistrare la medic" [ref=f24e294] [cursor=pointer]'
+      - 'button "Vreau informații despre: Înregistrare la medic" [ref=f24e302] [cursor=pointer]'
+      - button "ce documente am nevoie ca sa deschid un srl" [ref=f24e310] [cursor=pointer]
+      - button "eu vreau sa ma duc la erasmus, ce am nevoie avan" [ref=f24e316] [cursor=pointer]
+      - button "eu vreau sa ma duc la erasmus, ce am nevoie avan" [ref=f24e323] [cursor=pointer]
+      - button "cum inregistrez o masina adusa din Germania?" [ref=f24e330] [cursor=pointer]
+  - generic [ref=f24e337]:
+    - generic [ref=f24e338]:
+      - generic [ref=f24e347]:
+        - strong [ref=f24e348]: Asistent DocuGuide
+        - generic [ref=f24e349]: Activ acum
+      - generic [ref=f24e350]: Educație și studii
+    - generic [ref=f24e354]:
+      - generic [ref=f24e355]: vreau sa plec in mobilitate
+      - generic [ref=f24e357]: "Pentru a-ți pregăti un ghid personalizat, am nevoie de câteva detalii:"
+      - generic [ref=f24e367]:
+        - strong [ref=f24e368]: Despre ce fel de mobilitate este vorba?
+        - generic [ref=f24e369]:
+          - button [disabled] [ref=f24e370]
+          - button [disabled] [ref=f24e374]
+          - button [disabled] [ref=f24e378]
+          - button [disabled] [ref=f24e382]
+          - button [disabled] [ref=f24e386]
+      - generic [ref=f24e404]: "Mobilitate pentru personal (muncă: predare / formare)"
+      - generic [ref=f24e415]:
+        - paragraph [ref=f24e416]: Cadrele didactice și personalul administrativ din UTM pot pleca la predare sau formare prin Erasmus+, la universități cu care UTM are acorduri. Pagina indică mobilități de 5 zile – 2 luni.
+        - generic [ref=f24e417]:
+          - heading "Pași de urmat" [level=4] [ref=f24e418]
+          - list [ref=f24e419]:
+            - listitem [ref=f24e420]:
+              - generic [ref=f24e421]:
+                - strong [ref=f24e422]: Verifică dacă ești eligibil
+                - generic "Confirmat acum pe pagina oficială" [ref=f24e423]
+              - paragraph [ref=f24e426]: Ai relații contractuale de muncă cu UTM și cunoști bine limba în care vei preda sau te vei forma. Pagina indică minimum 2 zile consecutive de activitate (proiect KA131/103) sau 5 zile (KA107), fără zilele de călătorie.
+              - generic [ref=f24e427]: UTM
+              - group [ref=f24e432]:
+                - generic "Vezi sursa" [ref=f24e433] [cursor=pointer]
+            - listitem [ref=f24e434]:
+              - generic [ref=f24e435]:
+                - strong [ref=f24e436]: Verifică unde poți merge
+                - generic "Confirmat acum pe pagina oficială" [ref=f24e437]
+              - paragraph [ref=f24e440]: Poți merge în universități din țări participante la Erasmus+ (KA131/103) sau din țări partenere (KA107), cu care UTM are acorduri bilaterale inter-instituționale pentru domeniul tău.
+              - generic [ref=f24e441]:
+                - generic [ref=f24e442]: Direcția Relații Internaționale / Centrul Erasmus+
+                - generic [ref=f24e446]: după pasul 1
+              - group [ref=f24e447]:
+                - generic "Vezi sursa" [ref=f24e448] [cursor=pointer]
+            - listitem [ref=f24e449]:
+              - generic [ref=f24e450]:
+                - strong [ref=f24e451]: Depune dosarul de aplicație
+                - generic "Confirmat acum pe pagina oficială" [ref=f24e452]
+              - paragraph [ref=f24e455]: Dosarul include cererea de participare, documentul care certifică statutul de angajat, scrisoarea de motivație și alte documente relevante (CV, copia pașaportului). Se evaluează doar dosarele complete.
+              - generic [ref=f24e456]:
+                - generic [ref=f24e457]: Centrul Erasmus+ al UTM
+                - generic [ref=f24e461]: după pasul 2
+              - group [ref=f24e462]:
+                - generic "Vezi sursa" [ref=f24e463] [cursor=pointer]
+            - listitem [ref=f24e464]:
+              - generic [ref=f24e465]:
+                - strong [ref=f24e466]: Selecția și nominalizarea
+                - generic "Confirmat acum pe pagina oficială" [ref=f24e467]
+              - paragraph [ref=f24e470]: Dosarele sunt evaluate de Comisia de selecție. Înscrierea durează minimum 2 săptămâni, concursul 1 zi, contestațiile 1–2 zile; apoi se afișează rezultatele finale și documentele se trimit universităților partenere. Prioritate au cei care pleacă pentru prima dată în program.
+              - generic [ref=f24e471]:
+                - generic [ref=f24e472]: Comisia de selecție a candidaților
+                - generic [ref=f24e476]: înscriere minim 2 săptămâni, concurs 1 zi, contestații 1–2 zile
+                - generic [ref=f24e480]: după pasul 3
+              - group [ref=f24e481]:
+                - generic "Vezi sursa" [ref=f24e482] [cursor=pointer]
+            - listitem [ref=f24e483]:
+              - generic [ref=f24e484]:
+                - strong [ref=f24e485]: "Înainte de plecare: trimite documentele către Centrul Erasmus+"
+                - generic "Confirmat acum pe pagina oficială" [ref=f24e486]
+              - paragraph [ref=f24e489]: Trimiți invitația/acceptul universității gazdă, programul de predare sau de formare semnat de ambele universități și o poliță de asigurare de călătorie valabilă pe toată durata mobilității.
+              - generic [ref=f24e490]:
+                - generic [ref=f24e491]: Centrul Erasmus+ al UTM
+                - generic [ref=f24e495]: după pasul 4
+              - group [ref=f24e496]:
+                - generic "Vezi sursa" [ref=f24e497] [cursor=pointer]
+            - listitem [ref=f24e498]:
+              - generic [ref=f24e499]:
+                - strong [ref=f24e500]: Durata și sprijinul financiar
+                - generic "Confirmat acum pe pagina oficială" [ref=f24e501]
+              - paragraph [ref=f24e504]: Mobilitățile durează între 5 zile și 2 luni. Grantul Erasmus+ acoperă doar o parte din costurile de călătorie și subzistență; poți fi anunțat că trebuie să cofinanțezi o parte.
+              - generic [ref=f24e505]:
+                - generic [ref=f24e506]: Centrul Erasmus+ al UTM
+                - generic [ref=f24e510]: Grant parțial (suma nu este indicată pe pagină)
+                - generic [ref=f24e514]: 5 zile – 2 luni
+                - generic [ref=f24e518]: după pasul 4
+              - group [ref=f24e519]:
+                - generic "Vezi sursa" [ref=f24e520] [cursor=pointer]
+            - listitem [ref=f24e521]:
+              - generic [ref=f24e522]:
+                - strong [ref=f24e523]: "La întoarcere: raportul individual de activitate"
+                - generic "Confirmat acum pe pagina oficială" [ref=f24e524]
+              - paragraph [ref=f24e527]: La revenire completezi raportul individual de activitate. UTM recunoaște perioada de mobilitate ca perioadă de activitate profesională și păstrează drepturile angajatului.
+              - generic [ref=f24e528]:
+                - generic [ref=f24e529]: Centrul Erasmus+ al UTM
+                - generic [ref=f24e533]: după pasul 5
+              - group [ref=f24e534]:
+                - generic "Vezi sursa" [ref=f24e535] [cursor=pointer]
+        - generic [ref=f24e536]:
+          - heading "Documente 0/7 pregătite" [level=4] [ref=f24e537]:
+            - text: Documente
+            - generic [ref=f24e538]: 0/7 pregătite
+          - list [ref=f24e539]:
+            - listitem [ref=f24e540]:
+              - generic [ref=f24e541] [cursor=pointer]:
+                - checkbox "Cererea de participare la concurs Obligatoriu" [ref=f24e542]
+                - strong [ref=f24e543]: Cererea de participare la concurs
+                - generic [ref=f24e544]: Obligatoriu
+                - generic "Confirmat acum pe pagina oficială" [ref=f24e545]
+              - group [ref=f24e548]:
+                - generic "Vezi sursa" [ref=f24e549] [cursor=pointer]
+            - listitem [ref=f24e550]:
+              - generic [ref=f24e551] [cursor=pointer]:
+                - checkbox "Documentul care certifică statutul de angajat în cadrul universității Obligatoriu" [ref=f24e552]
+                - strong [ref=f24e553]: Documentul care certifică statutul de angajat în cadrul universității
+                - generic [ref=f24e554]: Obligatoriu
+                - generic "Confirmat acum pe pagina oficială" [ref=f24e555]
+              - group [ref=f24e558]:
+                - generic "Vezi sursa" [ref=f24e559] [cursor=pointer]
+            - listitem [ref=f24e560]:
+              - generic [ref=f24e561] [cursor=pointer]:
+                - checkbox "Scrisoare de motivație Obligatoriu" [ref=f24e562]
+                - strong [ref=f24e563]: Scrisoare de motivație
+                - generic [ref=f24e564]: Obligatoriu
+                - generic "Confirmat acum pe pagina oficială" [ref=f24e565]
+              - group [ref=f24e568]:
+                - generic "Vezi sursa" [ref=f24e569] [cursor=pointer]
+            - listitem [ref=f24e570]:
+              - generic [ref=f24e571] [cursor=pointer]:
+                - checkbox "Alte documente relevante (CV, copia pașaportului etc.) Posibil" [ref=f24e572]
+                - strong [ref=f24e573]: Alte documente relevante (CV, copia pașaportului etc.)
+                - generic [ref=f24e574]: Posibil
+                - generic "Confirmat acum pe pagina oficială" [ref=f24e575]
+              - group [ref=f24e578]:
+                - generic "Vezi sursa" [ref=f24e579] [cursor=pointer]
+            - listitem [ref=f24e580]:
+              - generic [ref=f24e581] [cursor=pointer]:
+                - checkbox "Scrisoare de invitație / accept din partea universității gazdă Obligatoriu" [ref=f24e582]
+                - strong [ref=f24e583]: Scrisoare de invitație / accept din partea universității gazdă
+                - generic [ref=f24e584]: Obligatoriu
+                - generic "Confirmat acum pe pagina oficială" [ref=f24e585]
+              - group [ref=f24e588]:
+                - generic "Vezi sursa" [ref=f24e589] [cursor=pointer]
+            - listitem [ref=f24e590]:
+              - generic [ref=f24e591] [cursor=pointer]:
+                - checkbox "Program de predare (Mobility Agreement for Teaching) sau de formare (Mobility Agreement for Training), semnat Obligatoriu" [ref=f24e592]
+                - strong [ref=f24e593]: Program de predare (Mobility Agreement for Teaching) sau de formare (Mobility Agreement for Training), semnat
+                - generic [ref=f24e594]: Obligatoriu
+                - generic "Confirmat acum pe pagina oficială" [ref=f24e595]
+              - group [ref=f24e598]:
+                - generic "Vezi sursa" [ref=f24e599] [cursor=pointer]
+            - listitem [ref=f24e600]:
+              - generic [ref=f24e601] [cursor=pointer]:
+                - checkbox "Poliță de asigurare de călătorie valabilă pe toată durata mobilității Obligatoriu" [ref=f24e602]
+                - strong [ref=f24e603]: Poliță de asigurare de călătorie valabilă pe toată durata mobilității
+                - generic [ref=f24e604]: Obligatoriu
+                - generic "Confirmat acum pe pagina oficială" [ref=f24e605]
+              - group [ref=f24e608]:
+                - generic "Vezi sursa" [ref=f24e609] [cursor=pointer]
+        - group [ref=f24e610]:
+          - generic "⚠ Ce nu este confirmat în surse (4) — vezi ce trebuie verificat" [ref=f24e611] [cursor=pointer]
+        - generic [ref=f24e612]:
+          - heading "Surse oficiale" [level=4] [ref=f24e613]
+          - list [ref=f24e614]:
+            - listitem [ref=f24e615]:
+              - generic [ref=f24e616]: "1"
+              - link "Universitatea Tehnică a Moldovei – Erasmus+ pentru personalul universitar" [ref=f24e617] [cursor=pointer]:
+                - /url: https://utm.md/relatii-internationale/programe-internationale/erasmus/erasmus-pentru-personalul-universitar-al-utm/
+        - paragraph [ref=f24e618]: "Ghid verificat (14/14 elemente confirmate acum). Ultima verificare manuală: 2026-10-04."
+    - generic [ref=f24e393]:
+      - button "Adaugă" [ref=f24e394] [cursor=pointer]
+      - textbox "Scrie un mesaj" [ref=f24e396]:
+        - /placeholder: Scrie un mesaj...
+      - button "Dictează mesajul" [ref=f24e397] [cursor=pointer]
+      - button "Trimite" [disabled] [ref=f24e401]

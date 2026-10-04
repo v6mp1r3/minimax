@@ -23,8 +23,10 @@ export function StepList({ steps, sources }) {
               <SourceRefs ids={s.sources} sources={sources} />
             </div>
             {s.description && <p>{s.description}</p>}
-            {(s.where || s.cost || s.duration || s.depends_on_step) && (
+            {(s.where || s.cost || s.duration || s.depends_on_step || s.applies) && (
               <div className="chips">
+                {s.applies === "yes" && <span className="chip applies">Se aplică în cazul tău</span>}
+                {s.applies === "maybe" && s.condition_text && <span className="chip maybe">Doar dacă {s.condition_text}</span>}
                 {s.where && <span className="chip"><Icon name="location" size={13} /> {s.where}</span>}
                 {s.cost && <span className="chip"><Icon name="cost" size={13} /> {s.cost}</span>}
                 {s.duration && <span className="chip"><Icon name="time" size={13} /> {s.duration}</span>}

@@ -1,0 +1,65 @@
+- main [ref=f24e134]:
+  - complementary [ref=f24e135]:
+    - button "DocuGuide - Acasă" [ref=f24e137] [cursor=pointer]:
+      - generic [ref=f24e144]: DocuGuide
+    - button "Conversație nouă" [ref=f24e145] [cursor=pointer]
+    - button "Toate conversațiile" [ref=f24e147] [cursor=pointer]
+    - navigation [ref=f24e148]:
+      - button [ref=f24e149] [cursor=pointer]
+      - button [ref=f24e154] [cursor=pointer]
+      - button [ref=f24e160] [cursor=pointer]
+      - button [ref=f24e164] [cursor=pointer]
+      - button [ref=f24e170] [cursor=pointer]
+      - button [ref=f24e175] [cursor=pointer]
+      - button [ref=f24e181] [cursor=pointer]
+    - generic [ref=f24e186]:
+      - strong [ref=f24e187]: Conversații recente
+      - button "eu vreau sa ma duc la erasmus, ce am nevoie avan Fixată" [ref=f24e189] [cursor=pointer]:
+        - generic [ref=f24e194]: eu vreau sa ma duc la erasmus, ce am nevoie avan
+        - generic "Fixată" [ref=f24e195]
+      - button "vreau sa plec in mobilitate" [ref=f24e199] [cursor=pointer]
+      - button "ce documente am nevoie ca sa deschid un srl" [ref=f24e206] [cursor=pointer]
+      - button "vreau sa plec in mobilitate" [ref=f24e214] [cursor=pointer]
+      - button "vreau sa plec in mobilitate in Ucraina, ce am ne" [ref=f24e221] [cursor=pointer]
+      - button "vreau să plec în mobilitatea în Ucraina ce docum" [ref=f24e228] [cursor=pointer]
+      - button "vreau să plec în mobilitatea în Ucraina ce docum" [ref=f24e235] [cursor=pointer]
+      - button "vreau să plec în mobilitatea în Ucraina ce docum" [ref=f24e242] [cursor=pointer]
+      - button "vreau sa plec in mobilitate in Ucraina, ce am ne" [ref=f24e249] [cursor=pointer]
+      - 'button "Vreau informații despre: Înscriere la universita" [ref=f24e255] [cursor=pointer]'
+      - button "ce documente am nevoie sa pentru confirmarea pol" [ref=f24e262] [cursor=pointer]
+      - button "ce documente am nevoie sa pentru confirmarea pol" [ref=f24e270] [cursor=pointer]
+      - button "cum inregistrez o masina adusa din Germania?" [ref=f24e278] [cursor=pointer]
+      - button "ce documente am nevoie ca sa deschid un srl" [ref=f24e286] [cursor=pointer]
+      - 'button "Vreau informații despre: Înregistrare la medic" [ref=f24e294] [cursor=pointer]'
+      - 'button "Vreau informații despre: Înregistrare la medic" [ref=f24e302] [cursor=pointer]'
+      - button "ce documente am nevoie ca sa deschid un srl" [ref=f24e310] [cursor=pointer]
+      - button "eu vreau sa ma duc la erasmus, ce am nevoie avan" [ref=f24e316] [cursor=pointer]
+      - button "eu vreau sa ma duc la erasmus, ce am nevoie avan" [ref=f24e323] [cursor=pointer]
+      - button "cum inregistrez o masina adusa din Germania?" [ref=f24e330] [cursor=pointer]
+  - generic [ref=f24e337]:
+    - generic [ref=f24e338]:
+      - generic [ref=f24e347]:
+        - strong [ref=f24e348]: Asistent DocuGuide
+        - generic [ref=f24e349]: Activ acum
+      - generic [ref=f24e350]: Educație și studii
+    - generic [ref=f24e354]:
+      - generic [ref=f24e355]: vreau sa plec in mobilitate
+      - generic [ref=f24e357]: "Pentru a-ți pregăti un ghid personalizat, am nevoie de câteva detalii:"
+      - generic [ref=f24e367]:
+        - strong [ref=f24e368]: Despre ce fel de mobilitate este vorba?
+        - generic [ref=f24e369]:
+          - button [ref=f24e370] [cursor=pointer]
+          - button [ref=f24e374] [cursor=pointer]
+          - button [ref=f24e378] [cursor=pointer]
+          - button [ref=f24e382] [cursor=pointer]
+          - button [ref=f24e386] [cursor=pointer]
+          - generic [ref=f24e390]:
+            - textbox "Altă variantă" [ref=f24e391]:
+              - /placeholder: Altă variantă...
+            - button "Trimite" [disabled] [ref=f24e392]
+    - generic [ref=f24e393]:
+      - button "Adaugă" [ref=f24e394] [cursor=pointer]
+      - textbox "Scrie un mesaj" [ref=f24e396]:
+        - /placeholder: Scrie un mesaj...
+      - button "Dictează mesajul" [ref=f24e397] [cursor=pointer]
+      - button "Trimite" [disabled] [ref=f24e401]

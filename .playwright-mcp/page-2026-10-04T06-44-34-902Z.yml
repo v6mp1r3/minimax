@@ -1,0 +1,51 @@
+- generic [ref=f30e3]:
+  - banner [ref=f30e4]:
+    - button "DocuGuide - Acasă" [ref=f30e5] [cursor=pointer]:
+      - generic [ref=f30e12]: DocuGuide
+    - generic [ref=f30e13]:
+      - button "RO" [ref=f30e14] [cursor=pointer]
+      - button "Deschide Chat" [ref=f30e15] [cursor=pointer]
+  - generic [ref=f30e31]:
+    - generic [ref=f30e32]: Asistent AI pentru documente
+    - heading "Orice situație. Un singur ghid." [level=1] [ref=f30e36]
+    - paragraph [ref=f30e37]: Obține rapid informații despre documentele necesare, pașii de urmat și procedurile oficiale, pentru orice situație.
+    - generic [ref=f30e38]:
+      - textbox "Descrie situația ta" [ref=f30e43]:
+        - /placeholder: Scrie ce vrei să faci...
+      - button "Trimite întrebarea" [ref=f30e44] [cursor=pointer]
+    - generic [ref=f30e47]:
+      - generic [ref=f30e48]: "Exemple:"
+      - button "Vreau să plec cu Erasmus în Franța" [ref=f30e49] [cursor=pointer]
+      - button "Cum mă înregistrez la medic?" [ref=f30e50] [cursor=pointer]
+      - button "Mi-am pierdut buletinul" [ref=f30e51] [cursor=pointer]
+  - generic [ref=f30e52]:
+    - heading "Explorează categoriile principale" [level=2] [ref=f30e53]
+    - generic [ref=f30e54]:
+      - button "Educație și studii Erasmus, burse, universitate și echivalarea diplomelor." [ref=f30e55] [cursor=pointer]:
+        - generic [ref=f30e60]:
+          - strong [ref=f30e61]: Educație și studii
+          - generic [ref=f30e62]: Erasmus, burse, universitate și echivalarea diplomelor.
+      - button "Sănătate Înregistrarea la medic, asigurare și acces la servicii." [ref=f30e66] [cursor=pointer]:
+        - generic [ref=f30e72]:
+          - strong [ref=f30e73]: Sănătate
+          - generic [ref=f30e74]: Înregistrarea la medic, asigurare și acces la servicii.
+      - button "Călătorii și relocare Vize, ședere și documente de călătorie." [ref=f30e78] [cursor=pointer]:
+        - generic [ref=f30e82]:
+          - strong [ref=f30e83]: Călătorii și relocare
+          - generic [ref=f30e84]: Vize, ședere și documente de călătorie.
+      - button "Acte și servicii publice Buletin, pașaport, stare civilă și servicii publice." [ref=f30e88] [cursor=pointer]:
+        - generic [ref=f30e94]:
+          - strong [ref=f30e95]: Acte și servicii publice
+          - generic [ref=f30e96]: Buletin, pașaport, stare civilă și servicii publice.
+      - button "Muncă și carieră Angajare, acte de muncă și calificări." [ref=f30e100] [cursor=pointer]:
+        - generic [ref=f30e105]:
+          - strong [ref=f30e106]: Muncă și carieră
+          - generic [ref=f30e107]: Angajare, acte de muncă și calificări.
+      - button "Afaceri și finanțe Înregistrare firmă, autorizații și acte fiscale." [ref=f30e111] [cursor=pointer]:
+        - generic [ref=f30e117]:
+          - strong [ref=f30e118]: Afaceri și finanțe
+          - generic [ref=f30e119]: Înregistrare firmă, autorizații și acte fiscale.
+      - button "Viață cotidiană Închiriere, schimbarea domiciliului și utilități." [ref=f30e123] [cursor=pointer]:
+        - generic [ref=f30e128]:
+          - strong [ref=f30e129]: Viață cotidiană
+          - generic [ref=f30e130]: Închiriere, schimbarea domiciliului și utilități.

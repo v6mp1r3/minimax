@@ -1,0 +1,62 @@
+- main [ref=f20e134]:
+  - complementary [ref=f20e135]:
+    - button "DocuGuide - Acasă" [ref=f20e137] [cursor=pointer]:
+      - generic [ref=f20e144]: DocuGuide
+    - button "Conversație nouă" [ref=f20e145] [cursor=pointer]
+    - button "Toate conversațiile" [ref=f20e147] [cursor=pointer]
+    - navigation [ref=f20e148]:
+      - button [ref=f20e149] [cursor=pointer]
+      - button [ref=f20e154] [cursor=pointer]
+      - button [ref=f20e160] [cursor=pointer]
+      - button [ref=f20e164] [cursor=pointer]
+      - button [ref=f20e170] [cursor=pointer]
+      - button [ref=f20e175] [cursor=pointer]
+      - button [ref=f20e181] [cursor=pointer]
+    - generic [ref=f20e186]:
+      - strong [ref=f20e187]: Conversații recente
+      - button "eu vreau sa ma duc la erasmus, ce am nevoie avan Fixată" [ref=f20e189] [cursor=pointer]:
+        - generic [ref=f20e194]: eu vreau sa ma duc la erasmus, ce am nevoie avan
+        - generic "Fixată" [ref=f20e195]
+      - button "vreau sa plec in mobilitate in Ucraina, ce am ne" [ref=f20e199] [cursor=pointer]
+      - button "vreau să plec în mobilitatea în Ucraina ce docum" [ref=f20e206] [cursor=pointer]
+      - button "vreau să plec în mobilitatea în Ucraina ce docum" [ref=f20e213] [cursor=pointer]
+      - button "vreau să plec în mobilitatea în Ucraina ce docum" [ref=f20e220] [cursor=pointer]
+      - button "vreau sa plec in mobilitate in Ucraina, ce am ne" [ref=f20e227] [cursor=pointer]
+      - 'button "Vreau informații despre: Înscriere la universita" [ref=f20e233] [cursor=pointer]'
+      - button "ce documente am nevoie sa pentru confirmarea pol" [ref=f20e240] [cursor=pointer]
+      - button "ce documente am nevoie sa pentru confirmarea pol" [ref=f20e248] [cursor=pointer]
+      - button "cum inregistrez o masina adusa din Germania?" [ref=f20e256] [cursor=pointer]
+      - button "ce documente am nevoie ca sa deschid un srl" [ref=f20e264] [cursor=pointer]
+      - 'button "Vreau informații despre: Înregistrare la medic" [ref=f20e272] [cursor=pointer]'
+      - 'button "Vreau informații despre: Înregistrare la medic" [ref=f20e280] [cursor=pointer]'
+      - button "ce documente am nevoie ca sa deschid un srl" [ref=f20e288] [cursor=pointer]
+      - button "eu vreau sa ma duc la erasmus, ce am nevoie avan" [ref=f20e294] [cursor=pointer]
+      - button "eu vreau sa ma duc la erasmus, ce am nevoie avan" [ref=f20e301] [cursor=pointer]
+      - button "cum inregistrez o masina adusa din Germania?" [ref=f20e308] [cursor=pointer]
+  - generic [ref=f20e315]:
+    - generic [ref=f20e316]:
+      - generic [ref=f20e325]:
+        - strong [ref=f20e326]: Asistent DocuGuide
+        - generic [ref=f20e327]: Activ acum
+      - generic [ref=f20e328]: Educație și studii
+    - generic [ref=f20e332]:
+      - generic [ref=f20e333]: vreau sa plec in mobilitate in Ucraina, ce am nevoie?
+      - generic [ref=f20e335]: "Pentru a-ți pregăti un ghid personalizat, am nevoie de câteva detalii:"
+      - generic [ref=f20e345]:
+        - strong [ref=f20e346]: Despre ce fel de mobilitate este vorba?
+        - generic [ref=f20e347]:
+          - button [ref=f20e348] [cursor=pointer]
+          - button [ref=f20e352] [cursor=pointer]
+          - button [ref=f20e356] [cursor=pointer]
+          - button [ref=f20e360] [cursor=pointer]
+          - button [ref=f20e364] [cursor=pointer]
+          - generic [ref=f20e368]:
+            - textbox "Altă variantă" [ref=f20e369]:
+              - /placeholder: Altă variantă...
+            - button "Trimite" [disabled] [ref=f20e370]
+    - generic [ref=f20e371]:
+      - button "Adaugă" [ref=f20e372] [cursor=pointer]
+      - textbox "Scrie un mesaj" [ref=f20e374]:
+        - /placeholder: Scrie un mesaj...
+      - button "Dictează mesajul" [ref=f20e375] [cursor=pointer]
+      - button "Trimite" [disabled] [ref=f20e379]

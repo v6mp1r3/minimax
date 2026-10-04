@@ -1,0 +1,60 @@
+{
+  "category": "education",
+  "match_hints": [],
+  "last_verified": "2026-10-04",
+  "slots": [],
+  "id": "mobility-bilateral",
+  "title": "Mobilitate în baza acordurilor de colaborare ale UTM",
+  "applies_when": {
+    "mobility_program": [
+      "bilateral"
+    ]
+  },
+  "summary": "UTM are acorduri cu universități și instituții din întreaga lume. Verifici lista partenerilor și te adresezi Direcției Relații Internaționale.",
+  "sources": {
+    "partners": {
+      "url": "https://utm.md/relatii-internationale/acorduri-de-colaborare/",
+      "title": "Parteneri internaționali UTM",
+      "organization": "Universitatea Tehnică a Moldovei"
+    },
+    "dri": {
+      "url": "https://utm.md/subdiviziuni-universitare/directia-relatii-internationale/",
+      "title": "Direcția Relații Internaționale",
+      "organization": "Universitatea Tehnică a Moldovei"
+    }
+  },
+  "documents": [],
+  "steps": [
+    {
+      "id": "s1",
+      "title": "Verifică lista partenerilor internaționali ai UTM",
+      "where": "Pagina „Parteneri internaționali” a UTM",
+      "depends_on_step": null,
+      "source": "partners",
+      "description": "Acordurile de colaborare oferă studenților și cadrelor didactice oportunități de mobilitate, stagii sau cercetări în colaborare cu instituții din Europa, Asia și alte regiuni. Lista partenerilor este pe pagina UTM.",
+      "quotes": [
+        "oferă studenților și cadrelor didactice oportunități de mobilitate, stagii sau cercetări în colaborare cu instituții prestigioase din Europa, Asia și alte regiuni",
+        "Lista de parteneri internaționali UTM include universități tehnice, centre de excelență, rețele universitare internaționale și ONG-uri academice"
+      ],
+      "cost": null,
+      "duration": null
+    },
+    {
+      "id": "s2",
+      "title": "Cere informații la Direcția Relații Internaționale",
+      "where": "Direcția Relații Internaționale a UTM",
+      "depends_on_step": 1,
+      "source": "dri",
+      "description": "Direcția oferă sprijin instituțional și informațional pentru mobilitatea academică a studenților, personalului academic și administrativ. Contactele sunt pe pagina Direcției.",
+      "quotes": [
+        "Mobilitate academică Sprijin instituțional și informațional pentru studenți, personal academic și administrativ"
+      ],
+      "cost": null,
+      "duration": null
+    }
+  ],
+  "unconfirmed": [
+    "Procedura, documentele și termenele pentru un schimb bilateral în afara Erasmus+ și CEEPUS — nu sunt descrise pe paginile verificate",
+    "Lista partenerilor de pe pagina UTM nu conține Ucraina; confirmă la Direcția Relații Internaționale dacă există alte acorduri"
+  ]
+}

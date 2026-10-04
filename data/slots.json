@@ -292,5 +292,35 @@
   },
   "general": {
     "slots": []
+  },
+  "_special": {
+    "mobility_program": {
+      "key": "mobility_program",
+      "type": "single",
+      "ask": "Despre ce fel de mobilitate este vorba?",
+      "options": [
+        {
+          "value": "erasmus",
+          "label": "Erasmus+"
+        },
+        {
+          "value": "ceepus",
+          "label": "CEEPUS"
+        },
+        {
+          "value": "bilateral",
+          "label": "Schimb între universități (acord bilateral)"
+        },
+        {
+          "value": "staff",
+          "label": "Mobilitate pentru personal (muncă: predare / formare)"
+        },
+        {
+          "value": "other",
+          "label": "Alt program (specifică)",
+          "specify": true
+        }
+      ]
+    }
   }
 }

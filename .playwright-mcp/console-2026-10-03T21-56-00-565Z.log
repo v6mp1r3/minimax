@@ -1,0 +1,4 @@
+[   12843ms] [WARNING] Found a 'popover' attribute with an invalid value. @ https://chatgpt.com/unauth-mweb/assets/tooltip-runtime-DIro3I7L.js:0
+[28055297ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://chatgpt.com/unauth-mweb/events/business:0
+[28055298ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://chatgpt.com/unauth-mweb/conversation/prepare?lightweight_authenticated=0:0
+[28055298ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://chatgpt.com/unauth-mweb/sentinel/chat-requirements/prepare:0

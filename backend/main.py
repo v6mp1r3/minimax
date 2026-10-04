@@ -1,6 +1,7 @@
 import json
 import os
 import re
+import secrets
 import threading
 import time
 import unicodedata
@@ -14,8 +15,11 @@ from ddgs import DDGS
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import Response
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
+
+from backend.pdf_export import build_pdf
 
 BASE = Path(__file__).resolve().parent.parent
 load_dotenv(BASE / ".env")
@@ -120,22 +124,28 @@ def clean_text(text: str) -> str:
     text = re.sub(r"\s+", " ", text or "").strip()
     return text
 
+def has_kw(text: str, words) -> bool:
+    """True if any keyword occurs at the START of a word ("firma" matches "firme", not "con-firma-rea")."""
+    t = fold(text)
+    return any(re.search(r"(?<![a-z0-9])" + re.escape(fold(w)), t) for w in words)
+
 def detect_category(question: str) -> str:
-    q = question.lower()
-    if any(x in q for x in ["erasmus", "erasmus+", "universitate", "burs", "studii", "student", "facultate"]):
+    q = question
+    if has_kw(q, ["erasmus", "erasmus+", "mobilit", "universitate", "burs", "studii", "student", "facultate"]):
         return "education"
-    if any(x in q for x in ["chirie", "în chirie", "inchirie", "apartament", "locuință", "locuinta", "contract de închiriere"]):
+    if has_kw(q, ["chirie", "în chirie", "inchirie", "apartament", "locuință", "locuinta", "contract de închiriere"]):
         return "rent"
-    if any(x in q for x in ["mașină", "masina", "automobil", "autoturism", "vehicul", "înmatricul", "inmatricul", "numere", "plăcuțe", "placute", "acte auto", "vămuire", "vamuire", "vamă", "vama", "import auto"]):
+    if has_kw(q, ["mașină", "masina", "automobil", "autoturism", "vehicul", "înmatricul", "inmatricul", "numere", "plăcuțe", "placute", "acte auto", "vămuire", "vamuire", "vamă", "vama", "import auto"]):
         return "auto"
-    if any(x in q for x in ["viză", "viza", "permis de ședere", "permis de sedere", "mă mut", "mutare", "mut în", "reloc"]):
+    if has_kw(q, ["viză", "viza", "permis de ședere", "permis de sedere", "mă mut", "mutare", "mut în", "reloc"]):
         return "relocation"
-    if any(x in q for x in ["angajare", "angajat", "contract de muncă", "contract de munca", "job", "salariat"]):
+    if has_kw(q, ["angajare", "angajat", "contract de muncă", "contract de munca", "job", "salariat"]):
         return "employment"
-    if any(x in q for x in ["firmă", "firma", "companie", "societate", "deschid o firmă", "deschid o firma", "srl", "s.r.l",
-                            "întreprindere", "intreprindere", "afacere", "afaceri", "persoană juridică", "persoana juridica"]):
+    if has_kw(q, ["firmă", "firma", "companie", "societate", "deschid o firmă", "deschid o firma", "srl", "s.r.l",
+                            "întreprindere", "intreprindere", "afacere", "afaceri", "persoană juridică", "persoana juridica",
+                            "firme", "înființ", "infiint"]):
         return "business"
-    if any(x in q for x in ["medic", "spital", "servicii medicale", "asigurare medicală", "asigurare medicala"]):
+    if has_kw(q, ["medic", "spital", "servicii medicale", "asigurare medicală", "asigurare medicala"]):
         return "health"
     return "general"
 
@@ -184,7 +194,7 @@ def infer_slot(slot: dict, question: str, explicit: str):
     if slot.get("auto_from") == "country_bloc":
         if (explicit or "").lower() in EU_COUNTRIES:
             return "EU"
-        if any(h in q for h in NON_EU_HINTS):
+        if has_kw(q, NON_EU_HINTS):
             return "NON_EU"
         return None
     if slot["key"] == "citizenships":
@@ -197,19 +207,21 @@ def infer_slot(slot: dict, question: str, explicit: str):
             if re.search(r"roman(a|easca|esc)?\b|\bue\b|europea|italian|german|francez|spaniol|polone", window):
                 found.add("EU")
         return [v for v in ("MD", "EU") if v in found] or None
-    hits = [o["value"] for o in slot["options"] if any(k in q for k in o.get("keywords", []))]
+    hits = [o["value"] for o in slot["options"] if has_kw(q, o.get("keywords", []))]
     if slot["type"] == "multi":
         return hits or None  # citizenship stated in the question -> no need to ask again
     return hits[0] if len(hits) == 1 else None
 
-def missing_slots(category: str, question: str, answers: dict, country_hint: str, only=None):
+def missing_slots(category: str, question: str, answers: dict, country_hint: str, only=None, card=None):
     """Slots we still need; anything the question already says is filled in, not asked."""
     known = dict(answers or {})
     explicit = explicit_country(question)
     if country_hint not in ("auto", "Moldova", None):
         explicit = explicit or country_hint
     missing = []
-    for s in slots_for(category):
+    # a curated guide brings its own questions (each one shows/hides specific steps or documents)
+    defs = card["questions"] if card and card.get("questions") else slots_for(category)
+    for s in defs:
         if only is not None and s["key"] not in only:
             continue
         if s["key"] in known:
@@ -253,7 +265,7 @@ def domain_guard(question: str):
         r"\bpermis\b", r"\bviză\b", r"\bviza\b", r"\bședere\b",
         r"\bsedere\b", r"\bdomiciliu\b", r"\badministrativ\b",
         r"\bprocedur", r"\bînscriere\b", r"\binscriere\b",
-        r"\buniversitate\b", r"\berasmus\b", r"\bburs", r"\bstudii\b",
+        r"\buniversitate\b", r"\berasmus\b", r"\bmobilit", r"\bburs", r"\bstudii\b",
         r"\bchirie\b", r"\bînchir", r"\binchir", r"\bapartament\b",
         r"\bcontract\b", r"\bangajare\b", r"\bjob\b", r"\bemployment\b",
         r"\bfirmă\b", r"\bfirma\b", r"\bsrl\b", r"\bs\.r\.l\b", r"\bîntreprindere", r"\bintreprindere", r"\bafacere", r"\bcompanie\b", r"\bautoriza",
@@ -841,7 +853,7 @@ def find_card(category: str, question: str, profile: dict):
     for card in load_cards():
         if card["category"] != category:
             continue
-        if card.get("match_hints") and not any(h in q for h in card["match_hints"]):
+        if card.get("match_hints") and not has_kw(q, card["match_hints"]):
             continue
         ok = True
         for key, allowed in (card.get("applies_when") or {}).items():
@@ -852,11 +864,19 @@ def find_card(category: str, question: str, profile: dict):
             return card
     return None
 
-def card_for_slots(category: str, question: str):
+def card_for_slots(category: str, question: str, answers: dict | None = None):
     """Card that will answer this question (by category + keywords); it decides which slots matter."""
     q = fold(question)
     for card in load_cards():
-        if card["category"] == category and (not card.get("match_hints") or any(h in q for h in card["match_hints"])):
+        if card["category"] != category:
+            continue
+        # Guides without keywords are chosen only by an answer (e.g. the mobility program): until the user
+        # has given it they must not capture unrelated questions. Guides with keywords match by the question.
+        if not card.get("match_hints") and any(
+                str((answers or {}).get(k, "")).split(":")[0].strip() not in allowed
+                for k, allowed in (card.get("applies_when") or {}).items()):
+            continue
+        if not card.get("match_hints") or has_kw(q, card["match_hints"]):
             return card
     return None
 
@@ -870,7 +890,7 @@ def verify_card(card: dict):
     with ThreadPoolExecutor(max_workers=max(1, len(urls))) as pool:
         texts = dict(zip(urls, pool.map(lambda u: _norm(fetch_page(u)[1]), urls.values())))
     status, where_ok = {}, {}
-    for item in card["documents"] + card["steps"]:
+    for item in card["documents"] + card["steps"] + card.get("alerts", []):
         text = texts.get(item["source"], "")
         quotes = [item["quote"]] if "quote" in item else item["quotes"]
         if not text:
@@ -884,24 +904,81 @@ def verify_card(card: dict):
         where_ok[item["id"]] = bool(wq and text and _norm(wq) in text)
     return status, {k: bool(t) for k, t in texts.items()}, where_ok
 
+def _card_profile(card: dict, profile: dict | None) -> dict:
+    """Answers reduced to the guide's own option values; anything else (free text, "Nu știu") is 'unknown'."""
+    out = dict(profile or {})
+    for q in card.get("questions", []):
+        allowed = {o["value"] for o in q["options"]}
+        raw = out.get(q["key"])
+        vals = raw if isinstance(raw, list) else [raw]
+        vals = [str(v).split(":")[0].strip() for v in vals if v is not None]
+        vals = [v for v in vals if v in allowed and v != "unknown"]
+        out[q["key"]] = (vals if q["type"] == "multi" else vals[0]) if vals else "unknown"
+    return out
+
+def _answered(p: dict, key: str) -> bool:
+    return p.get(key) not in (None, "", "unknown", [])
+
+def _cond_true(cond: dict, p: dict) -> bool:
+    key, v = cond.get("slot"), p.get(cond.get("slot"))
+    if "answered" in cond:
+        return _answered(p, key) == cond["answered"]
+    if "equals" in cond:
+        return v == cond["equals"] or (isinstance(v, list) and cond["equals"] in v)
+    if "in" in cond:
+        return v in cond["in"]
+    return False
+
+def _visibility(item: dict, p: dict):
+    """(shown, applies). applies: 'yes' = the answer confirms it, 'maybe' = answer unknown, show conservatively."""
+    if item.get("unless") and _cond_true(item["unless"], p):
+        return False, None
+    when = item.get("when")
+    if not when:
+        return True, None
+    if not _answered(p, when["slot"]):
+        show = item.get("show_if_unknown", True)
+        return show, ("maybe" if show else None)
+    return (True, "yes") if _cond_true(when, p) else (False, None)
+
 def card_answer(card: dict, profile: dict | None = None):
     status, page_ok, where_ok = verify_card(card)
     keys = list(card["sources"])
     sid = {k: i + 1 for i, k in enumerate(keys)}
     label = {"confirmed": "Confirmat acum pe pagina oficială", "changed": "Pagina oficială s-a schimbat — verifică manual",
              "unreachable": "Nu am putut deschide pagina oficială acum; ultima verificare: " + card["last_verified"]}
+    p = _card_profile(card, profile)
+
+    vis_docs = [(d, a) for d in card["documents"] for show, a in [_visibility(d, p)] if show]
+    vis_steps = [(i, st, a) for i, st in enumerate(card["steps"]) for show, a in [_visibility(st, p)] if show]
+    new_pos = {i: n + 1 for n, (i, _, _) in enumerate(vis_steps)}
+
+    def dependency(dep):
+        """'after step N' must name a step that is actually shown: skip hidden ones along their own chain."""
+        hops = 0
+        while dep and (dep - 1) not in new_pos and hops < 20:
+            dep = card["steps"][dep - 1].get("depends_on_step")
+            hops += 1
+        return new_pos.get(dep - 1) if dep else None
+
     docs = [{
         "name": d["name"], "status": d["status"] if status[d["id"]] != "changed" else "unknown",
         "reason": label[status[d["id"]]], "where_to_get": d.get("where_to_get") if where_ok[d["id"]] else None,
         "sources": [sid[d["source"]]], "quote": d["quote"], "check": status[d["id"]],
-    } for d in card["documents"]]
+        "applies": a, "condition_text": d.get("condition_text"),
+    } for d, a in vis_docs]
     steps = [{
         "title": st["title"], "description": st["description"], "where": st.get("where"),
-        "cost": st.get("cost"), "duration": st.get("duration"), "depends_on_step": st.get("depends_on_step"),
+        "cost": st.get("cost"), "duration": st.get("duration"), "depends_on_step": dependency(st.get("depends_on_step")),
         "link": card["sources"][st["source"]]["url"], "sources": [sid[st["source"]]],
         "quote": st["quotes"][0], "quotes": st["quotes"], "check": status[st["id"]],
-    } for st in card["steps"]]
-    n_ok = sum(v == "confirmed" for v in status.values())
+        "applies": a, "condition_text": st.get("condition_text"),
+    } for _, st, a in vis_steps]
+
+    # alerts: verified exclusions that apply to THIS user (only when the answer says so)
+    alerts = [al for al in card.get("alerts", []) if _visibility(al, p)[0] and _visibility(al, p)[1] == "yes"]
+    shown_ids = [d["id"] for d, _ in vis_docs] + [st["id"] for _, st, _ in vis_steps] + [al["id"] for al in alerts]
+    n_ok = sum(status.get(i) == "confirmed" for i in shown_ids)
     warnings = ["Neconfirmat în surse: " + x for x in card.get("unconfirmed", [])]
     cit = (profile or {}).get("citizenships")
     note = card.get("profile_notes", {}).get("citizenships")
@@ -909,13 +986,16 @@ def card_answer(card: dict, profile: dict | None = None):
         cit = cit if isinstance(cit, list) else [cit]
         has_eu = any(str(c).split(":")[0] == "EU" for c in cit)
         warnings.insert(0, note["has_EU"] if has_eu else note["no_EU"])
-    if n_ok < len(status):
-        warnings.insert(0, f"Doar {n_ok} din {len(status)} elemente au putut fi confirmate acum pe paginile oficiale.")
+    for al in reversed(alerts):
+        txt = al["text"] if status.get(al["id"]) == "confirmed" else al["text"] + " (pagina oficială nu a putut fi confirmată acum)"
+        warnings.insert(0, "⚠ " + txt)
+    if n_ok < len(shown_ids):
+        warnings.insert(0, f"Doar {n_ok} din {len(shown_ids)} elemente au putut fi confirmate acum pe paginile oficiale.")
     answer = {"summary": card["summary"], "clarification_needed": False, "clarifying_questions": [],
               "documents": docs, "steps": steps, "warnings": warnings, "contradictions": []}
     sources = [{"id": sid[k], "title": v["title"], "url": v["url"], "organization": v["organization"],
                 "authority": 5, "fetched": page_ok[k]} for k, v in card["sources"].items()]
-    return answer, sources, f"{n_ok}/{len(status)}"
+    return answer, sources, f"{n_ok}/{len(shown_ids)}"
 
 
 QUESTION_STOP = set(STOPWORDS) | set("unde cand cine cui cum iau lua pot putea poti sunt pentru documentul document documente documentul "
@@ -1069,8 +1149,7 @@ def followup_answer(card: dict, question: str):
                 out["hint"] = item["hint"]
         step = next((st for st in card["steps"] if st["id"] == item.get("used_in")), None)
         if step:
-            out["facts"].append(f"Îl folosești la pasul {step['order'] if 'order' in step else card['steps'].index(step) + 1}: {step['title']}"
-                                + (f" ({step['where']})." if step.get("where") else "."))
+            out["facts"].append(f"Îl folosești la pasul „{step['title']}”" + (f" ({step['where']})." if step.get("where") else "."))
     else:
         out["facts"].append(item["description"])
         if item.get("where"):
@@ -1092,6 +1171,58 @@ def followup_answer(card: dict, question: str):
         if out["general"]:
             out["hint"] = None  # the generated answer replaces the static suggestion
     return out
+
+class ExportRequest(BaseModel):
+    question: str = ""
+    data: dict                 # the answer exactly as the user sees it (answer, sources, card, profile)
+    checked: list[str] = []    # names of the documents the user has ticked off
+
+# Finished PDFs wait here for a few minutes so the browser can fetch them as a normal download URL.
+_EXPORTS: dict = {}
+EXPORT_TTL = 600
+
+def _make_pdf(req: ExportRequest):
+    card_id = (req.data.get("card") or {}).get("id")
+    card = next((c for c in load_cards() if c["id"] == card_id), None)
+    try:
+        pdf = build_pdf(req.model_dump(), card)
+    except Exception as e:
+        raise HTTPException(500, f"Nu am putut genera PDF-ul: {e}")
+    title = (req.data.get("card") or {}).get("title") or "ghid"
+    slug = re.sub(r"[^a-z0-9]+", "-", fold(title)).strip("-")[:60] or "ghid"
+    return pdf, f"docuguide-{slug}.pdf"
+
+def _attachment(pdf: bytes, name: str) -> Response:
+    # "attachment" + a .pdf name: every browser saves it as a file instead of opening it
+    return Response(content=pdf, media_type="application/pdf", headers={
+        "Content-Disposition": f'attachment; filename="{name}"; filename*=UTF-8\'\'{name}',
+        "X-Content-Type-Options": "nosniff", "Cache-Control": "no-store"})
+
+@app.post("/api/export/pdf")
+def export_pdf(req: ExportRequest):
+    """The guide on screen as a PDF, returned directly."""
+    pdf, name = _make_pdf(req)
+    return _attachment(pdf, name)
+
+@app.post("/api/export/pdf/prepare")
+def export_pdf_prepare(req: ExportRequest):
+    """Builds the PDF and returns a short-lived URL; opening that URL downloads the file natively."""
+    pdf, name = _make_pdf(req)
+    now = time.time()
+    for k in [k for k, v in _EXPORTS.items() if now - v[0] > EXPORT_TTL]:
+        _EXPORTS.pop(k, None)
+    while len(_EXPORTS) >= 50:  # never let this grow without bound
+        _EXPORTS.pop(min(_EXPORTS, key=lambda k: _EXPORTS[k][0]))
+    token = secrets.token_urlsafe(16)
+    _EXPORTS[token] = (now, pdf, name)
+    return {"url": f"/api/export/pdf/{token}", "name": name}
+
+@app.get("/api/export/pdf/{token}")
+def export_pdf_download(token: str):
+    item = _EXPORTS.get(token)
+    if not item or time.time() - item[0] > EXPORT_TTL:
+        raise HTTPException(404, "Linkul de descărcare a expirat. Apasă din nou „Exportă PDF”.")
+    return _attachment(item[1], item[2])
 
 @app.get("/api/health")
 def health():
@@ -1178,10 +1309,29 @@ def chat(req: ChatRequest):
     category = detect_category(question) if req.category == "auto" else req.category
     country = detect_country(question) if req.country == "auto" else req.country
 
+    # "Mobilitate" is not "Erasmus": it may be CEEPUS, a bilateral exchange or something else.
+    # Ask which one first; only an explicit Erasmus+ answer leads to the Erasmus guide.
+    only_slots = None
+    if category == "education" and has_kw(question, ["mobilit"]) and not has_kw(question, ["erasmus", "ceepus"]):
+        mob = str((req.answers or {}).get("mobility_program") or "")
+        if not mob:
+            q_ = load_json(SLOTS_FILE)["_special"]["mobility_program"]
+            return {
+                "allowed": True, "needs_clarification": True, "domain_guard": domain, "category": category,
+                "country": country, "profile": dict(req.answers or {}),
+                "questions": [{"key": q_["key"], "type": q_["type"], "ask": q_["ask"], "options": q_["options"],
+                               "no_other": False, "placeholder": None}],
+            }
+        if mob.split(":")[0] == "erasmus":
+            question = f"{question} Erasmus"  # the user confirmed it is Erasmus+: the Erasmus guide may apply
+        elif mob.split(":")[0] not in ("ceepus", "bilateral", "staff"):
+            only_slots = ["citizenships"]  # "other": no verified guide, keep the questions minimal
+
     # Clarifying-question flow: ask for missing slots BEFORE any search or LLM call.
-    slot_card = card_for_slots(category, question)
+    slot_card = card_for_slots(category, question, req.answers)
     profile, missing = missing_slots(category, question, req.answers, req.country,
-                                     only=slot_card.get("slots") if slot_card else None)
+                                     only=only_slots if only_slots is not None else (slot_card.get("slots") if slot_card else None),
+                                     card=slot_card)
     if missing:
         return {
             "allowed": True,

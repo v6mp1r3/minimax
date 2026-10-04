@@ -98,3 +98,89 @@
   flex: 1 1 220px;
   min-width: 0;
 }
+
+/* conditional items: tell the user whether this applies to them */
+.chip.applies {
+  background: #e2f4ec;
+  color: #056655;
+  font-weight: 700;
+}
+
+.chip.maybe {
+  background: #fff4e5;
+  color: #8a5a10;
+}
+
+.unconfirmed-box summary {
+  font-weight: 800;
+}
+
+/* PDF export */
+.answer-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid #dcebe4;
+}
+
+.export-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 1px solid #b9ddd0;
+  border-radius: 999px;
+  background: #fff;
+  color: #087e6c;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.export-btn:hover:not(:disabled) {
+  background: #e8f6f0;
+}
+
+.export-btn:disabled {
+  opacity: 0.7;
+  cursor: progress;
+}
+
+.export-error {
+  color: #a1341f;
+  font-size: 12px;
+}
+
+@media print {
+  .answer-toolbar { display: none; }
+}
+
+.export-done {
+  margin: 8px 0 0;
+  padding: 7px 12px;
+  border-radius: 10px;
+  background: #e8f6f0;
+  color: #056655;
+  font-size: 12px;
+  text-align: right;
+}
+
+.export-done a {
+  color: #087e6c;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.link-btn {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #087e6c;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+}

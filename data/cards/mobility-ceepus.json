@@ -1,0 +1,84 @@
+{
+  "category": "education",
+  "match_hints": [],
+  "last_verified": "2026-10-04",
+  "slots": [],
+  "id": "mobility-ceepus",
+  "title": "Mobilitate CEEPUS (UTM)",
+  "applies_when": {
+    "mobility_program": [
+      "ceepus"
+    ]
+  },
+  "summary": "CEEPUS este un program regional de mobilități academice. Alegi o rețea în care UTM este membru și te înscrii online pe ceepus.info.",
+  "sources": {
+    "ceepus": {
+      "url": "https://utm.md/relatii-internationale/programe-internationale/ceepus/",
+      "title": "CEEPUS",
+      "organization": "Universitatea Tehnică a Moldovei"
+    }
+  },
+  "documents": [],
+  "steps": [
+    {
+      "id": "s1",
+      "title": "Află ce este CEEPUS și ce tipuri de mobilitate oferă",
+      "where": "Pagina CEEPUS a UTM",
+      "depends_on_step": null,
+      "source": "ceepus",
+      "description": "CEEPUS este un program regional de mobilități academice în Europa Centrală și de Est, din 1993. Oferă stagii pentru studenți, stagii de cercetare pentru masteranzi și doctoranzi și stagii pentru cadrele didactice.",
+      "quotes": [
+        "CEEPUS este un program regional de mobilități academice care se derulează în Europa Centrală și de Est începând cu 1993",
+        "Programul CEEPUS oferă trei categorii de mobilități: stagii pentru studenți, stagii de cercetare pentru masteranzi și doctoranzi și stagii pentru cadrele didactice"
+      ],
+      "cost": null,
+      "duration": null
+    },
+    {
+      "id": "s2",
+      "title": "Alege o rețea CEEPUS în care UTM este membru",
+      "where": "Pagina CEEPUS a UTM (lista rețelelor) și facultatea ta",
+      "depends_on_step": 1,
+      "source": "ceepus",
+      "description": "O rețea CEEPUS leagă mai multe universități din cel puțin două țări într-un proiect comun. UTM este membru în 16 rețele; pagina UTM le listează cu țara coordonatoare, titlul, coordonatorul și partenerul local de la UTM.",
+      "quotes": [
+        "O rețea CEEPUS este o structură inter universitară în cadrul căreia mai multe universități din cel puțin două țări diferite derulează un proiect comun",
+        "Universitatea Tehnică a Moldovei este membră în cadrul a 16 rețele CEEPUS",
+        "Coordinating country CEEPUS Network CEEPUS Network Title CEEPUS Network Coordinator Local Network partner"
+      ],
+      "cost": null,
+      "duration": null
+    },
+    {
+      "id": "s3",
+      "title": "Înscrie-te pentru bursă online pe ceepus.info",
+      "where": "ceepus.info",
+      "depends_on_step": 2,
+      "source": "ceepus",
+      "description": "Operațiunile legate de proiecte CEEPUS și de înscrierea pentru acordarea burselor se fac online, pe ceepus.info.",
+      "quotes": [
+        "Toate operațiunile legate de crearea/gestionarea proiectelor CEEPUS și de înscrierea pentru acordarea burselor se derulează online, pe pagina de internet ceepus.info"
+      ],
+      "cost": null,
+      "duration": null
+    },
+    {
+      "id": "s4",
+      "title": "Bursa se acordă de Oficiul Național CEEPUS din țara gazdă",
+      "where": "Oficiul Național CEEPUS din țara gazdă",
+      "depends_on_step": 3,
+      "source": "ceepus",
+      "description": "Bursa este acordată de Oficiul Național CEEPUS din țara în care mergi, nu de UTM.",
+      "quotes": [
+        "Bursa este acordată de către Oficiul Național CEEPUS din țara gazdă"
+      ],
+      "cost": null,
+      "duration": null
+    }
+  ],
+  "unconfirmed": [
+    "Condițiile de eligibilitate, documentele cerute și termenele-limită — nu sunt pe pagina UTM; consultă ceepus.info și coordonatorul rețelei",
+    "Țările participante — pagina UTM listează rețele coordonate din Bulgaria, Polonia, România, Slovacia, Croația, Serbia și Slovenia; Ucraina nu apare acolo",
+    "Cuantumul burselor de pe pagina UTM este pentru participanții care vin în Republica Moldova, nu pentru cei care pleacă"
+  ]
+}

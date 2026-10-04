@@ -1,0 +1,72 @@
+- main [ref=f23e134]:
+  - complementary [ref=f23e135]:
+    - button "DocuGuide - Acasă" [ref=f23e137] [cursor=pointer]:
+      - generic [ref=f23e144]: DocuGuide
+    - button "Conversație nouă" [ref=f23e145] [cursor=pointer]
+    - button "Toate conversațiile" [ref=f23e147] [cursor=pointer]
+    - navigation [ref=f23e148]:
+      - button [ref=f23e149] [cursor=pointer]
+      - button [ref=f23e154] [cursor=pointer]
+      - button [ref=f23e160] [cursor=pointer]
+      - button [ref=f23e164] [cursor=pointer]
+      - button [ref=f23e170] [cursor=pointer]
+      - button [ref=f23e175] [cursor=pointer]
+      - button [ref=f23e181] [cursor=pointer]
+    - generic [ref=f23e186]:
+      - strong [ref=f23e187]: Conversații recente
+      - button "eu vreau sa ma duc la erasmus, ce am nevoie avan Fixată" [ref=f23e189] [cursor=pointer]:
+        - generic [ref=f23e194]: eu vreau sa ma duc la erasmus, ce am nevoie avan
+        - generic "Fixată" [ref=f23e195]
+      - button "ce documente am nevoie ca sa deschid un srl" [ref=f23e199] [cursor=pointer]
+      - button "vreau sa plec in mobilitate" [ref=f23e207] [cursor=pointer]
+      - button "vreau sa plec in mobilitate in Ucraina, ce am ne" [ref=f23e214] [cursor=pointer]
+      - button "vreau să plec în mobilitatea în Ucraina ce docum" [ref=f23e221] [cursor=pointer]
+      - button "vreau să plec în mobilitatea în Ucraina ce docum" [ref=f23e228] [cursor=pointer]
+      - button "vreau să plec în mobilitatea în Ucraina ce docum" [ref=f23e235] [cursor=pointer]
+      - button "vreau sa plec in mobilitate in Ucraina, ce am ne" [ref=f23e242] [cursor=pointer]
+      - 'button "Vreau informații despre: Înscriere la universita" [ref=f23e248] [cursor=pointer]'
+      - button "ce documente am nevoie sa pentru confirmarea pol" [ref=f23e255] [cursor=pointer]
+      - button "ce documente am nevoie sa pentru confirmarea pol" [ref=f23e263] [cursor=pointer]
+      - button "cum inregistrez o masina adusa din Germania?" [ref=f23e271] [cursor=pointer]
+      - button "ce documente am nevoie ca sa deschid un srl" [ref=f23e279] [cursor=pointer]
+      - 'button "Vreau informații despre: Înregistrare la medic" [ref=f23e287] [cursor=pointer]'
+      - 'button "Vreau informații despre: Înregistrare la medic" [ref=f23e295] [cursor=pointer]'
+      - button "ce documente am nevoie ca sa deschid un srl" [ref=f23e303] [cursor=pointer]
+      - button "eu vreau sa ma duc la erasmus, ce am nevoie avan" [ref=f23e309] [cursor=pointer]
+      - button "eu vreau sa ma duc la erasmus, ce am nevoie avan" [ref=f23e316] [cursor=pointer]
+      - button "cum inregistrez o masina adusa din Germania?" [ref=f23e323] [cursor=pointer]
+  - generic [ref=f23e330]:
+    - generic [ref=f23e331]:
+      - generic [ref=f23e340]:
+        - strong [ref=f23e341]: Asistent DocuGuide
+        - generic [ref=f23e342]: Activ acum
+      - generic [ref=f23e343]: Afaceri și finanțe
+    - generic [ref=f23e348]:
+      - generic [ref=f23e349]: ce documente am nevoie ca sa deschid un srl
+      - generic [ref=f23e351]: "Pentru a-ți pregăti un ghid personalizat, am nevoie de câteva detalii:"
+      - generic [ref=f23e361]:
+        - strong [ref=f23e362]: Câți fondatori (asociați) are SRL-ul?
+        - generic [ref=f23e363]:
+          - button [disabled] [ref=f23e364]
+          - button [disabled] [ref=f23e368]
+          - button [disabled] [ref=f23e372]
+      - generic [ref=f23e387]: Unul singur (asociat unic)
+      - generic [ref=f23e397]:
+        - strong [ref=f23e398]: Printre fondatori, administratori sau beneficiari efectivi este cineva cu cetățenie străină sau nerezident în Republica Moldova?
+        - generic [ref=f23e399]:
+          - button [disabled] [ref=f23e400]
+          - button [disabled] [ref=f23e404]
+          - button [disabled] [ref=f23e408]
+      - generic [ref=f23e414]: Nu știu
+      - generic [ref=f23e424]:
+        - strong [ref=f23e425]: SRL-ul va avea o activitate reglementată (ex. audit, pază și detectivi, creditare nebancară, monedă electronică)?
+        - generic [ref=f23e426]:
+          - button [ref=f23e427] [cursor=pointer]
+          - button [ref=f23e431] [cursor=pointer]
+          - button [ref=f23e435] [cursor=pointer]
+    - generic [ref=f23e376]:
+      - button "Adaugă" [ref=f23e377] [cursor=pointer]
+      - textbox "Scrie un mesaj" [ref=f23e379]:
+        - /placeholder: Scrie un mesaj...
+      - button "Dictează mesajul" [ref=f23e380] [cursor=pointer]
+      - button "Trimite" [disabled] [ref=f23e384]

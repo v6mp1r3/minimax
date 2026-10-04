@@ -1,4 +1,5 @@
 export function SourceRefs({ ids = [], sources }) {
+  if (sources.length <= 1) return null; // with one source the number says nothing and looks like a step number
   const byId = Object.fromEntries(sources.map((s) => [s.id, s]));
   return ids.map((id) =>
     byId[id] ? (

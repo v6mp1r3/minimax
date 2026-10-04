@@ -53,7 +53,8 @@ export function useChat(initialMessage) {
         push(...items);
       } else {
         setPending(null);
-        push({ role: "assistant", type: "answer", data });
+        // keep the question with the answer: the PDF export prints it
+        push({ role: "assistant", type: "answer", data: { ...data, question } });
       }
     } catch (e) {
       setPending(null);
