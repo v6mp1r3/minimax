@@ -266,29 +266,7 @@
     ]
   },
   "health": {
-    "slots": [
-      "citizenships",
-      {
-        "key": "insured",
-        "type": "single",
-        "ask": "Ai asigurare medicală?",
-        "options": [
-          {
-            "value": "yes",
-            "label": "Da"
-          },
-          {
-            "value": "no",
-            "label": "Nu"
-          },
-          {
-            "value": "unknown",
-            "label": "Nu știu"
-          }
-        ],
-        "no_other": true
-      }
-    ]
+    "slots": []
   },
   "general": {
     "slots": []

@@ -23,7 +23,7 @@ DATA = BASE / "data"
 REGISTRY_FILE = DATA / "source_registry.json"
 
 # Small in-memory TTL cache so repeated demo questions are instant.
-CACHE_TTL = 30 * 60
+CACHE_TTL = int(os.getenv("CACHE_TTL_SECONDS", "7200"))
 _cache: dict = {}
 _cache_lock = threading.Lock()
 
@@ -38,39 +38,113 @@ def cache_set(key, value):
     with _cache_lock:
         _cache[key] = (time.time(), value)
 
-OLLAMA_URL = os.getenv("OLLAMA_URL", "http://127.0.0.1:11434")
-OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "llama3.2:3b")
+# AI providers: Gemini (primary), OpenRouter (secondary), Ollama (local fallback).
+# Only the final answer calls an LLM. Query understanding, routing and retrieval are local.
+AI_PROVIDER = os.getenv("AI_PROVIDER", "gemini").strip().lower()
+AI_FALLBACK_PROVIDER = os.getenv("AI_FALLBACK_PROVIDER", "openrouter").strip().lower()
+LLM_MAX_PROMPT_CHARS = int(os.getenv("LLM_MAX_PROMPT_CHARS", "14000"))
+LLM_TIMEOUT = float(os.getenv("LLM_TIMEOUT_SECONDS", "45"))
+ENABLE_CLARIFICATIONS = os.getenv("ENABLE_CLARIFICATIONS", "false").strip().lower() == "true"
 
-# Hosted LLM (Groq free plan). With GROQ_API_KEY set it is used first; Ollama stays as the fallback.
-GROQ_API_KEY = os.getenv("GROQ_API_KEY", "").strip()
-GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile")
-GROQ_BASE_URL = os.getenv("GROQ_BASE_URL", "https://api.groq.com/openai/v1").rstrip("/")
-LLM_PROVIDER = os.getenv("LLM_PROVIDER", "groq" if GROQ_API_KEY else "ollama").lower()
-# The free plan allows ~8,000 tokens/minute, so keep prompts small when Groq is the provider.
-LLM_MAX_PROMPT_CHARS = int(os.getenv("LLM_MAX_PROMPT_CHARS", "11000" if LLM_PROVIDER == "groq" else "0"))
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "").strip()
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.8-flash").strip()
+GEMINI_BASE_URL = os.getenv("GEMINI_BASE_URL", "https://generativelanguage.googleapis.com/v1beta").rstrip("/")
+GEMINI_THINKING_LEVEL = os.getenv("GEMINI_THINKING_LEVEL", "low").strip().lower()
 
-def _groq_chat(messages, json_mode, temperature, max_tokens, timeout):
-    payload = {"model": GROQ_MODEL, "messages": messages, "temperature": temperature,
-               "max_completion_tokens": max_tokens}
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "").strip()
+OPENROUTER_MODEL = os.getenv("OPENROUTER_MODEL", "qwen/qwen3.8-27b:free").strip()
+OPENROUTER_BASE_URL = os.getenv("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1").rstrip("/")
+
+OLLAMA_URL = os.getenv("OLLAMA_URL", "http://127.0.0.1:11434").rstrip("/")
+OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "qwen3:8b").strip()
+OLLAMA_THINK = os.getenv("OLLAMA_THINK", "false").strip().lower() == "true"
+OLLAMA_NUM_CTX = int(os.getenv("OLLAMA_NUM_CTX", "8192"))
+
+
+def _gemini_chat(messages, json_mode, temperature, max_tokens, timeout):
+    if not GEMINI_API_KEY:
+        raise RuntimeError("GEMINI_API_KEY nu este configurată.")
+    system_parts = [m["content"] for m in messages if m.get("role") == "system"]
+    user_parts = [m["content"] for m in messages if m.get("role") != "system"]
+    contents = [{"role": "user", "parts": [{"text": "\n\n".join(user_parts)}]}]
+    generation = {"maxOutputTokens": max_tokens}
+    # Gemini 3.8 uses thinking levels. Keep the request minimal and avoid
+    # deprecated sampling fields such as temperature/top_p/top_k.
+    if GEMINI_THINKING_LEVEL in {"low", "medium", "high"}:
+        generation["thinkingConfig"] = {"thinkingLevel": GEMINI_THINKING_LEVEL}
+    if json_mode:
+        generation["responseMimeType"] = "application/json"
+    payload = {
+        "systemInstruction": {"parts": [{"text": "\n\n".join(system_parts)}]} if system_parts else None,
+        "contents": contents,
+        "generationConfig": generation,
+    }
+    payload = {k: v for k, v in payload.items() if v is not None}
+    url = f"{GEMINI_BASE_URL}/models/{GEMINI_MODEL}:generateContent"
+
+    # Google can temporarily return 429/500/502/503/504. Retry with
+    # exponential backoff instead of immediately converting a transient
+    # provider problem into a DocuGuide 503.
+    retryable = {429, 500, 502, 503, 504}
+    delays = (1.0, 2.0, 4.0)
+    last_status = None
+    last_body = ""
+    with httpx.Client(timeout=timeout) as client:
+        for attempt in range(len(delays) + 1):
+            try:
+                r = client.post(
+                    url,
+                    headers={"x-goog-api-key": GEMINI_API_KEY, "Content-Type": "application/json"},
+                    json=payload,
+                )
+            except httpx.HTTPError as exc:
+                if attempt < len(delays):
+                    time.sleep(delays[attempt])
+                    continue
+                raise RuntimeError(f"Gemini conexiunea a eșuat după retry-uri: {exc}") from exc
+
+            if r.status_code < 400:
+                data = r.json()
+                parts = data.get("candidates", [{}])[0].get("content", {}).get("parts", [])
+                return "".join(part.get("text", "") for part in parts if isinstance(part, dict)).strip()
+
+            last_status = r.status_code
+            last_body = r.text[:1200]
+            if r.status_code in retryable and attempt < len(delays):
+                time.sleep(delays[attempt])
+                continue
+
+            raise RuntimeError(
+                f"Gemini a răspuns cu HTTP {last_status}: {last_body}"
+            )
+
+    raise RuntimeError(f"Gemini a răspuns cu HTTP {last_status}: {last_body}")
+
+
+def _openrouter_chat(messages, json_mode, temperature, max_tokens, timeout):
+    if not OPENROUTER_API_KEY:
+        raise RuntimeError("OPENROUTER_API_KEY nu este configurată.")
+    payload = {"model": OPENROUTER_MODEL, "messages": messages, "temperature": temperature,
+               "max_tokens": max_tokens}
     if json_mode:
         payload["response_format"] = {"type": "json_object"}
-    headers = {"Authorization": f"Bearer {GROQ_API_KEY}"}
+    headers = {
+        "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+        "Content-Type": "application/json",
+        "HTTP-Referer": "http://127.0.0.1:8000",
+        "X-Title": "DocuGuide",
+    }
     with httpx.Client(timeout=timeout) as client:
-        for attempt in (0, 1):
-            r = client.post(f"{GROQ_BASE_URL}/chat/completions", json=payload, headers=headers)
-            if r.status_code == 429 and attempt == 0:  # per-minute limit: wait once, then retry
-                try:
-                    wait = float(r.headers.get("retry-after", "5"))
-                except ValueError:
-                    wait = 5.0
-                time.sleep(min(max(wait, 1.0), 20.0))
-                continue
-            r.raise_for_status()
-            return r.json()["choices"][0]["message"]["content"] or ""
+        r = client.post(f"{OPENROUTER_BASE_URL}/chat/completions", json=payload, headers=headers)
+        r.raise_for_status()
+        data = r.json()
+    return data.get("choices", [{}])[0].get("message", {}).get("content", "") or ""
+
 
 def _ollama_chat(messages, json_mode, temperature, max_tokens, timeout):
     payload = {"model": OLLAMA_MODEL, "stream": False, "messages": messages,
-               "options": {"temperature": temperature, "num_ctx": 6000, "num_predict": max_tokens}}
+               "options": {"temperature": temperature, "num_ctx": OLLAMA_NUM_CTX, "num_predict": max_tokens},
+               "think": OLLAMA_THINK}
     if json_mode:
         payload["format"] = "json"
     with httpx.Client(timeout=timeout) as client:
@@ -78,20 +152,58 @@ def _ollama_chat(messages, json_mode, temperature, max_tokens, timeout):
         r.raise_for_status()
         return r.json().get("message", {}).get("content", "") or ""
 
-def llm_chat(messages, json_mode=False, temperature=0.2, max_tokens=600, timeout=120):
-    """One entry point for every model call: Groq if configured, otherwise (or on failure) Ollama."""
-    if LLM_PROVIDER == "groq" and GROQ_API_KEY:
-        try:
-            return _groq_chat(messages, json_mode, temperature, max_tokens, min(timeout, 60))
-        except Exception as groq_err:
-            try:
-                return _ollama_chat(messages, json_mode, temperature, max_tokens, timeout)
-            except Exception:
-                raise groq_err
+
+def _provider_available(name: str) -> bool:
+    if name == "gemini":
+        return bool(GEMINI_API_KEY)
+    if name == "openrouter":
+        return bool(OPENROUTER_API_KEY)
+    if name == "ollama":
+        # Ollama is opt-in. We never silently fall back to a local server.
+        return os.getenv("ENABLE_OLLAMA_FALLBACK", "false").strip().lower() == "true"
+    return False
+
+
+def _provider_chain():
+    chain = []
+    for name in (AI_PROVIDER, AI_FALLBACK_PROVIDER):
+        name = (name or "").strip().lower()
+        if name and name not in {"none", "disabled"} and name not in chain and _provider_available(name):
+            chain.append(name)
+    return chain
+
+
+def _call_provider(name, messages, json_mode, temperature, max_tokens, timeout):
+    if name == "gemini":
+        return _gemini_chat(messages, json_mode, temperature, max_tokens, timeout)
+    if name == "openrouter":
+        return _openrouter_chat(messages, json_mode, temperature, max_tokens, timeout)
     return _ollama_chat(messages, json_mode, temperature, max_tokens, timeout)
 
+
+def llm_chat(messages, json_mode=False, temperature=0.15, max_tokens=900, timeout=None):
+    """One final LLM call per user request. Falls back only if the primary provider fails."""
+    last = None
+    for provider in _provider_chain():
+        try:
+            return _call_provider(provider, messages, json_mode, temperature, max_tokens, timeout or LLM_TIMEOUT)
+        except Exception as exc:
+            last = exc
+            continue
+    raise RuntimeError(str(last) if last else "Niciun provider AI configurat.")
+
+
+def provider_status():
+    return {
+        "primary": AI_PROVIDER,
+        "fallback": AI_FALLBACK_PROVIDER,
+        "configured": {"gemini": bool(GEMINI_API_KEY), "openrouter": bool(OPENROUTER_API_KEY), "ollama": os.getenv("ENABLE_OLLAMA_FALLBACK", "false").strip().lower() == "true"},
+        "models": {"gemini": GEMINI_MODEL, "openrouter": OPENROUTER_MODEL, "ollama": OLLAMA_MODEL},
+    }
+
+
 def llm_label() -> str:
-    return f"Groq · {GROQ_MODEL}" if (LLM_PROVIDER == "groq" and GROQ_API_KEY) else f"Ollama · {OLLAMA_MODEL}"
+    return f"{AI_PROVIDER} · {GEMINI_MODEL if AI_PROVIDER == 'gemini' else OPENROUTER_MODEL if AI_PROVIDER == 'openrouter' else OLLAMA_MODEL}"
 
 app = FastAPI(title="DocuGuide — Evidence Research Demo")
 app.add_middleware(
@@ -135,7 +247,7 @@ def detect_category(question: str) -> str:
     if any(x in q for x in ["firmă", "firma", "companie", "societate", "deschid o firmă", "deschid o firma", "srl", "s.r.l",
                             "întreprindere", "intreprindere", "afacere", "afaceri", "persoană juridică", "persoana juridica"]):
         return "business"
-    if any(x in q for x in ["medic", "spital", "servicii medicale", "asigurare medicală", "asigurare medicala"]):
+    if any(x in q for x in ["medic", "spital", "servicii medicale", "asigurare medicală", "asigurare medicala", "polita medicala", "polita de asigurare", "aoam", "cnam", "asigurat", "asigurata"]):
         return "health"
     return "general"
 
@@ -297,61 +409,29 @@ def domain_guard(question: str):
     return {"allowed": "ambiguous", "reason": "", "category": "unknown"}
 
 
-def llm_domain_guard(question: str):
-    prompt = f"""
-Classify the user's question for DocuGuide.
-
-DocuGuide ONLY handles:
-- documents and administrative procedures
-- education / Erasmus / university administration
-- public services and identity documents
-- visas, residence, relocation and travel documentation
-- renting / housing paperwork
-- employment paperwork
-- opening a company / permits
-- administrative health-service access
-- vehicle import, customs, registration and car paperwork
-
-A question is allowed ONLY if it names a recognisable administrative situation: a procedure, an official
-document, an institution, a legal status or a permit (e.g. "ce acte trebuie pentru buletin", "cum deschid un SRL").
-Generic words like "documente" or "acte" are NOT enough: the subject must be an administrative topic.
-Examples that are NOT allowed: "ce documente am nevoie pentru un kebab", "ce acte trebuie pentru pizza",
-"cum fac o prăjitură", "ce documente am nevoie pentru o pisică de jucărie".
-
-Return ONLY JSON:
-{{"allowed": true_or_false, "category": "education|public_services|relocation|rent|auto|employment|business|health|other", "reason": "short Romanian reason"}}
-
-User question:
-{question}
-""".strip()
-
-    try:
-        content = llm_chat(
-            [{"role": "system", "content": "Return valid JSON only."}, {"role": "user", "content": prompt}],
-            json_mode=True, temperature=0, max_tokens=150, timeout=45,
-        ) or "{}"
-        result = json.loads(content)
-        return {
-            "allowed": bool(result.get("allowed", False)),
-            "category": result.get("category", "other"),
-            "reason": result.get("reason", "")
-        }
-    except Exception:
-        # Fail closed for ambiguous requests: do not turn DocuGuide into
-        # a general-purpose chatbot.
-        return {
-            "allowed": False,
-            "category": "other",
-            "reason": "Nu am putut confirma că întrebarea aparține domeniului DocuGuide."
-        }
-
-
 def get_domain_decision(question: str):
+    """Purely local domain routing. It deliberately never calls an LLM.
+    This guarantees one provider request maximum for a normal question."""
     decision = domain_guard(question)
     if decision["allowed"] in (True, False):
         return decision
-    return llm_domain_guard(question)
-
+    q = fold(question)
+    # Natural-language administrative signals. This is intentionally broad; the
+    # evidence/domain checks later decide whether a useful answer can be produced.
+    natural_admin = [
+        "ce acte", "ce document", "ce hart", "ce trebuie", "cum obtin", "cum fac", "unde depun",
+        "unde merg", "cat costa", "cat dureaza", "cum verific", "cum solicit", "cum inregistrez",
+        "cum deschid", "cum schimb", "cum declar", "cum aplic", "vreau sa obtin", "am nevoie de",
+        "pierdut", "reinno", "reinoi", "cerere", "formular", "taxa", "certificat", "adeverinta",
+        "polita", "asigurare", "cnam", "aoam", "buletin", "pasaport", "srl", "viza", "permis",
+    ]
+    if any(x in q for x in natural_admin):
+        return {"allowed": True, "reason": "Întrebare administrativă detectată local.", "category": "administrative"}
+    return {
+        "allowed": False,
+        "reason": "Întrebarea nu pare să fie despre documente sau proceduri administrative.",
+        "category": "other",
+    }
 
 def build_queries(question: str, category: str, country: str):
     q = clean_text(question)
@@ -389,8 +469,9 @@ def build_queries(question: str, category: str, country: str):
         ]
     elif category == "health":
         queries += [
-            f"acces servicii medicale documente {country}",
-            f"asigurare medicală acte {country}",
+            f"polița medicală AOAM acte documente {country}",
+            f"CNAM asigurare obligatorie asistență medicală documente {country}",
+            f"statut asigurat poliță medicală verificare {country}",
         ]
     else:
         queries += [
@@ -420,7 +501,7 @@ CATEGORY_TERMS = {
     "auto": ["inmatricul", "vamu", "automobil"],
     "employment": ["angaj", "munca", "contract"],
     "business": ["inregistr", "societate", "firma"],
-    "health": ["medic", "asigurar", "cnam"],
+    "health": ["medic", "asigurar", "cnam", "aoam", "polita", "asigurat"],
 }
 
 def fold(s: str) -> str:
@@ -462,29 +543,103 @@ def _site_search(domain: str, queries):
             time.sleep(0.8)
     return hits
 
+LOCAL_DOCS_DIR = DATA / "documents"
+
+
+def _extract_local_file(path: Path) -> str:
+    try:
+        suffix = path.suffix.lower()
+        if suffix in {".txt", ".md", ".log"}:
+            return path.read_text(encoding="utf-8", errors="ignore")
+        if suffix == ".json":
+            obj = json.loads(path.read_text(encoding="utf-8", errors="ignore"))
+            return json.dumps(obj, ensure_ascii=False, indent=2)
+        if suffix == ".csv":
+            return path.read_text(encoding="utf-8", errors="ignore")
+        if suffix == ".pdf":
+            try:
+                from pypdf import PdfReader
+                return "\n".join((page.extract_text() or "") for page in PdfReader(str(path)).pages)
+            except Exception:
+                return ""
+        if suffix == ".docx":
+            try:
+                from docx import Document
+                return "\n".join(p.text for p in Document(str(path)).paragraphs)
+            except Exception:
+                return ""
+    except Exception:
+        return ""
+    return ""
+
+
+def _char_ngrams(text: str, n=3):
+    t = re.sub(r"[^a-z0-9]+", " ", fold(text))
+    return {t[i:i+n] for i in range(max(0, len(t)-n+1)) if " " not in t[i:i+n]}
+
+
+def _hybrid_score(query: str, text: str) -> float:
+    q_words = {w for w in re.findall(r"[a-z0-9]+", fold(query)) if len(w) >= 3 and w not in STOPWORDS}
+    t_words = set(re.findall(r"[a-z0-9]+", fold(text)))
+    lexical = len(q_words & t_words) / max(len(q_words), 1)
+    qgrams, tgrams = _char_ngrams(query), _char_ngrams(text[:12000])
+    fuzzy = len(qgrams & tgrams) / max(len(qgrams), 1)
+    return 0.72 * lexical + 0.28 * fuzzy
+
+
+def search_local_documents(question: str, category: str):
+    if not LOCAL_DOCS_DIR.exists():
+        return []
+    results = []
+    for path in LOCAL_DOCS_DIR.rglob("*"):
+        if not path.is_file() or path.suffix.lower() not in {".txt", ".md", ".json", ".csv", ".pdf", ".docx"}:
+            continue
+        text = _extract_local_file(path)
+        if not text.strip():
+            continue
+        score = _hybrid_score(question, text)
+        # Category terms are a second signal so a short user question still finds the right file.
+        score += 0.12 * _hybrid_score(" ".join(CATEGORY_TERMS.get(category, [])), text)
+        if score < 0.08:
+            continue
+        stems = stems_for(question, category)
+        body = excerpt(text, stems, limit=2200) if text else ""
+        results.append({
+            "title": path.name,
+            "url": "local://" + path.relative_to(BASE).as_posix(),
+            "snippet": clean_text(body[:900]),
+            "authority": 4,
+            "organization": "Document local",
+            "relevance": score,
+            "fetched": True,
+            "text": body,
+        })
+    return sorted(results, key=lambda x: -x["relevance"])[:8]
+
+
 def search_web(question: str, category: str, country: str):
-    """Search ONLY the approved domains (site: filter, in parallel).
-    No curated/demo fallback: if nothing official is found we return [] and the
-    caller reports that honestly instead of letting the model improvise."""
+    """Hybrid retrieval: local user documents + approved official web sources.
+    Retrieval is deterministic/local; no LLM is used here."""
     cache_key = ("search", question, category, country)
     cached = cache_get(cache_key)
     if cached is not None:
         return cached
 
+    local = search_local_documents(question, category)
     allowed = allowed_sources(category)
-    queries = build_queries(question, category, country)[:2]
+    queries = build_queries(question, category, country)[:4]
+    hits = []
     with ThreadPoolExecutor(max_workers=max(1, len(allowed))) as pool:
         per_domain = list(pool.map(lambda d: _site_search(d["domain"], queries), allowed))
-
-    results, seen = [], set()
-    for hits in per_domain:
-        for r in hits:
+    seen = set()
+    for domain_hits in per_domain:
+        for r in domain_hits:
             url = r.get("href") or r.get("url") or ""
             if not url or url in seen or not domain_allowed(url, allowed):
                 continue
             seen.add(url)
             authority, label = authority_for(url, allowed)
-            results.append({
+            hits.append({
                 "title": clean_text(r.get("title", "")),
                 "url": url,
                 "snippet": clean_text(r.get("body", "")),
@@ -492,11 +647,13 @@ def search_web(question: str, category: str, country: str):
                 "organization": label,
             })
     stems = stems_for(question, category)
-    for r in results:
-        r["relevance"] = relevance(f"{r['title']} {r['url']} {r['snippet']}", stems)
-    results.sort(key=lambda x: (-x["relevance"], -x["authority"]))
+    for r in hits:
+        r["relevance"] = relevance(f"{r['title']} {r['url']} {r['snippet']}", stems) + _hybrid_score(question, f"{r['title']} {r['snippet']}")
+    hits.sort(key=lambda x: (-x["relevance"], -x["authority"]))
+    results = local[:4] + hits[:10]
+    results.sort(key=lambda x: (-x.get("relevance", 0), -x.get("authority", 0)))
     results = results[:10]
-    if results and results[0]["relevance"] > 0:  # a thin / irrelevant result set is not worth caching
+    if results:
         cache_set(cache_key, results)
     return results
 
@@ -522,6 +679,10 @@ def extract_content(soup) -> str:
     return "\n".join(blocks)
 
 def fetch_page(url: str):
+    if url.startswith("local://"):
+        path = BASE / url[len("local://"):]
+        text = _extract_local_file(path)
+        return path.name, text[:12000]
     cached = cache_get(("page", url))
     if cached is not None:
         return cached
@@ -674,7 +835,7 @@ Distinguish:
 
 If sources disagree, report the disagreement instead of silently choosing.
 Every document and step MUST be stated in the SOURCE MATERIAL below. Do not use general knowledge. If the sources do not describe the procedure or the documents, return empty "documents" and "steps" lists and say so in "summary". Never turn a menu item, link title or unrelated service into a step.
-Clarifying questions were already asked in the UI. Always set "clarification_needed" to false.
+Do not ask the user follow-up questions just to make the answer easier. Use the information in the question and sources. If a detail truly changes the result and is missing, explain the dependency in warnings instead of blocking the answer. Always set "clarification_needed" to false.
 
 For every cost, duration, institution, address and link: copy it ONLY from the sources. If a source does not state it, use null. Never guess an amount or a number of days. "link" must be one of the source URLs.
 "depends_on_step" is the 1-based number of the step that must be finished before this one (or null).
@@ -762,7 +923,7 @@ def parse_json_lenient(text: str):
             continue
     return None
 
-def call_ollama(prompt):
+def call_ai(prompt):
     """Answer step (name kept for compatibility): returns the parsed JSON answer from the active provider."""
     content = llm_chat(
         [{"role": "system", "content": "Return valid JSON only. Answer in Romanian. Keep every text field short."},
@@ -1095,30 +1256,55 @@ def followup_answer(card: dict, question: str):
 
 @app.get("/api/health")
 def health():
-    info = {"provider": LLM_PROVIDER, "active": llm_label()}
-    groq = LLM_PROVIDER == "groq" and bool(GROQ_API_KEY)
-    if groq:
+    status = provider_status()
+    checks = {}
+    if GEMINI_API_KEY:
         try:
             with httpx.Client(timeout=5) as client:
-                r = client.get(f"{GROQ_BASE_URL}/models", headers={"Authorization": f"Bearer {GROQ_API_KEY}"})
-            info["groq_ok"] = r.status_code == 200
+                r = client.get(f"{GEMINI_BASE_URL}/models", params={"key": GEMINI_API_KEY})
+            checks["gemini_ok"] = r.status_code == 200
             if r.status_code != 200:
-                info["groq_error"] = f"HTTP {r.status_code} (cheie invalidă sau limită depășită?)"
+                checks["gemini_error"] = f"HTTP {r.status_code}"
         except Exception as e:
-            info["groq_ok"] = False
-            info["groq_error"] = str(e)
-    try:
-        with httpx.Client(timeout=3) as client:
-            r = client.get(f"{OLLAMA_URL}/api/tags")
-            r.raise_for_status()
-            models = [m.get("name") for m in r.json().get("models", [])]
-        info.update({"ollama_ok": True, "model": OLLAMA_MODEL, "model_installed": OLLAMA_MODEL in models, "installed_models": models})
-    except Exception as e:
-        info.update({"ollama_ok": False, "model": OLLAMA_MODEL, "ollama_error": str(e)})
-    # "ok" = at least one provider can answer
-    info["ok"] = bool(info.get("groq_ok")) or (info.get("ollama_ok") and info.get("model_installed"))
-    info["ai"] = "groq" if groq else "ollama"
-    return info
+            checks["gemini_ok"] = False
+            checks["gemini_error"] = str(e)
+    else:
+        checks["gemini_ok"] = False
+        checks["gemini_error"] = "GEMINI_API_KEY lipsește"
+    if OPENROUTER_API_KEY:
+        try:
+            with httpx.Client(timeout=5) as client:
+                r = client.get(f"{OPENROUTER_BASE_URL}/models", headers={"Authorization": f"Bearer {OPENROUTER_API_KEY}"})
+            checks["openrouter_ok"] = r.status_code == 200
+            if r.status_code != 200:
+                checks["openrouter_error"] = f"HTTP {r.status_code}"
+        except Exception as e:
+            checks["openrouter_ok"] = False
+            checks["openrouter_error"] = str(e)
+    else:
+        checks["openrouter_ok"] = False
+    if os.getenv("ENABLE_OLLAMA_FALLBACK", "false").strip().lower() == "true":
+        try:
+            with httpx.Client(timeout=3) as client:
+                r = client.get(f"{OLLAMA_URL}/api/tags")
+                r.raise_for_status()
+                models = [m.get("name") for m in r.json().get("models", [])]
+            checks.update({"ollama_ok": True, "ollama_model": OLLAMA_MODEL,
+                           "ollama_model_installed": OLLAMA_MODEL in models, "installed_models": models})
+        except Exception as e:
+            checks.update({"ollama_ok": False, "ollama_model": OLLAMA_MODEL, "ollama_model_installed": False,
+                           "ollama_error": str(e)})
+    else:
+        checks.update({"ollama_ok": False, "ollama_model": OLLAMA_MODEL,
+                       "ollama_model_installed": False, "ollama_disabled": True})
+    active_ok = bool(checks.get(f"{AI_PROVIDER}_ok")) if AI_PROVIDER not in {"ollama", "none", "disabled"} else bool(checks.get("ollama_ok") and checks.get("ollama_model_installed"))
+    fallback_ok = bool(checks.get(f"{AI_FALLBACK_PROVIDER}_ok")) if AI_FALLBACK_PROVIDER not in {"ollama", "none", "disabled", ""} else bool(checks.get("ollama_ok") and checks.get("ollama_model_installed"))
+    checks.update({"provider": AI_PROVIDER, "active": llm_label(), "primary_ok": active_ok,
+                   "fallback_ok": fallback_ok, "ok": active_ok or fallback_ok,
+                   "one_llm_call_per_question": True,
+                   "retrieval": "local hybrid + approved official web sources"})
+    checks.update(status)
+    return checks
 
 @app.post("/api/chat")
 def chat(req: ChatRequest):
@@ -1169,7 +1355,7 @@ def chat(req: ChatRequest):
             "source_count": 0,
             "policy": {
                 "allowed_only": True,
-                "local_ai": True,
+                "ai_provider": AI_PROVIDER,
                 "domain_guard": True,
                 "web_search_skipped": True
             }
@@ -1182,7 +1368,7 @@ def chat(req: ChatRequest):
     slot_card = card_for_slots(category, question)
     profile, missing = missing_slots(category, question, req.answers, req.country,
                                      only=slot_card.get("slots") if slot_card else None)
-    if missing:
+    if missing and ENABLE_CLARIFICATIONS:
         return {
             "allowed": True,
             "needs_clarification": True,
@@ -1205,7 +1391,7 @@ def chat(req: ChatRequest):
             "answer": answer, "category": category, "country": country, "search_queries": [],
             "sources": sources, "source_count": len(sources),
             "card": {"id": card["id"], "title": card["title"], "last_verified": card["last_verified"], "confirmed": confirmed},
-            "policy": {"allowed_only": True, "local_ai": True, "curated_card": True},
+            "policy": {"allowed_only": True, "ai_provider": AI_PROVIDER, "curated_card": True},
         }
 
     results = search_web(question, category, country)
@@ -1234,7 +1420,7 @@ def chat(req: ChatRequest):
             "search_queries": build_queries(question, category, country),
             "sources": [],
             "source_count": 0,
-            "policy": {"allowed_only": True, "local_ai": True, "no_evidence": True},
+            "policy": {"allowed_only": True, "ai_provider": AI_PROVIDER, "no_evidence": True},
         }
 
     if not subject_in_sources(question, category, evidence):
@@ -1247,7 +1433,7 @@ def chat(req: ChatRequest):
                 "contradictions": [],
             },
             "category": category, "country": country, "search_queries": build_queries(question, category, country),
-            "sources": [], "source_count": 0, "policy": {"allowed_only": True, "local_ai": True, "no_evidence": True},
+            "sources": [], "source_count": 0, "policy": {"allowed_only": True, "ai_provider": AI_PROVIDER, "no_evidence": True},
         }
 
     if LLM_MAX_PROMPT_CHARS:
@@ -1259,15 +1445,19 @@ def chat(req: ChatRequest):
     prompt = make_prompt(question, category, country, evidence, profile)
 
     try:
-        answer = call_ollama(prompt)
+        answer = call_ai(prompt)
     except httpx.HTTPStatusError as e:
-        if e.response.status_code == 404 and LLM_PROVIDER != "groq":
-            raise HTTPException(503, f"Modelul {OLLAMA_MODEL} nu este instalat în Ollama. Rulează în terminal: ollama pull {OLLAMA_MODEL}")
         if e.response.status_code == 429:
-            raise HTTPException(503, "Limita gratuită a serviciului AI a fost atinsă. Încearcă din nou peste un minut.")
-        raise HTTPException(503, f"Serviciul AI ({llm_label()}) a returnat o eroare: {e}")
+            raise HTTPException(503, "Providerul AI a atins o limită temporară. Încearcă din nou peste puțin timp sau folosește Ollama local.")
+        raise HTTPException(503, f"Serviciul AI ({llm_label()}) a returnat HTTP {e.response.status_code}. Verifică /api/health.")
     except Exception as e:
-        raise HTTPException(503, f"Serviciul AI ({llm_label()}) nu a putut genera răspunsul: {e}")
+        if not GEMINI_API_KEY and AI_PROVIDER == "gemini":
+            raise HTTPException(
+                503,
+                "Gemini nu este configurat. Deschide fișierul .env și completează GEMINI_API_KEY. "
+                "Ollama nu este folosit automat. Verifică apoi /api/health."
+            )
+        raise HTTPException(503, f"Serviciul AI nu a putut genera răspunsul. Verifică /api/health. Detalii: {e}")
     answer = sanitize_answer(answer, evidence)
     if not answer["documents"] and not answer["steps"]:
         answer["extracts"] = build_extracts(evidence, question, category)
@@ -1300,7 +1490,7 @@ def chat(req: ChatRequest):
         "source_count": len(source_cards),
         "policy": {
             "allowed_only": True,
-            "local_ai": True,
+            "ai_provider": AI_PROVIDER,
             "requires_evidence_for_required": True
         }
     }
